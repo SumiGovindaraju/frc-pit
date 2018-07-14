@@ -266,7 +266,7 @@ function renderWebcasts() {
                         $(".webcasts .tab-content").append(`
                                 <div class="tab-pane fade" id="webcast-${webcast}" role="tabpanel">
                                     <iframe
-                                        src="http://player.twitch.tv/?channel=${data.webcasts[webcast].channel}"
+                                        src="//player.twitch.tv/?channel=${data.webcasts[webcast].channel}"
                                         frameborder="none"
                                         scrolling="none"
                                         allowfullscreen="true">
