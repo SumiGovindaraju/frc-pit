@@ -16,10 +16,19 @@ export default class Auth extends Component {
         signInSuccessUrl: `/frc-pit/signed_in?redirect=${redirectURL}`,
         signInOptions: [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.GithubAuthProvider.PROVIDER_ID,
           firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          firebase.auth.PhoneAuthProvider.PROVIDER_ID
-        ]
+          {
+            provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+            recaptchaParameters: {
+              type: 'image',
+              size: 'normal',
+              badge: 'bottomleft'
+            },
+            defaultCountry: 'US', // Set default country to the United Kingdom (+44).
+          }
+        ],
+
+        credentialHelper: firebaseui.auth.CredentialHelper.NONE
       }
     };
     

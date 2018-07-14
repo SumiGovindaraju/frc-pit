@@ -15,7 +15,7 @@ export default class Header extends Component {
         a.classList.add("nav-link");
         a.classList.add("sign-out");
         a.innerHTML = "Sign out " + user.displayName;
-        a.href = "../sign_out";
+        a.href = "../frc-pit/sign_out";
 
         li.appendChild(a);
         document.getElementsByClassName("sign-out-ul")[0].appendChild(li);
