@@ -1,0 +1,73 @@
+import React, { Component } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
+var redirectURL = decodeURIComponent(((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || "../");
+
+export default class SignedIn extends Component {
+  constructor(props) {
+    super(props);
+    this.createUser = this.createUser.bind(this);
+    this.state = { shouldRender: false, currentUser: null };
+
+    var instance = this;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        firebase.database().ref('/users/' + user.uid).once("value", snapshot => {
+          if (snapshot.val()) {
+            window.location.href = redirectURL;
+          } else {
+            instance.setState({ currentUser: user });
+            instance.setState({ shouldRender: true });
+          }
+        });
+      } else {
+        window.location.href = "../auth"
+      }
+    });
+  }
+
+  createUser() {
+    var full_name = document.getElementById("full-name").value !== "" ? document.getElementById("full-name").value : this.state.currentUser.displayName;
+    var team_number = document.getElementById("team-number").value;
+
+    if (full_name === "" || team_number === "") {
+      alert("Error: All fields must be filled.");
+      return;
+    }
+
+    if (this.state.currentUser != null) {
+      firebase.database().ref('/users/' + this.state.currentUser.uid).set({
+        "name": full_name,
+        "team": team_number,
+        "tools": []
+      });
+
+      this.state.currentUser.updateProfile({
+        displayName: full_name
+      }).then(function() {
+        window.location.href = redirectURL;
+      }).catch(function(error) {
+        console.error(error);
+      });
+    }
+  }
+
+  render() {
+    if (this.state.shouldRender) {
+      return (
+        <div>
+          <form className="add-tool-container" style={{ width: "98%", margin: "1%" }}>
+            <p>Full Name:</p><input className="form-control" id="full-name" placeholder={ this.state.currentUser.displayName == null ? "Full name" : this.state.currentUser.displayName } type="text" />
+            <p>Team Number:</p><input className="form-control" id="team-number" placeholder="Team Number" type="number" />
+            <div className="btn btn-primary add-tool-btn" onClick={this.createUser}>Create User</div>
+          </form>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+}

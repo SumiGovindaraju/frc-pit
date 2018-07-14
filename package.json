@@ -1,0 +1,23 @@
+{
+  "name": "frc-pit-pwa",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://sumigovindaraju.github.io/frc-pit",
+  "dependencies": {
+    "firebase": "^5.1.0",
+    "gh-pages": "^1.2.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-firebaseui": "^3.0.4",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

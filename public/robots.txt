@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /auth/
+Disallow: /tools_list/
+Disallow: /check_out_tool/
+Disallow: /signed_in/
+Disallow: /sign_out/

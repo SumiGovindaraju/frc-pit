@@ -1,0 +1,46 @@
+import React, { Component } from 'react';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+var redirectURL = ((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || "../";
+
+export default class Auth extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldRender: false,
+      uiConfig: {
+        signInFlow: 'popup',
+        signInSuccessUrl: `/signed_in?redirect=${redirectURL}`,
+        signInOptions: [
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.GithubAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        ]
+      }
+    };
+    
+    var instance = this;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        window.location.href = `../signed_in?redirect=${redirectURL}`;
+      } else {
+        instance.setState({ shouldRender: true });
+      }
+    });
+  }
+  
+  render() {
+    if (this.state.shouldRender) {
+      return (
+        <StyledFirebaseAuth uiConfig={this.state.uiConfig} firebaseAuth={firebase.auth()}/>
+      );
+    } else {
+      return null;
+    }
+  }
+}
