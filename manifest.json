@@ -1,0 +1,11 @@
+{
+  "short_name": "FRC Pit",
+  "name": "FRC Pit Display PWA",
+  "description": "FRC Pit Display with tools checkout.",
+  "icons": [],
+  "start_url": "./index.html",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#343a40"
+}
