@@ -3,7 +3,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-var redirectURL = ((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || "../frc-pit";
+var redirectURL = ((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || process.env.PUBLIC_URL;
 
 export default class Auth extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class Auth extends Component {
       shouldRender: false,
       uiConfig: {
         signInFlow: 'popup',
-        signInSuccessUrl: `/frc-pit/signed_in?redirect=${redirectURL}`,
+        signInSuccessUrl: process.env.PUBLIC_URL + `/signed_in?redirect=${redirectURL}`,
         signInOptions: [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
           firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -27,8 +27,6 @@ export default class Auth extends Component {
             defaultCountry: 'US'
           }
         ],
-
-        credentialHelper: firebase.auth.CredentialHelper.NONE
       }
     };
     
@@ -36,7 +34,7 @@ export default class Auth extends Component {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        window.location.href = `../frc-pit/signed_in?redirect=${redirectURL}`;
+        window.location.href = process.env.PUBLIC_URL + `/signed_in?redirect=${redirectURL}`;
       } else {
         instance.setState({ shouldRender: true });
       }

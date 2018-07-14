@@ -7,7 +7,7 @@ export default class SignOut extends Component {
     super(props);
 
     firebase.auth().signOut().then(function() {
-      window.location.href = "../frc-pit"
+      window.location.href = process.env.PUBLIC_URL;
     }, function(error) {
       console.error(error);
     });
