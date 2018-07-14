@@ -18,11 +18,11 @@
     font-weight: bold;
 }
 
-.settings>form {
+.settings>div>form {
     padding: 3%;
 }
 
-.settings>form>* {
+.settings>div>form>* {
     margin-top: 3%;
 }
 
