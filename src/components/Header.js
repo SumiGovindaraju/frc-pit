@@ -46,9 +46,9 @@ export default class Header extends Component {
           </button>
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item"><a className="nav-link" href="../"><i className="fa fa-home" aria-hidden="true"></i> Home</a></li>
-              <li className="nav-item"><a className="nav-link" href="../tools_list"><i className="fa fa-wrench" aria-hidden="true"></i> Tools List</a></li>
-              <li className="nav-item"><a className="nav-link" href="../check_out_tool"><i className="fa fa-plus" aria-hidden="true"></i> Check Out Tool</a></li>
+              <li className="nav-item"><a className="nav-link" href="../frc-pit"><i className="fa fa-home" aria-hidden="true"></i> Home</a></li>
+              <li className="nav-item"><a className="nav-link" href="../frc-pit/tools_list"><i className="fa fa-wrench" aria-hidden="true"></i> Tools List</a></li>
+              <li className="nav-item"><a className="nav-link" href="../frc-pit/check_out_tool"><i className="fa fa-plus" aria-hidden="true"></i> Check Out Tool</a></li>
               <li className="nav-item dropdown settings" style={{display: "none"}}>
                 <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i className="fa fa-cog" aria-hidden="true"></i> Settings
