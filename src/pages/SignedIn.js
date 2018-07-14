@@ -33,7 +33,7 @@ export default class SignedIn extends Component {
     var full_name = document.getElementById("full-name").value !== "" ? document.getElementById("full-name").value : this.state.currentUser.displayName;
     var team_number = document.getElementById("team-number").value;
 
-    if (full_name === "" || team_number === "") {
+    if (full_name === "" || full_name === null || team_number === "") {
       alert("Error: All fields must be filled.");
       return;
     }
