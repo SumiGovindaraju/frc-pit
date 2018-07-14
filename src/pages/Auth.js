@@ -24,11 +24,11 @@ export default class Auth extends Component {
               size: 'normal',
               badge: 'bottomleft'
             },
-            defaultCountry: 'US', // Set default country to the United Kingdom (+44).
+            defaultCountry: 'US'
           }
         ],
 
-        credentialHelper: firebaseui.auth.CredentialHelper.NONE
+        credentialHelper: firebase.auth.CredentialHelper.NONE
       }
     };
     
