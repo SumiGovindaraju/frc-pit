@@ -15,7 +15,7 @@ class ToolRow extends Component {
       if (user) {
         instance.setState({ currentUser: user });
       } else {
-        window.location.href = "../auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = "../frc-pit/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
   }
@@ -119,7 +119,7 @@ export default class ToolsList extends Component {
 
         instance.setState({ shouldRender: true });
       } else {
-        window.location.href = "../auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = "../frc-pit/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
   }

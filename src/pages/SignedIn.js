@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-var redirectURL = decodeURIComponent(((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || "../");
+var redirectURL = decodeURIComponent(((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || "../frc-pit");
 
 export default class SignedIn extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class SignedIn extends Component {
           }
         });
       } else {
-        window.location.href = "../auth"
+        window.location.href = "../frc-pitauth"
       }
     });
   }

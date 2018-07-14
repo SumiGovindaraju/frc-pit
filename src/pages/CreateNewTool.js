@@ -23,7 +23,7 @@ export default class CreateNewTool extends Component {
 
         instance.setState({ shouldRender: true });
       } else {
-        window.location.href = "../auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = "../frc-pit/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
   }
