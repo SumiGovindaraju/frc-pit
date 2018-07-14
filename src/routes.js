@@ -8,32 +8,32 @@ import SignOut from './pages/SignOut';
 
 export default [
   {
-    path: '/',
+    path: '/frc-pit',
     component: Home,
     exact: true
   },
   {
-    path: '/auth',
+    path: '/frc-pit/auth',
     component: Auth,
     exact: true
   },
   {
-    path: '/tools_list',
+    path: '/frc-pit/tools_list',
     component: ToolsList,
     exact: true
   },
   {
-    path: '/check_out_tool',
+    path: '/frc-pit/check_out_tool',
     component: CreateNewTool,
     exact: true
   },
   {
-    path: '/signed_in',
+    path: '/frc-pit/signed_in',
     component: SignedIn,
     exact: true
   },
   {
-    path: '/sign_out',
+    path: '/frc-pit/sign_out',
     component: SignOut,
     exact: true
   },
