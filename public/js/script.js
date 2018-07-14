@@ -4,6 +4,15 @@ var team = false, event = false;
 var countdownInterval;
 var timeZone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+        vars[key] = value;
+    });
+
+    return vars;
+}
+
 function render() {
     if (team == false || event == false) {
         $(".schedule-rankings").hide();
@@ -16,17 +25,19 @@ function render() {
         return;
     }
 
-    $(".no-team-event-selected").hide();
-    $(".schedule-rankings").show();
-    $(".webcasts").show();
-    $(".awards").show();
-    $(".countdown").show();
-
-    renderSchedule();
-    renderRankings();
-    renderWebcasts();
-    renderAwards();
-    renderCountdown();
+    verifyTeamInEvent(function() {
+        $(".no-team-event-selected").hide();
+        $(".schedule-rankings").show();
+        $(".webcasts").show();
+        $(".awards").show();
+        $(".countdown").show();
+    
+        renderSchedule();
+        renderRankings();
+        renderWebcasts();
+        renderAwards();
+        renderCountdown();
+    });
 }
 
 function renderAwards() {
@@ -304,30 +315,15 @@ function setTeamNumberAndEvent() {
         return;
     }
 
-    $.ajax({
-        url: TBA_BASE_URL + "/team/frc" + $("input").val() + "/events/" + (new Date()).getFullYear(),
-        type: "GET",
-        headers: {
-            "X-TBA-Auth-Key": X_TBA_Auth_Key
-        },
-        success: function(data) {
-            for (var i in data) {
-                if (data[i].key == $("select").val().substring($("select").val().indexOf("(") + 1, $("select").val().indexOf(")"))) {
-                    team = "frc" + $("input").val();
-                    event = $("select").val().substring($("select").val().indexOf("(") + 1, $("select").val().indexOf(")"));
-                    $(".no-team-event-selected").hide();
-                    $(".half").show();
-                    render();
-                    return;
-                }
-            }
+    team = "frc" + $("input").val();
+    event = $("select").val().substring($("select").val().indexOf("(") + 1, $("select").val().indexOf(")"));
 
-            alert("Team is not in event");
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error(jqXHR.responseText);
-        }
-    });
+    verifyTeamInEvent(function() {
+        window.location.href = window.location.href.split("?")[0] + "?team=" + team + "&event=" + event;
+        // $(".no-team-event-selected").hide();
+        // $(".half").show();
+        // render();
+    })
 }
 
 function sortSchedule() {
@@ -404,4 +400,28 @@ function sortScheduleCompare(a, b) {
     }
 
     return a > b ? 1 : (a < b ? -1 : 0);
+}
+
+// Verify Team is in Event
+function verifyTeamInEvent(callback) {
+    $.ajax({
+        url: TBA_BASE_URL + "/team/" + team + "/events/" + (new Date()).getFullYear(),
+        type: "GET",
+        headers: {
+            "X-TBA-Auth-Key": X_TBA_Auth_Key
+        },
+        success: function(data) {
+            for (var i in data) {
+                if (data[i].key == event) {
+                    callback();
+                    return;
+                }
+            }
+
+            alert("Team is not in event");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR.responseText);
+        }
+    });
 }

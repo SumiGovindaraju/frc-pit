@@ -50,14 +50,16 @@ export default class Header extends Component {
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/tools_list"}><i className="fa fa-wrench" aria-hidden="true"></i> Tools List</a></li>
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/check_out_tool"}><i className="fa fa-plus" aria-hidden="true"></i> Check Out Tool</a></li>
               <li className="nav-item dropdown settings" style={{display: "none"}}>
-                <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a className="nav-link dropdown-toggle" href={process.env.PUBLIC_URL} id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i className="fa fa-cog" aria-hidden="true"></i> Settings
                 </a>
-                <form className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <input className="form-control" placeholder="Team Number" type="number" />
-                  <select className="form-control"></select>
-                  <div className="btn btn-success set-team-number-and-event-btn">Go!</div>
-                </form>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <form>
+                    <input className="form-control" placeholder="Team Number" type="number" />
+                    <select className="form-control"></select>
+                    <div className="btn btn-success set-team-number-and-event-btn">Go!</div>
+                  </form>
+                </div>
               </li>
             </ul>
             <ul className="navbar-nav ml-auto sign-out-ul"></ul>

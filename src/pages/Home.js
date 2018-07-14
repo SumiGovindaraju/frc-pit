@@ -17,6 +17,12 @@ export default class Home extends Component {
         $(".no-team-event-selected").show();
     
         renderListOfEvents();
+
+        if (getUrlVars()["team"] !== undefined && getUrlVars()["event"] !== undefined) {
+          team = getUrlVars()["team"];
+          event = getUrlVars()["event"];
+          render();
+        }
     
         setInterval(function() {
           if (window.navigator.onLine && team && event) {
