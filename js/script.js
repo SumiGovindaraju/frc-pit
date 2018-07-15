@@ -155,9 +155,12 @@ function renderListOfEvents() {
         },
         success: function(data) {
             for (var i in data) {
-                var end_of_event_date = new Date(data[i].end_date + timeZone);
-                end_of_event_date.setDate(end_of_event_date.getDate() + 1);
-                if ((new Date()) <= end_of_event_date) {
+                var end_of_event_date = new Date();
+                end_of_event_date.setFullYear(data[i].end_date.substring(0, 4));
+                end_of_event_date.setMonth(parseInt(data[i].end_date.substring(5, 7)) - 1);
+                end_of_event_date.setDate(data[i].end_date.substring(8, 10));
+
+                if (new Date() <= end_of_event_date) {
                     $("select").append("<option>" + data[i].name + " (" + data[i].key + ")</option>");
                 }
             }
