@@ -16,6 +16,7 @@ export default class Auth extends Component {
         signInSuccessUrl: process.env.PUBLIC_URL + `/signed_in?redirect=${redirectURL}`,
         signInOptions: [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.GithubAuthProvider.PROVIDER_ID,
           firebase.auth.EmailAuthProvider.PROVIDER_ID,
           {
             provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
