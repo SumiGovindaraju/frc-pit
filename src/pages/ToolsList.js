@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
 
 class ToolRow extends Component {
   constructor(props) {
     super(props);
+
     this.returnTool = this.returnTool.bind(this);
     this.state = { currentUser: null };
 
@@ -15,15 +16,14 @@ class ToolRow extends Component {
       if (user) {
         instance.setState({ currentUser: user });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("/tools_list");
       }
     });
   }
 
   returnTool(id) {
     if (this.state.currentUser != null) {
-      var ref = firebase.database().ref('/users/' + this.state.currentUser.uid + '/tools').child(id);
-      ref.remove();
+      firebase.firestore().collection('users').doc(this.state.currentUser.uid).collection('tools').doc(id).delete();
     } else {
       alert("No current user");
     }
@@ -45,6 +45,9 @@ class ToolRow extends Component {
 export default class ToolsList extends Component {
   constructor(props) {
     super(props);
+
+    firebase.firestore().settings({timestampsInSnapshots: true});
+
     this.state = { shouldRender: false, tools: [], team_number: null };
 
     var instance = this;
@@ -52,69 +55,26 @@ export default class ToolsList extends Component {
       if (user) {
         instance.setState({ currentUser: user });
 
-        firebase.database().ref('/users/' + instance.state.currentUser.uid + '/tools').on('child_added', function(snapshot, prevChildKey) {
-          var tools = instance.state.tools;
-          var key = snapshot.key;
-          var data = snapshot.val();
+        firebase.firestore().collection('users').doc(instance.state.currentUser.uid).collection('tools').onSnapshot(querySnapshot => {
+          var tools = [];
 
-          tools.push({
-            key: key,
-            tool_name: data.tool_name,
-            tool_team_number: data.tool_team_number,
-            tool_check_out_time: data.tool_check_out_time,
-            tool_description: data.tool_description
-          });
-    
-          instance.setState({ tools: tools });
-        });
-
-        firebase.database().ref('/users/' + instance.state.currentUser.uid + '/tools').on('child_changed', function(snapshot) {
-          var tools = instance.state.tools;
-          var key = snapshot.key;
-          var data = snapshot.val();
-
-          for (var tool in tools) {
-            if (tools[tool].key === key) {
-              tools[tool] = {
-                key: key,
-                tool_name: data.tool_name,
-                tool_team_number: data.tool_team_number,
-                tool_check_out_time: data.tool_check_out_time,
-                tool_description: data.tool_description
-              };
-            }
+          for (var i in querySnapshot.docs) {
+            tools.push({
+              key: querySnapshot.docs[i].id,
+              name: querySnapshot.docs[i].get('name'),
+              team_number: querySnapshot.docs[i].get('team_number'),
+              checkout_time: querySnapshot.docs[i].get('checkout_time').toDate().toLocaleString(),
+              description: querySnapshot.docs[i].get('description')
+            });
           }
 
-          tools.push({
-            key: key,
-            tool_name: data.tool_name,
-            tool_team_number: data.tool_team_number,
-            tool_check_out_time: data.tool_check_out_time,
-            tool_description: data.tool_description
-          });
-    
           instance.setState({ tools: tools });
+        }, err => {
+          console.error(err)
         });
 
-        firebase.database().ref('/users/' + instance.state.currentUser.uid + '/tools').on('child_removed', function(snapshot) {
-          var tools = instance.state.tools;
-          var key = snapshot.key;
-
-          for (var tool in tools) {
-            if (tools[tool].key === key) {
-              delete tools[tool];
-            }
-          }
-    
-          instance.setState({ tools: tools });
-        });
-
-        firebase.database().ref('/users/' + instance.state.currentUser.uid).once("value", snapshot => {
-          snapshot.forEach(function(childSnapshot) {
-            if (childSnapshot.key === "team") {
-              instance.setState({ team_number: childSnapshot.val() });
-            }
-          });
+        firebase.firestore().collection('users').doc(instance.state.currentUser.uid).get().then((doc) => {
+          instance.setState({ team_number: doc.get('team') });
         });
 
         instance.setState({ shouldRender: true });
@@ -127,8 +87,8 @@ export default class ToolsList extends Component {
   render() {
     if (this.state.shouldRender) {
       var rows = [];
-      rows = this.state.tools.map((obj) => 
-        <ToolRow key={obj.key} index={obj.key} name={obj.tool_name} team={obj.tool_team_number} time={obj.tool_check_out_time} tool={obj.tool_description} />
+      rows = this.state.tools.map(({key, name, team_number, checkout_time, description}) => 
+        <ToolRow key={key} index={key} name={name} team={team_number} time={checkout_time} tool={description} />
       );
 
       return (
@@ -137,10 +97,10 @@ export default class ToolsList extends Component {
           <table className="table-striped table-bordered tools-list" style={{ width: "98%", maxWidth: "98%", margin: "1%" }}>
             <thead>
               <tr>
-                <th>Name <i class="fas fa-sort"></i></th>
-                <th>Team Number <i class="fas fa-sort"></i></th>
-                <th>Checkout Date <i class="fas fa-sort"></i></th>
-                <th>Tool <i class="fas fa-sort"></i></th>
+                <th>Name</th>
+                <th>Team Number</th>
+                <th>Checkout Date</th>
+                <th>Tool</th>
                 <th>Return</th>
               </tr>
             </thead>

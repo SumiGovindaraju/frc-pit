@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
 
 var redirectURL = decodeURIComponent(((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.search) || [null, ''])[1].replace(/\+/g, '%20')) || process.env.PUBLIC_URL);
 
 export default class SignedIn extends Component {
   constructor(props) {
     super(props);
+
+    firebase.firestore().settings({timestampsInSnapshots: true});
+
     this.createUser = this.createUser.bind(this);
     this.state = { shouldRender: false, currentUser: null };
 
@@ -15,16 +18,16 @@ export default class SignedIn extends Component {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        firebase.database().ref('/users/' + user.uid).once("value", snapshot => {
-          if (snapshot.val()) {
-            window.location.href = redirectURL;
+        firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
+          if (doc.exists) {
+            window.location.href = process.env.PUBLIC_URL + redirectURL;
           } else {
             instance.setState({ currentUser: user });
             instance.setState({ shouldRender: true });
           }
         });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth";
+        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("/signed_in");
       }
     });
   }
@@ -39,10 +42,9 @@ export default class SignedIn extends Component {
     }
 
     if (this.state.currentUser != null) {
-      firebase.database().ref('/users/' + this.state.currentUser.uid).set({
+      firebase.firestore().collection('users').doc(this.state.currentUser.uid).set({
         "name": full_name,
-        "team": team_number,
-        "tools": []
+        "team": team_number
       });
 
       this.state.currentUser.updateProfile({

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
-import 'firebase/database';
+import 'firebase/firestore';
 
 export default class CreateNewTool extends Component {
   constructor(props) {
     super(props);
+
+    firebase.firestore().settings({timestampsInSnapshots: true});
+
     this.addTool = this.addTool.bind(this);
     this.state = { shouldRender: false, currentUser: null };
 
@@ -13,17 +16,13 @@ export default class CreateNewTool extends Component {
       if (user) {
         instance.setState({ currentUser: user });
 
-        firebase.database().ref('/users/' + instance.state.currentUser.uid).once("value", snapshot => {
-          snapshot.forEach(function(childSnapshot) {
-            if (childSnapshot.key === "team") {
-              instance.setState({ team_number: childSnapshot.val() });
-            }
-          });
+        firebase.firestore().collection('users').doc(instance.state.currentUser.uid).get().then((doc) => {
+          instance.setState({ team_number: doc.get('team') });
         });
 
         instance.setState({ shouldRender: true });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("/check_out_tool");
       }
     });
   }
@@ -39,11 +38,11 @@ export default class CreateNewTool extends Component {
     }
 
     if (this.state.currentUser != null) {
-      firebase.database().ref('/users/' + this.state.currentUser.uid + '/tools').push().set({
-          "tool_name": name,
-          "tool_check_out_time": (new Date()).toLocaleString(),
-          "tool_description": tool,
-          "tool_team_number": team_number
+      firebase.firestore().collection('users').doc(this.state.currentUser.uid).collection('tools').add({
+          "name": name,
+          "description": tool,
+          "checkout_time": new Date(),
+          "team_number": parseInt(team_number, 10)
       });
 
       document.getElementById("name").value = "";
