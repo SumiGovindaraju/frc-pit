@@ -14,7 +14,7 @@ function getUrlVars() {
 }
 
 function render() {
-    if (team == false || event == false) {
+    if (team === false || event === false) {
         $(".schedule-rankings").hide();
         $(".webcast").hide();
         $(".awards").hide();
@@ -49,7 +49,7 @@ function renderAwards() {
         },
         success: function(data) {
             $(".awards ul").empty();
-            if (data.length == 0) {
+            if (data === undefined || data.length === 0) {
                 $(".awards h1").last().hide();
                 $(".awards ul").hide();
                 $(".no-awards").show();
@@ -59,7 +59,7 @@ function renderAwards() {
                 $(".awards ul").show();
                 for (var award in data) {
                     $(".awards ul").append(`
-                            <li>${data[award].name} ${(data[award].recipient_list[0].awardee != null ? "(" + data[award].recipient_list[0].awardee + ")" : "")}</li>
+                            <li>${data[award].name} ${(data[award].recipient_list[0].awardee !== null ? "(" + data[award].recipient_list[0].awardee + ")" : "")}</li>
                         `);
                 }
             }
@@ -82,7 +82,7 @@ function renderCountdown() {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
         },
         success: function(data) {
-            if (data.length == 0) {
+            if (data === undefined || data.length === 0) {
                 $(".countdown-timer-tag").hide();
                 $(".countdown h2").hide();
                 $(".no-countdown").show();
@@ -93,11 +93,11 @@ function renderCountdown() {
                 for (var match in data) {
                     if ((new Date()) < (new Date(data[match].predicted_time * 1000)) && data[match].predicted_time * 1000 < closestMatchTime) {
                         closestMatchTime = data[match].predicted_time * 1000;
-                        closestMatchName = data[match].comp_level == "qm" ? "Quals " + data[match].match_number : (data[match].comp_level == "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level == "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number));
+                        closestMatchName = data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number));
                     }
                 }
 
-                if (closestMatchTime == Number.MAX_VALUE || closestMatchName == null) {
+                if (closestMatchTime === Number.MAX_VALUE || closestMatchName === null) {
                     $(".countdown-timer-tag").hide();
                     $(".countdown h2").hide();
                     clearInterval(countdownInterval);
@@ -181,7 +181,7 @@ function renderRankings() {
         success: function(data) {
             $(".rankings table tbody").empty();
 
-            if (data == null || data.length == 0 || data.rankings.length == 0) {
+            if (data === undefined || data === null || data.length === 0 || data.rankings === undefined || data.rankings === null || data.rankings.length === 0) {
                 $(".rankings table").hide();
                 $(".no-rankings").show();
             } else {
@@ -189,12 +189,12 @@ function renderRankings() {
                 $(".rankings table").show();
                 for (var ranking in data.rankings) {
                     $("#rankings table tbody").append(`<tr>
-                            <td ${data.rankings[ranking].team_key == team ? "class='current-team'" : ""}>${data.rankings[ranking].rank}</td>
-                            <td ${data.rankings[ranking].team_key == team ? "class='current-team'" : ""}>${data.rankings[ranking].team_key.substring(3)}</td>
-                            <td ${data.rankings[ranking].team_key == team ? "class='current-team'" : ""}>${data.rankings[ranking].sort_orders[0]}</td>
-                            <td ${data.rankings[ranking].team_key == team ? "class='current-team'" : ""}>${data.rankings[ranking].record.wins}-${data.rankings[ranking].record.losses}-${data.rankings[ranking].record.ties}</td>
-                            <td ${data.rankings[ranking].team_key == team ? "class='current-team'" : ""}>${data.rankings[ranking].matches_played}</td>
-                            <td ${data.rankings[ranking].team_key == team ? "class='current-team'" : ""}>${data.rankings[ranking].extra_stats[0]}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].rank}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].team_key.substring(3)}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].sort_orders[0]}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].record.wins}-${data.rankings[ranking].record.losses}-${data.rankings[ranking].record.ties}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].matches_played}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].extra_stats[0]}</td>
                         </tr>`);
                 }
             }
@@ -217,7 +217,7 @@ function renderSchedule() {
         success: function(data) {
             $(".schedule table tbody").empty();
 
-            if (data.length == 0) {
+            if (data === undefined || data.length === 0) {
                 $(".schedule table").hide();
                 $(".no-schedule").show();
             } else {
@@ -226,15 +226,15 @@ function renderSchedule() {
                 for (var match in data) {
                     if (data[match].alliances.red.team_keys.includes(team.toString()) || data[match].alliances.blue.team_keys.includes(team.toString())) {
                         $("#schedule table tbody").append(`<tr>
-                                <td>${data[match].comp_level == "qm" ? "Quals " + data[match].match_number : (data[match].comp_level == "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level == "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number))}</td>
-                                <td class="red ${data[match].alliances.red.team_keys[0] == team ? "current-team" : ""}">${data[match].alliances.red.team_keys[0].substring(3)}</td>
-                                <td class="red ${data[match].alliances.red.team_keys[1] == team ? "current-team" : ""}">${data[match].alliances.red.team_keys[1].substring(3)}</td>
-                                <td class="red ${data[match].alliances.red.team_keys[2] == team ? "current-team" : ""}">${data[match].alliances.red.team_keys[2].substring(3)}</td>
-                                <td class="blue ${data[match].alliances.blue.team_keys[0] == team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[0].substring(3)}</td>
-                                <td class="blue ${data[match].alliances.blue.team_keys[1] == team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[1].substring(3)}</td>
-                                <td class="blue ${data[match].alliances.blue.team_keys[2] == team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[2].substring(3)}</td>
-                                <td class="red-score ${data[match].winning_alliance == "red" ? "winner" : ""}">${data[match].alliances.red.score >= 0 ? data[match].alliances.red.score : "---"}</td>
-                                <td class="blue-score ${data[match].winning_alliance == "blue" ? "winner" : ""}">${data[match].alliances.blue.score >= 0 ? data[match].alliances.blue.score : "---"}</td>
+                                <td>${data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number))}</td>
+                                <td class="red ${data[match].alliances.red.team_keys[0] === team ? "current-team" : ""}">${data[match].alliances.red.team_keys[0].substring(3)}</td>
+                                <td class="red ${data[match].alliances.red.team_keys[1] === team ? "current-team" : ""}">${data[match].alliances.red.team_keys[1].substring(3)}</td>
+                                <td class="red ${data[match].alliances.red.team_keys[2] === team ? "current-team" : ""}">${data[match].alliances.red.team_keys[2].substring(3)}</td>
+                                <td class="blue ${data[match].alliances.blue.team_keys[0] === team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[0].substring(3)}</td>
+                                <td class="blue ${data[match].alliances.blue.team_keys[1] === team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[1].substring(3)}</td>
+                                <td class="blue ${data[match].alliances.blue.team_keys[2] === team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[2].substring(3)}</td>
+                                <td class="red-score ${data[match].winning_alliance === "red" ? "winner" : ""}">${data[match].alliances.red.score >= 0 ? data[match].alliances.red.score : "---"}</td>
+                                <td class="blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""}">${data[match].alliances.blue.score >= 0 ? data[match].alliances.blue.score : "---"}</td>
                             </tr>`);
                     }
                 }
@@ -261,7 +261,7 @@ function renderWebcasts() {
             $(".webcasts ul").empty();
             $(".webcasts .tab-content").empty();
 
-            if (data.webcasts.length == 0) {
+            if (data === undefined || data.webcasts === undefined || data.webcasts.length === 0) {
                 $(".webcasts ul").hide();
                 $(".webcasts .tab-content").hide();
                 $(".no-webcasts").show();
@@ -270,17 +270,17 @@ function renderWebcasts() {
                 $(".webcasts ul").show();
                 $(".webcasts .tab-content").show();
                 for (var webcast in data.webcasts) {
-                    if (data.webcasts[webcast].type == "twitch") {
+                    if (data.webcasts[webcast].type === "twitch" || data.webcasts[webcast].type === "youtube") {
                         $(".webcasts ul").append(`
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#webcast-${webcast}" role="tab">Webcast ${webcast}</a>
+                                    <a class="nav-link" data-toggle="tab" href="#webcast-${(parseInt(webcast) + 1)}" role="tab">Webcast ${(parseInt(webcast) + 1)}</a>
                                 </li>
                             `);
 
                         $(".webcasts .tab-content").append(`
-                                <div class="tab-pane fade" id="webcast-${webcast}" role="tabpanel">
+                                <div class="tab-pane fade" id="webcast-${(parseInt(webcast) + 1)}" role="tabpanel">
                                     <iframe
-                                        src="//player.twitch.tv/?channel=${data.webcasts[webcast].channel}"
+                                        src="${data.webcasts[webcast].type === "twitch" ? "//player.twitch.tv/?channel=" : "//www.youtube.com/embed/"}${data.webcasts[webcast].channel}"
                                         frameborder="none"
                                         scrolling="none"
                                         allowfullscreen="true">
@@ -290,7 +290,7 @@ function renderWebcasts() {
                     }
                 }
 
-                if ($(".webcasts ul").children().length == 0) {
+                if ($(".webcasts ul").children().length === 0) {
                     $(".webcasts ul").hide();
                     $(".webcasts .tab-content").hide();
                     $(".no-webcasts").show();
@@ -313,7 +313,7 @@ function renderWebcasts() {
 }
 
 function setTeamNumberAndEvent() {
-    if ($("input").val() == "" || $("select").val() == "") {
+    if ($("input").val() === "" || $("select").val() === "") {
         alert("All fields must be filled");
         return;
     }
@@ -343,7 +343,7 @@ function sortSchedule() {
             x = rows[i].getElementsByTagName("td")[0];
             y = rows[i + 1].getElementsByTagName("td")[0];
 
-            if (sortScheduleCompare(x.innerHTML, y.innerHTML) == 1) {
+            if (sortScheduleCompare(x.innerHTML, y.innerHTML) === 1) {
                 shouldSwitch = true;
                 break;
             }
@@ -380,22 +380,22 @@ function sortScheduleCompare(a, b) {
         bType = 3;
     }
 
-    if (aType != bType) {
+    if (aType !== bType) {
         return aType > bType ? 1 : -1;
     }
 
     var aMatchNum, bMatchNum;
-    if (aType == 0 && bType == 0) {
+    if (aType === 0 && bType === 0) {
         aMatchNum = parseInt(a.substring(6));
         bMatchNum = parseInt(b.substring(6));
 
         return aMatchNum > bMatchNum ? 1 : (aMatchNum < bMatchNum ? -1 : 0);
-    } else if (aType == 1 && bType == 1) {
+    } else if (aType === 1 && bType === 1) {
         aMatchNum = parseInt(a.substring(17));
         bMatchNum = parseInt(b.substring(17));
 
         return aMatchNum > bMatchNum ? 1 : (aMatchNum < bMatchNum ? -1 : 0);
-    } else if (aType == 2 && bType == 2) {
+    } else if (aType === 2 && bType === 2) {
         aMatchNum = parseInt(a.substring(14));
         bMatchNum = parseInt(b.substring(14));
 
@@ -415,7 +415,7 @@ function verifyTeamInEvent(callback) {
         },
         success: function(data) {
             for (var i in data) {
-                if (data[i].key == event) {
+                if (data[i].key === event) {
                     callback();
                     return;
                 }
