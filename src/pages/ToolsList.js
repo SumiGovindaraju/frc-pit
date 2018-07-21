@@ -16,7 +16,7 @@ class ToolRow extends Component {
       if (user) {
         instance.setState({ currentUser: user });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("/tools_list");
+        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("tools_list");
       }
     });
   }
