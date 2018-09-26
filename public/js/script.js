@@ -91,8 +91,8 @@ function renderCountdown() {
                 var closestMatchName = null;
 
                 for (var match in data) {
-                    if ((new Date()) < (new Date(data[match].predicted_time * 1000)) && data[match].predicted_time * 1000 < closestMatchTime) {
-                        closestMatchTime = data[match].predicted_time * 1000;
+                    if ((new Date()) < (new Date(data[match].time * 1000)) && data[match].time * 1000 < closestMatchTime) {
+                        closestMatchTime = data[match].time * 1000;
                         closestMatchName = data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number));
                     }
                 }
