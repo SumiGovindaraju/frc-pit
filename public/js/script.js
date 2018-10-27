@@ -2,7 +2,8 @@ var TBA_BASE_URL = "https://www.thebluealliance.com/api/v3";
 var X_TBA_Auth_Key = "83kBcUgRuDvJ1XLVXpB2ROeuRAzHoWpX9IRiWkRuwv8B9CryAlc3izY3ZXVOD4Hm";
 var team = false, event = false;
 var countdownInterval;
-var timeZone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+var timeZone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
+var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function getUrlVars() {
     var vars = {};
@@ -239,9 +240,12 @@ function renderSchedule() {
                             append += `
                                 <td class="red-score ${data[match].winning_alliance === "red" ? "winner" : ""}">${data[match].alliances.red.score}</td>
                                 <td class="blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""}">${data[match].alliances.blue.score}</td>`;
-                        } else {
+                        } else if (new Date(data[match].time * 1000).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) { // check if match is today
                             append += `
                                 <td colspan="2">${(new Date(data[match].time * 1000)).toLocaleTimeString()}</td>`;
+                        } else {
+                            append += `
+                                <td colspan="2">${days[(new Date(data[match].time * 1000)).getDay()]}</td>`
                         }
                         append += `</tr>`;
 
