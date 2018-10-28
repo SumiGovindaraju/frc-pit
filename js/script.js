@@ -192,7 +192,7 @@ function renderRankings() {
                     $("#rankings table tbody").append(`<tr>
                             <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].rank}</td>
                             <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].team_key.substring(3)}</td>
-                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].sort_orders[0]}</td>
+                            <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].sort_orders[0].toFixed(3)}</td>
                             <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].record.wins}-${data.rankings[ranking].record.losses}-${data.rankings[ranking].record.ties}</td>
                             <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].matches_played}</td>
                             <td ${data.rankings[ranking].team_key === team ? "class='current-team'" : ""}>${data.rankings[ranking].extra_stats[0]}</td>
