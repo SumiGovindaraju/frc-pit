@@ -18,6 +18,8 @@ export default class Home extends Component {
     
         renderListOfEvents();
 
+        $("body").tooltip({selector: '[data-toggle=tooltip]'});
+
         if (getUrlVars()["team"] !== undefined && getUrlVars()["event"] !== undefined) {
           team = getUrlVars()["team"];
           event = getUrlVars()["event"];
