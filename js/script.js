@@ -210,7 +210,7 @@ function renderRankings() {
 
 function renderSchedule() {
     $.ajax({
-        url: TBA_BASE_URL + "/event/" + event + "/matches/simple",
+        url: TBA_BASE_URL + "/event/" + event + "/matches",
         type: "GET",
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
@@ -238,8 +238,8 @@ function renderSchedule() {
 
                         if (data[match].alliances.red.score >= 0 && data[match].alliances.blue.score >= 0) {
                             append += `
-                                <td class="red-score ${data[match].winning_alliance === "red" ? "winner" : ""}">${data[match].alliances.red.score}</td>
-                                <td class="blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""}">${data[match].alliances.blue.score}</td>`;
+                                <td class="red-score ${data[match].winning_alliance === "red" ? "winner" : ""}" data-toggle="tooltip" data-placement="top" title="${data[match].score_breakdown.red.autoQuestRankingPoint ? "Auto Quest" : ""}${data[match].score_breakdown.red.autoQuestRankingPoint && data[match].score_breakdown.red.faceTheBossRankingPoint ? " & " : ""}${data[match].score_breakdown.red.faceTheBossRankingPoint ? "Face The Boss" : ""}">${data[match].alliances.red.score}</td>
+                                <td class="blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""}" data-toggle="tooltip" data-placement="top" title="${data[match].score_breakdown.blue.autoQuestRankingPoint ? "Auto Quest" : ""}${data[match].score_breakdown.blue.autoQuestRankingPoint && data[match].score_breakdown.blue.faceTheBossRankingPoint ? " & " : ""}${data[match].score_breakdown.blue.faceTheBossRankingPoint ? "Face The Boss" : ""}">${data[match].alliances.blue.score}</td>`;
                         } else {
                             var matchDate = new Date(data[match].time * 1000);
                             append += `
