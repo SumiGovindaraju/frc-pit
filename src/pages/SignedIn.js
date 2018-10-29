@@ -20,7 +20,7 @@ export default class SignedIn extends Component {
       if (user) {
         firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
           if (doc.exists) {
-            window.location.href = process.env.PUBLIC_URL + "/" + redirectURL;
+            window.location.href = redirectURL;
           } else {
             instance.setState({ currentUser: user });
             instance.setState({ shouldRender: true });
