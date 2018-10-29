@@ -15,15 +15,28 @@ export default class Home extends Component {
         $(".countdown").hide();
         $(".settings").show();
         $(".no-team-event-selected").show();
-    
-        renderListOfEvents();
 
         $("body").tooltip({selector: '[data-toggle=tooltip]'});
 
-        if (getUrlVars()["team"] !== undefined && getUrlVars()["event"] !== undefined) {
+        if (getUrlVars()["team"] !== undefined) {
           team = getUrlVars()["team"];
+        }
+
+        if (getUrlVars()["event"] !== undefined) {
           event = getUrlVars()["event"];
-          render();
+        }
+        
+        $('form input').keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
+
+        renderListOfEvents();
+
+        if (event) {
+          verifyTeamInEvent(render);
         }
     
         setInterval(function() {

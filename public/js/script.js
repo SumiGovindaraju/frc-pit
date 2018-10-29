@@ -15,7 +15,7 @@ function getUrlVars() {
 }
 
 function render() {
-    if (team === false || event === false) {
+    if (!event) {
         $(".schedule-rankings").hide();
         $(".webcast").hide();
         $(".awards").hide();
@@ -42,42 +42,75 @@ function render() {
 }
 
 function renderAwards() {
-    $.ajax({
-        url: TBA_BASE_URL + "/team/" + team + "/event/" + event + "/awards",
-        type: "GET",
-        headers: {
-            "X-TBA-Auth-Key": X_TBA_Auth_Key
-        },
-        success: function(data) {
-            $(".awards ul").empty();
-            if (data === undefined || data.length === 0) {
+    if (team) {
+        $.ajax({
+            url: TBA_BASE_URL + "/team/" + team + "/event/" + event + "/awards",
+            type: "GET",
+            headers: {
+                "X-TBA-Auth-Key": X_TBA_Auth_Key
+            },
+            success: function(data) {
+                $(".awards ul").empty();
+                if (data === undefined || data.length === 0) {
+                    $(".awards h1").last().hide();
+                    $(".awards ul").hide();
+                    $(".no-awards").show();
+                } else {
+                    $(".no-awards").hide();
+                    $(".awards h1").last().show();
+                    $(".awards ul").show();
+                    for (var award in data) {
+                        $(".awards ul").append(`
+                            <li>${data[award].name} ${data[award].recipient_list.map(x => x.team_key === team && x.awardee !== null ? "(" + x.awardee + ")" : "").join("")}</li>
+                        `);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR.responseText);
                 $(".awards h1").last().hide();
                 $(".awards ul").hide();
                 $(".no-awards").show();
-            } else {
-                $(".no-awards").hide();
-                $(".awards h1").last().show();
-                $(".awards ul").show();
-                for (var award in data) {
-                    $(".awards ul").append(`
-                            <li>${data[award].name} ${(data[award].recipient_list[0].awardee !== null ? "(" + data[award].recipient_list[0].awardee + ")" : "")}</li>
-                        `);
-                }
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error(jqXHR.responseText);
-            $(".awards h1").last().hide();
-            $(".awards ul").hide();
-            $(".no-awards").show();
-        }
-    });
+        });
+    } else {
+        $.ajax({
+            url: TBA_BASE_URL + "/event/" + event + "/awards",
+            type: "GET",
+            headers: {
+                "X-TBA-Auth-Key": X_TBA_Auth_Key
+            },
+            success: function(data) {
+                $(".awards ul").empty();
+                if (data === undefined || data.length === 0) {
+                    $(".awards h1").last().hide();
+                    $(".awards ul").hide();
+                    $(".no-awards").show();
+                } else {
+                    $(".no-awards").hide();
+                    $(".awards h1").last().show();
+                    $(".awards ul").show();
+                    for (var award in data) {
+                        $(".awards ul").append(`
+                                <li>${data[award].name} (${data[award].recipient_list.map(x => x.awardee !== null ? x.awardee : x.team_key.substring(3)).join(", ")})</li>
+                            `);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR.responseText);
+                $(".awards h1").last().hide();
+                $(".awards ul").hide();
+                $(".no-awards").show();
+            }
+        });
+    }
 }
 
 function renderCountdown() {
     clearInterval(countdownInterval);
     $.ajax({
-        url: TBA_BASE_URL + "/team/" + team + "/event/" + event + "/matches",
+        url: TBA_BASE_URL + (team ? "/team/" + team : "") + "/event/" + event + "/matches",
         type: "GET",
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
@@ -146,6 +179,10 @@ function renderCountdown() {
 }
 
 function renderListOfEvents() {
+    if (team) {
+        $(".settings input[type='number']").val(parseInt(team.substring(3)));
+    }
+
     $("select").empty();
 
     $.ajax({
@@ -170,6 +207,10 @@ function renderListOfEvents() {
             console.error(jqXHR.responseText);
         }
     });
+
+    if ($("select").children().length === 0) {
+        $("select").append("<option disabled>No Upcoming Events</option>");
+    }
 }
 
 function renderRankings() {
@@ -225,7 +266,7 @@ function renderSchedule() {
                 $(".no-schedule").hide();
                 $(".schedule table").show();
                 for (var match in data) {
-                    if (data[match].alliances.red.team_keys.includes(team.toString()) || data[match].alliances.blue.team_keys.includes(team.toString())) {
+                    if (!team || (data[match].alliances.red.team_keys.includes(team.toString()) || data[match].alliances.blue.team_keys.includes(team.toString()))) {
                         var append = `
                         <tr>
                             <td>${data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number))}</td>
@@ -325,19 +366,16 @@ function renderWebcasts() {
 }
 
 function setTeamNumberAndEvent() {
-    if ($("input").val() === "" || $("select").val() === "") {
-        alert("All fields must be filled");
+    if ($("select").val() === "") {
+        alert("Event field must be filled");
         return;
     }
 
-    team = "frc" + $("input").val();
-    event = $("select").val().substring($("select").val().indexOf("(") + 1, $("select").val().indexOf(")"));
+    team = $("input").val() !== "" ? "frc" + $("input").val() : false;
+    event = $("select").val().substring($("select").val().lastIndexOf("(") + 1, $("select").val().lastIndexOf(")"));
 
     verifyTeamInEvent(function() {
-        window.location.href = window.location.href.split("?")[0] + "?team=" + team + "&event=" + event;
-        // $(".no-team-event-selected").hide();
-        // $(".half").show();
-        // render();
+        window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
     })
 }
 
@@ -420,7 +458,7 @@ function sortScheduleCompare(a, b) {
 // Verify Team is in Event
 function verifyTeamInEvent(callback) {
     $.ajax({
-        url: TBA_BASE_URL + "/team/" + team + "/events/" + (new Date()).getFullYear(),
+        url: TBA_BASE_URL + (team ? "/team/" + team : "") + "/events/" + event.substring(0, 4),
         type: "GET",
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
@@ -433,10 +471,11 @@ function verifyTeamInEvent(callback) {
                 }
             }
 
-            alert("Team is not in event");
+            alert(team ? "Team is not in event" : "Event does not exist");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
+            alert(team ? "Team is not in event" : "Event does not exist");
         }
     });
 }

@@ -28,14 +28,6 @@ html {
     font-weight: bold;
 }
 
-.settings>div>form {
-    padding: 3%;
-}
-
-.settings>div>form>* {
-    margin-top: 3%;
-}
-
 .add-tool-container>p, .add-tool-btn {
     margin-top: 1%;
 }
