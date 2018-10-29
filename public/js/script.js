@@ -5,6 +5,18 @@ var countdownInterval;
 var timeZone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+function getMatchTimeInMS(match) {
+    if (match.actual_time !== undefined && match.actual_time !== null) {
+        return match.actual_time * 1000;
+    }
+    
+    if (match.predicted_time !== undefined && match.predicted_time !== null) {
+        return match.predicted_time * 1000;
+    }
+
+    return match.time * 1000;
+}
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
@@ -125,8 +137,8 @@ function renderCountdown() {
                 var closestMatchName = null;
 
                 for (var match in data) {
-                    if ((new Date()) < (new Date(data[match].time * 1000)) && data[match].time * 1000 < closestMatchTime) {
-                        closestMatchTime = data[match].time * 1000;
+                    if ((new Date()) < (new Date(getMatchTimeInMS(data[match]))) && getMatchTimeInMS(data[match]) < closestMatchTime) {
+                        closestMatchTime = getMatchTimeInMS(data[match]);
                         closestMatchName = data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number));
                     }
                 }
@@ -282,7 +294,7 @@ function renderSchedule() {
                                 <td class="red-score ${data[match].winning_alliance === "red" ? "winner" : ""}" data-toggle="tooltip" data-placement="top" title="${data[match].score_breakdown.red.autoQuestRankingPoint ? "Auto Quest" : ""}${data[match].score_breakdown.red.autoQuestRankingPoint && data[match].score_breakdown.red.faceTheBossRankingPoint ? " & " : ""}${data[match].score_breakdown.red.faceTheBossRankingPoint ? "Face The Boss" : ""}">${data[match].alliances.red.score}</td>
                                 <td class="blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""}" data-toggle="tooltip" data-placement="top" title="${data[match].score_breakdown.blue.autoQuestRankingPoint ? "Auto Quest" : ""}${data[match].score_breakdown.blue.autoQuestRankingPoint && data[match].score_breakdown.blue.faceTheBossRankingPoint ? " & " : ""}${data[match].score_breakdown.blue.faceTheBossRankingPoint ? "Face The Boss" : ""}">${data[match].alliances.blue.score}</td>`;
                         } else {
-                            var matchDate = new Date(data[match].time * 1000);
+                            var matchDate = new Date(getMatchTimeInMS(data[match]));
                             append += `
                                 <td colspan="2"><time datetime='${matchDate.toISOString()}'>${days[matchDate.getDay()]}, ${matchDate.toLocaleTimeString().replace(/:\d{2}\s/, ' ')}</time></td>`
                         }
