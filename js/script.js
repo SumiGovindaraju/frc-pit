@@ -211,7 +211,7 @@ function renderListOfEvents() {
                 end_of_event_date.setDate(data[i].end_date.substring(8, 10));
 
                 if (new Date() <= end_of_event_date) {
-                    $("select").append("<option>" + data[i].name + " (" + data[i].key + ")</option>");
+                    $("select").append("<option value='" + data[i].key + "' " + (event && event === data[i].key ? "selected" : "") + ">" + data[i].name + " (" + data[i].key + ")</option>");
                 }
             }
         },
@@ -384,7 +384,7 @@ function setTeamNumberAndEvent() {
     }
 
     team = $("input").val() !== "" ? "frc" + $("input").val() : false;
-    event = $("select").val().substring($("select").val().lastIndexOf("(") + 1, $("select").val().lastIndexOf(")"));
+    event = $("select").val().substring($("select").val());
 
     verifyTeamInEvent(function() {
         window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
