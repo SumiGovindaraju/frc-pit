@@ -50,7 +50,7 @@ export default class Header extends Component {
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/tools_list"}><i className="fa fa-wrench" aria-hidden="true"></i> Tools List</a></li>
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/check_out_tool"}><i className="fa fa-plus" aria-hidden="true"></i> Check Out Tool</a></li>
             </ul>
-            <form className="form-inline settings">
+            <form className="form-inline settings" style={{display: "none"}}>
               <select className="form-control mr-sm-2"></select>
               <input className="form-control mr-sm-2" placeholder="Team Number" type="number"/>
               <input type="button" className="btn btn-success set-team-number-and-event-btn my-2 my-sm-0" value="✓"/>
