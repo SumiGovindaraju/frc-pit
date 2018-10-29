@@ -56,7 +56,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <h1 className="no-team-event-selected" style={{ textAlign: "center" }}>No Team/Match selected</h1>
+        <h1 className="no-team-event-selected" style={{ textAlign: "center" }}>No Event/Team selected</h1>
         <ScheduleAndRankings />
         <Webcasts />
         <Awards />
