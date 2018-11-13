@@ -1,0 +1,183 @@
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.red {
+    background-color: #fee;
+}
+
+.red-score {
+    background-color: #fdd;
+}
+
+.blue {
+    background-color: #eef;
+}
+
+.blue-score {
+    background-color: #ddf;
+}
+
+.winner, .current-team {
+    font-weight: bold;
+}
+
+.add-tool-container>p, .add-tool-btn {
+    margin-top: 1%;
+}
+
+.tools-list>thead>tr>th, .tools-list>tbody>tr>td {
+    padding: 5px;
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+    .schedule-rankings>.tab-content>.tab-pane>table>thead>tr>th, .schedule-rankings>.tab-content>.tab-pane>table>tbody>tr>td {
+        padding: 0;
+    }
+
+    .tools-list>thead>tr>th, .tools-list>tbody>tr>td {
+        padding: 0px;
+    }
+
+    .tools-list>tbody>tr>td>button {
+        padding: 2px;
+    }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    .tools-list>thead>tr>th, .tools-list>tbody>tr>td {
+        padding: 8px;
+    }
+
+    .schedule-rankings {
+        min-height: 45vh;
+    }
+
+    .webcasts {
+        min-height: 45vh;
+    }
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    .tools-list>thead>tr>th, .tools-list>tbody>tr>td {
+        padding: 15px;
+    }
+
+    .schedule-rankings {
+        min-height: 45vh;
+    }
+
+    .webcasts {
+        min-height: 45vh;
+    }
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .tools-list>thead>tr>th, .tools-list>tbody>tr>td {
+        padding: 15px;
+    }
+
+    .schedule-rankings>.tab-content>.tab-pane>table>thead>tr>th, .schedule-rankings>.tab-content>.tab-pane>table>tbody>tr>td {
+        padding: 6px;
+    }
+
+    .schedule-rankings {
+        position: absolute;
+        top: 10;
+        left: 0;
+        width: 48%;
+        height: 90%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+
+    .webcasts {
+        position: absolute;
+        top: 10;
+        right: 0;
+        width: 48%;
+        height: 45%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+
+    .awards {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 23%;
+        height: 45%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+
+    .countdown {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 23%;
+        height: 45%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+}
+
+@media (min-width: 1200px) {
+    .tools-list>thead>tr>th, .tools-list>tbody>tr>td {
+        padding: 15px;
+    }
+
+    .schedule-rankings>.tab-content>.tab-pane>table>thead>tr>th, .schedule-rankings>.tab-content>.tab-pane>table>tbody>tr>td {
+        padding: 15px;
+    }
+
+    .schedule-rankings {
+        position: absolute;
+        top: 10;
+        left: 0;
+        width: 48%;
+        height: 90%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+
+    .webcasts {
+        position: absolute;
+        top: 10;
+        right: 0;
+        width: 48%;
+        height: 45%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+
+    .awards {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 23%;
+        height: 45%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+
+    .countdown {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 23%;
+        height: 45%;
+        margin: 1%;
+        overflow-y: scroll;
+    }
+}
