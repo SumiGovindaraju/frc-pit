@@ -1,14 +1,15 @@
 module.exports = {
   staticFileGlobs: [
-    'build/static/css/**.css',
-    'build/static/js/**.js'
+    './build/index.html',
+    './build/css/**.css',
+    './build/js/**.js',
+    './build/static/**.**',
+    './build/webfonts/**.**'
   ],
+  dontCacheBustUrlsMatching: /\.\w{8}\./,
   swFilePath: './build/service-worker.js',
-  templateFilePath: './service-worker.tmpl',
-  stripPrefix: 'build/',
-  handleFetch: false,
-  runtimeCaching: [{
-    urlPattern: /this\\.is\\.a\\.regex/,
-    handler: 'networkFirst'
-  }]
+  navigateFallback: './200.html',
+  navigateFallbackWhitelist: [/^(?!\/__).*/],
+  staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+  stripPrefix: './build'
 }
