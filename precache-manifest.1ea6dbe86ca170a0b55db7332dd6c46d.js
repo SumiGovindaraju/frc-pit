@@ -12,7 +12,7 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/js/1.2dddbb04.chunk.js"
   },
   {
-    "revision": "a9233a9286859076cbae60bdf6297cbb",
+    "revision": "523aa0e9ed6411ade312af42369d09e7",
     "url": "/frc-pit/index.html"
   }
 ];

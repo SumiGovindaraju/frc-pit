@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["/css/bootstrap.min.css","88d1b1c0fd447a75e6e60a61ca041aae"],["/css/fontawesome-all.min.css","03bb20343b84678df2d6cf78e4052700"],["/css/style.css","c6ae9e8a01110ff67eda07e25f652f72"],["/index.html","a9233a9286859076cbae60bdf6297cbb"],["/js/bootstrap.bundle.min.js","fb63ebd7050580f171cb88b16f94e00c"],["/js/jquery-3.3.1.min.js","4b57cf46dc8cb95c4cca54afc85e9540"],["/js/script.js","018f2ac9aa2ed5cb18b8f678084594e4"],["/webfonts/fa-brands-400.eot","748ab466bee11e0b2132916def799916"],["/webfonts/fa-brands-400.svg","b032e14eac87e3001396ff597e4ec15f"],["/webfonts/fa-brands-400.ttf","7febe26eeb4dd8e3a3c614a144d399fb"],["/webfonts/fa-brands-400.woff","2248542e1bbbd548a157e3e6ced054fc"],["/webfonts/fa-brands-400.woff2","3654744dc6d6c37c9b3582b57622df5e"],["/webfonts/fa-regular-400.eot","b58f468f84168d61e0ebc1e1f423587c"],["/webfonts/fa-regular-400.svg","3929b3ef871fa90bbb4e77e005851e74"],["/webfonts/fa-regular-400.ttf","54f142e03adc6da499c2af4f54ab76fd"],["/webfonts/fa-regular-400.woff","f3dd4f397fbc5aaf831b6b0ba112d75c"],["/webfonts/fa-regular-400.woff2","33f727ccde4b05c0ed143c5cd78cda0c"],["/webfonts/fa-solid-900.eot","035a137af03db6f1af76a589da5bb865"],["/webfonts/fa-solid-900.svg","9bbbee00f65769a64927764ef51af6d0"],["/webfonts/fa-solid-900.ttf","b6a14bb88dbc580e45034af297c8f605"],["/webfonts/fa-solid-900.woff","6661d6b3521b4c480ba759e4b9e480c1"],["/webfonts/fa-solid-900.woff2","8a8c0474283e0d9ef41743e5e486bf05"]];
+var precacheConfig = [["asset-manifest.json","3985d56c27a415a7339a12bc67063faf"],["css/bootstrap.min.css","88d1b1c0fd447a75e6e60a61ca041aae"],["css/fontawesome-all.min.css","03bb20343b84678df2d6cf78e4052700"],["css/style.css","c6ae9e8a01110ff67eda07e25f652f72"],["index.html","523aa0e9ed6411ade312af42369d09e7"],["js/bootstrap.bundle.min.js","fb63ebd7050580f171cb88b16f94e00c"],["js/jquery-3.3.1.min.js","4b57cf46dc8cb95c4cca54afc85e9540"],["js/script.js","018f2ac9aa2ed5cb18b8f678084594e4"],["manifest.json","742284ad611c3d8c27143185d1bf12bd"],["precache-manifest.1ea6dbe86ca170a0b55db7332dd6c46d.js","1ea6dbe86ca170a0b55db7332dd6c46d"],["robots.txt","65cede53be50f1244ac01e7c366a25c8"],["static/js/1.2dddbb04.chunk.js","527ef7572f57dbeef23b54ab6cfe2933"],["static/js/main.0b86e7b1.chunk.js","87fa4c7fdaa9a4d3cfc00a9d6b1da168"],["static/js/runtime~main.797c765d.js","b19e06f334e37b092ad96053117332b6"],["webfonts/fa-brands-400.eot","748ab466bee11e0b2132916def799916"],["webfonts/fa-brands-400.svg","b032e14eac87e3001396ff597e4ec15f"],["webfonts/fa-brands-400.ttf","7febe26eeb4dd8e3a3c614a144d399fb"],["webfonts/fa-brands-400.woff","2248542e1bbbd548a157e3e6ced054fc"],["webfonts/fa-brands-400.woff2","3654744dc6d6c37c9b3582b57622df5e"],["webfonts/fa-regular-400.eot","b58f468f84168d61e0ebc1e1f423587c"],["webfonts/fa-regular-400.svg","3929b3ef871fa90bbb4e77e005851e74"],["webfonts/fa-regular-400.ttf","54f142e03adc6da499c2af4f54ab76fd"],["webfonts/fa-regular-400.woff","f3dd4f397fbc5aaf831b6b0ba112d75c"],["webfonts/fa-regular-400.woff2","33f727ccde4b05c0ed143c5cd78cda0c"],["webfonts/fa-solid-900.eot","035a137af03db6f1af76a589da5bb865"],["webfonts/fa-solid-900.svg","9bbbee00f65769a64927764ef51af6d0"],["webfonts/fa-solid-900.ttf","b6a14bb88dbc580e45034af297c8f605"],["webfonts/fa-solid-900.woff","6661d6b3521b4c480ba759e4b9e480c1"],["webfonts/fa-solid-900.woff2","8a8c0474283e0d9ef41743e5e486bf05"]];
 var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : '');
 
 
@@ -135,7 +135,7 @@ var urlsToCacheKeys = new Map(
     var relativeUrl = item[0];
     var hash = item[1];
     var absoluteUrl = new URL(relativeUrl, self.location);
-    var cacheKey = createCacheKey(absoluteUrl, hashParamName, hash, /\.\w{8}\./);
+    var cacheKey = createCacheKey(absoluteUrl, hashParamName, hash, false);
     return [absoluteUrl.toString(), cacheKey];
   })
 );
@@ -229,11 +229,11 @@ self.addEventListener('fetch', function(event) {
 
     // If shouldRespond is still false, check to see if this is a navigation
     // request, and if so, whether the URL matches navigateFallbackWhitelist.
-    var navigateFallback = './200.html';
+    var navigateFallback = '';
     if (!shouldRespond &&
         navigateFallback &&
         (event.request.mode === 'navigate') &&
-        isPathWhitelisted(["^(?!\\/__).*"], event.request.url)) {
+        isPathWhitelisted([], event.request.url)) {
       url = new URL(navigateFallback, self.location).toString();
       shouldRespond = urlsToCacheKeys.has(url);
     }
