@@ -16,12 +16,12 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/js/runtime~main.797c765d.js"
   },
   {
-    "revision": "33f727ccde4b05c0ed143c5cd78cda0c",
-    "url": "/frc-pit/static/media/fa-regular-400.33f727cc.woff2"
-  },
-  {
     "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
     "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
+  },
+  {
+    "revision": "33f727ccde4b05c0ed143c5cd78cda0c",
+    "url": "/frc-pit/static/media/fa-regular-400.33f727cc.woff2"
   },
   {
     "revision": "b58f468f84168d61e0ebc1e1f423587c",
@@ -76,7 +76,7 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-brands-400.b032e14e.svg"
   },
   {
-    "revision": "143986893c1641b8ffd1392c36aef63d",
+    "revision": "eba41bcce9be66ff4964899c2e01d197",
     "url": "/frc-pit/index.html"
   }
 ];
