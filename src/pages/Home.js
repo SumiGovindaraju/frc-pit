@@ -34,12 +34,12 @@ export default class Home extends Component {
         });
 
         if (event) {
-          render();
+          render(true);
         }
     
         setInterval(function() {
           if (event) {
-            render();
+            render(false);
           }
         }, 120000); // Attempt to render every 2 minutes no matter what
       });

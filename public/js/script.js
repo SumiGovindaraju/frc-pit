@@ -28,7 +28,7 @@ function getUrlVars() {
     return vars;
 }
 
-function render() {
+function render(renderWebcast) {
     if (!event) {
         $(".schedule-rankings").hide();
         $(".webcast").hide();
@@ -63,7 +63,9 @@ function render() {
 
         renderSchedule();
         renderRankings();
-        renderWebcasts();
+        if (renderWebcast) {
+            renderWebcasts();
+        }
         renderAwards();
         renderCountdown();
     }, async function() {
@@ -583,7 +585,7 @@ setInterval(function() {
 
 setInterval(function() { // immediately render when you get internet, after losing connection
     if (navigator.onLine && !isOnline) {
-        render();
+        render(true);
     }
 
     isOnline = navigator.onLine;
