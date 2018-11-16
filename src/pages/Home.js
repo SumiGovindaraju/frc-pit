@@ -33,8 +33,6 @@ export default class Home extends Component {
           }
         });
 
-        renderListOfEvents();
-
         if (event) {
           render();
         }

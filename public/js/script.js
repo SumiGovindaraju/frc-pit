@@ -53,6 +53,8 @@ function render() {
 
         await updateAPIs();
 
+        renderListOfEvents();
+
         $(".no-team-event-selected").hide();
         $(".schedule-rankings").show();
         $(".webcasts").show();
