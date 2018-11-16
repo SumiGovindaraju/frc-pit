@@ -16,20 +16,20 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/js/runtime~main.797c765d.js"
   },
   {
-    "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
-    "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
-  },
-  {
     "revision": "33f727ccde4b05c0ed143c5cd78cda0c",
     "url": "/frc-pit/static/media/fa-regular-400.33f727cc.woff2"
   },
   {
-    "revision": "54f142e03adc6da499c2af4f54ab76fd",
-    "url": "/frc-pit/static/media/fa-regular-400.54f142e0.ttf"
+    "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
+    "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
   },
   {
     "revision": "b58f468f84168d61e0ebc1e1f423587c",
     "url": "/frc-pit/static/media/fa-regular-400.b58f468f.eot"
+  },
+  {
+    "revision": "54f142e03adc6da499c2af4f54ab76fd",
+    "url": "/frc-pit/static/media/fa-regular-400.54f142e0.ttf"
   },
   {
     "revision": "8a8c0474283e0d9ef41743e5e486bf05",

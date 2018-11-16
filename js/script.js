@@ -318,7 +318,7 @@ function setTeamNumberAndEvent() {
 
     verifyTeamInEvent(function() {
         window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
-    })
+    }, function() {});
 }
 
 function sortSchedule() {
