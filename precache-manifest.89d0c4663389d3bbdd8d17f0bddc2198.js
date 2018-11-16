@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-solid-900.6661d6b3.woff"
   },
   {
-    "revision": "2bb9a3355c67ed9b483d",
+    "revision": "20a1bc9148f8eef74b03",
     "url": "/frc-pit/static/css/main.9fcd20b6.chunk.css"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/js/runtime~main.797c765d.js"
   },
   {
-    "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
-    "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
-  },
-  {
     "revision": "33f727ccde4b05c0ed143c5cd78cda0c",
     "url": "/frc-pit/static/media/fa-regular-400.33f727cc.woff2"
+  },
+  {
+    "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
+    "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
   },
   {
     "revision": "b58f468f84168d61e0ebc1e1f423587c",
@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-brands-400.3654744d.woff2"
   },
   {
-    "revision": "2bb9a3355c67ed9b483d",
-    "url": "/frc-pit/static/js/main.2bb9a335.chunk.js"
+    "revision": "20a1bc9148f8eef74b03",
+    "url": "/frc-pit/static/js/main.20a1bc91.chunk.js"
   },
   {
     "revision": "2248542e1bbbd548a157e3e6ced054fc",
@@ -76,7 +76,7 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-brands-400.b032e14e.svg"
   },
   {
-    "revision": "699cdf6d0b86cd6373c8d3b04fc7f698",
+    "revision": "cf0ee1c2230bda11255674c714add580",
     "url": "/frc-pit/index.html"
   }
 ];
