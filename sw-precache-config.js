@@ -8,6 +8,10 @@ module.exports = {
   ],
   swFilePath: './build/service-worker.js',
   stripPrefix: 'build/',
-  importScripts: (['./js/service-worker.js']),
-  handleFetch: false
+  handleFetch: false,
+  runtimeCaching: [{
+    urlPattern: /this\\.is\\.a\\.regex/,
+    handler: 'networkFirst'
+  }],
+  maximumFileSizeToCacheInBytes: 3500000
 }
