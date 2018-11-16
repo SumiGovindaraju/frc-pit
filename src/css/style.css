@@ -24,8 +24,12 @@ html {
     background-color: #ddf;
 }
 
-.winner, .current-team {
+.current-team {
     font-weight: bold;
+}
+
+.winner {
+    text-decoration: underline;
 }
 
 .add-tool-container>p, .add-tool-btn {
