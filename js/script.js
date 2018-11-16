@@ -405,7 +405,7 @@ function verifyTeamInEvent(successCallback, errorCallback) {
             alert("Team data not cached. FRC Pit is offline.");
             return;
         }
-    } else {
+    } else if (!navigator.onLine) {
         errorCallback();
         alert("Event data not cached. FRC Pit is offline.");
         return;
