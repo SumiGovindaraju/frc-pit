@@ -4,7 +4,7 @@ module.exports = {
     'build/static/css/**.**',
     'build/static/js/**.**',
     'build/static/media/**.**',
-    'build/**.html'
+    'build/**.**'
   ],
   swFilePath: './build/service-worker.js',
   stripPrefix: 'build/',
@@ -13,5 +13,6 @@ module.exports = {
     urlPattern: /this\\.is\\.a\\.regex/,
     handler: 'networkFirst'
   }],
-  maximumFileSizeToCacheInBytes: 3500000
+  maximumFileSizeToCacheInBytes: 3500000,
+  ignoreUrlParametersMatching: [/^team/, /^event/]
 }
