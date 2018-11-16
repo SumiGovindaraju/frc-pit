@@ -36,17 +36,14 @@ export default class Home extends Component {
         renderListOfEvents();
 
         if (event) {
-          verifyTeamInEvent(render);
+          render();
         }
     
         setInterval(function() {
-          if (window.navigator.onLine && team && event) {
-            renderSchedule();
-            renderRankings();
-            renderAwards();
-            renderCountdown();
+          if (event) {
+            render();
           }
-        }, 120000); // Update information every 2 minutes
+        }, 120000); // Attempt to render every 2 minutes no matter what
       });
     `);
     script.appendChild(scriptBody);
