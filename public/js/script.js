@@ -295,10 +295,12 @@ function renderWebcasts() {
     if (!navigator.onLine) {
         $(".no-internet").show();
     } else if (data === undefined || data.length === undefined || data.length === 0) {
+        $(".no-internet").hide();
         $(".webcasts ul").hide();
         $(".webcasts .tab-content").hide();
         $(".no-webcasts").show();
     } else {
+        $(".no-internet").hide();
         $(".no-webcasts").hide();
         $(".webcasts ul").show();
         $(".webcasts .tab-content").show();
