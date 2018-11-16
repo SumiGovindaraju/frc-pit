@@ -40,7 +40,7 @@ function render() {
         return;
     }
 
-    verifyTeamInEvent(function() {
+    verifyTeamInEvent(async function() {
         if (cache.events[event] === undefined) {
             cache.events[event] = {"teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}};
         }
@@ -51,14 +51,14 @@ function render() {
 
         document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
 
-        updateAPIs();
+        await updateAPIs();
 
         $(".no-team-event-selected").hide();
         $(".schedule-rankings").show();
         $(".webcasts").show();
         $(".awards").show();
         $(".countdown").show();
-    
+
         renderSchedule();
         renderRankings();
         renderWebcasts();
@@ -439,14 +439,16 @@ function verifyTeamInEvent(successCallback, errorCallback) {
     }
 }
 
-function updateAPIs() {
+async function updateAPIs() {
     if (!navigator.onLine) {
         return;
     }
 
+    var promises = []
+
     // awards (team specific)
     if (team) {
-        $.ajax({
+        promises.push($.ajax({
             url: TBA_BASE_URL + "/team/" + team + "/event/" + event + "/awards",
             type: "GET",
             headers: {
@@ -458,11 +460,11 @@ function updateAPIs() {
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
-        });
+        }));
     }
 
     // awards (event)
-    $.ajax({
+    promises.push($.ajax({
         url: TBA_BASE_URL + "/event/" + event + "/awards",
         type: "GET",
         headers: {
@@ -474,11 +476,11 @@ function updateAPIs() {
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
-    });
+    }));
 
     // matches (countdown and schedule) (team specific)
     if (team) {
-        $.ajax({
+        promises.push($.ajax({
             url: TBA_BASE_URL + "/team/" + team + "/event/" + event + "/matches",
             type: "GET",
             headers: {
@@ -490,11 +492,11 @@ function updateAPIs() {
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
-        });
+        }));
     }
 
     // matches (countdown and schedule) (event)
-    $.ajax({
+    promises.push($.ajax({
         url: TBA_BASE_URL + "/event/" + event + "/matches",
         type: "GET",
         headers: {
@@ -506,10 +508,10 @@ function updateAPIs() {
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
-    });
+    }));
 
     // rankings
-    $.ajax({
+    promises.push($.ajax({
         url: TBA_BASE_URL + "/event/" + event + "/rankings",
         type: "GET",
         headers: {
@@ -521,10 +523,10 @@ function updateAPIs() {
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
-    });
+    }));
 
     // webcasts
-    $.ajax({
+    promises.push($.ajax({
         url: TBA_BASE_URL + "/event/" + event,
         type: "GET",
         headers: {
@@ -536,10 +538,10 @@ function updateAPIs() {
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
-    });
+    }));
 
     // list of events
-    $.ajax({
+    promises.push($.ajax({
         url: TBA_BASE_URL + "/events/" + (new Date()).getFullYear() + "/simple",
         type: "GET",
         headers: {
@@ -562,7 +564,9 @@ function updateAPIs() {
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
-    });
+    }));
+
+    await Promise.all(promises);
 }
 
 setInterval(function() {
