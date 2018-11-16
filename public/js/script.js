@@ -64,7 +64,7 @@ function render() {
         renderWebcasts();
         renderAwards();
         renderCountdown();
-    }, function() {
+    }, async function() {
         $(".no-team-event-selected").show();
         $(".schedule-rankings").hide();
         $(".webcasts").hide();
@@ -77,7 +77,7 @@ function renderAwards() {
     if (team) {
         $(".awards ul").empty();
 
-        data = cache.events[event].teams[team].awards;
+        var data = cache.events[event].teams[team].awards;
         if (data === undefined || data.length === undefined || data.length === 0) {
             $(".awards h1").last().hide();
             $(".awards ul").hide();
@@ -118,7 +118,7 @@ function renderAwards() {
 function renderCountdown() {
     clearInterval(countdownInterval);
 
-    data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
+    var data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
 
     if (data === undefined || data.length === undefined || data.length === 0) {
         $(".countdown-timer-tag").hide();
@@ -181,9 +181,11 @@ function renderListOfEvents() {
 
     $("select").empty();
     
-    data = cache.events.list;
-    for (var i in data) {
-        $("select").append("<option value='" + data[i].key + "' " + (event && event === data[i].key ? "selected" : "") + ">" + data[i].name + " (" + data[i].key + ")</option>");
+    var data = cache.events.list;
+    if (data !== undefined || data.length !== undefined || data.length !== 0) {
+        for (var i in data) {
+            $("select").append("<option value='" + data[i].key + "' " + (event && event === data[i].key ? "selected" : "") + ">" + data[i].name + " (" + data[i].key + ")</option>");
+        }
     }
 
     if ($("select").children().length === 0) {
@@ -194,7 +196,7 @@ function renderListOfEvents() {
 function renderRankings() {
     $(".rankings table tbody").empty();
 
-    data = cache.events[event].rankings;
+    var data = cache.events[event].rankings;
     if (data === undefined || data.length === undefined || data.length === 0) {
         $(".rankings table").hide();
         $(".no-rankings").show();
@@ -217,7 +219,7 @@ function renderRankings() {
 function renderSchedule() {
     $(".schedule table tbody").empty();
 
-    data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
+    var data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
     if (data === undefined || data.length === undefined || data.length === 0) {
         $(".schedule table").hide();
         $(".no-schedule").show();
@@ -261,7 +263,7 @@ function renderWebcasts() {
     $(".webcasts ul").empty();
     $(".webcasts .tab-content").empty();
 
-    data = cache.events[event].webcasts;
+    var data = cache.events[event].webcasts;
     if (!navigator.onLine) {
         $(".no-internet").show();
     } else if (data === undefined || data.length === undefined || data.length === 0) {
@@ -316,9 +318,9 @@ function setTeamNumberAndEvent() {
     team = $("input").val() !== "" ? "frc" + $("input").val() : false;
     event = $("select").val().substring($("select").val());
 
-    verifyTeamInEvent(function() {
+    verifyTeamInEvent(async function() {
         window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
-    }, function() {});
+    }, async function() {});
 }
 
 function sortSchedule() {
@@ -398,44 +400,48 @@ function sortScheduleCompare(a, b) {
 }
 
 // Verify Team is in Event
-function verifyTeamInEvent(successCallback, errorCallback) {
-    if (cache.events[event] != undefined) {
+async function verifyTeamInEvent(successCallback, errorCallback) {
+    if (cache != undefined && cache.events != undefined && cache.events[event] != undefined) {
         if ((team && cache.events[event].teams[team] == undefined) && !navigator.onLine) {
-            errorCallback();
+            await errorCallback();
             alert("Team data not cached. FRC Pit is offline.");
-            return;
+            return false;
         }
     } else if (!navigator.onLine) {
-        errorCallback();
+        await errorCallback();
         alert("Event data not cached. FRC Pit is offline.");
-        return;
+        return false;
     }
 
-    if (window.onLine) { // just to make sure
+    if (navigator.onLine) { // just to make sure
         $.ajax({
             url: TBA_BASE_URL + (team ? "/team/" + team : "") + "/events/" + event.substring(0, 4),
             type: "GET",
             headers: {
                 "X-TBA-Auth-Key": X_TBA_Auth_Key
             },
-            success: function(data) {
+            success: async function(data) {
                 for (var i in data) {
                     if (data[i].key === event) {
-                        successCallback();
-                        return;
+                        await successCallback();
+                        return true;
                     }
                 }
-
+                
+                await errorCallback();
                 alert(team ? "Team is not in event" : "Event does not exist");
+                return false;
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: async function(jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
-                errorCallback();
+                await errorCallback();
                 alert(team ? "Team is not in event" : "Event does not exist");
+                return false;
             }
         });
     } else {
-        successCallback();
+        await successCallback();
+        return true;
     }
 }
 
