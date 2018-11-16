@@ -53,8 +53,6 @@ function render(renderWebcast) {
 
         await updateAPIs();
 
-        renderListOfEvents();
-
         $(".no-team-event-selected").hide();
         $(".schedule-rankings").show();
         $(".webcasts").show();
@@ -105,8 +103,6 @@ function renderAwards() {
             $(".awards ul").hide();
             $(".no-awards").show();
         } else {
-            // cache.events[event].awards = data;
-
             $(".no-awards").hide();
             $(".awards h1").last().show();
             $(".awards ul").show();
@@ -178,7 +174,37 @@ function renderCountdown() {
     }
 }
 
-function renderListOfEvents() {
+async function renderListOfEvents() {
+    var promises = [];
+    if (navigator.onLine) {
+        promises.push($.ajax({
+            url: TBA_BASE_URL + "/events/" + (new Date()).getFullYear() + "/simple",
+            type: "GET",
+            headers: {
+                "X-TBA-Auth-Key": X_TBA_Auth_Key
+            },
+            success: function(data) {
+                cache.events.list = [];
+
+                for (var i in data) {
+                    var end_of_event_date = new Date();
+                    end_of_event_date.setFullYear(data[i].end_date.substring(0, 4));
+                    end_of_event_date.setMonth(parseInt(data[i].end_date.substring(5, 7)) - 1);
+                    end_of_event_date.setDate(data[i].end_date.substring(8, 10));
+
+                    if (new Date() <= end_of_event_date) {
+                        cache.events.list.push(data[i]);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR.responseText);
+            }
+        }));
+    }
+
+    await Promise.all(promises);
+
     if (team) {
         $(".settings input[type='number']").val(parseInt(team.substring(3)));
     }
@@ -228,8 +254,6 @@ function renderSchedule() {
         $(".schedule table").hide();
         $(".no-schedule").show();
     } else {
-        // cache.events[event].matches = data;
-
         $(".no-schedule").hide();
         $(".schedule table").show();
         for (var match in data) {
@@ -544,32 +568,6 @@ async function updateAPIs() {
         },
         success: function(data) {
             cache.events[event].webcasts = data.webcasts;
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error(jqXHR.responseText);
-        }
-    }));
-
-    // list of events
-    promises.push($.ajax({
-        url: TBA_BASE_URL + "/events/" + (new Date()).getFullYear() + "/simple",
-        type: "GET",
-        headers: {
-            "X-TBA-Auth-Key": X_TBA_Auth_Key
-        },
-        success: function(data) {
-            cache.events.list = [];
-
-            for (var i in data) {
-                var end_of_event_date = new Date();
-                end_of_event_date.setFullYear(data[i].end_date.substring(0, 4));
-                end_of_event_date.setMonth(parseInt(data[i].end_date.substring(5, 7)) - 1);
-                end_of_event_date.setDate(data[i].end_date.substring(8, 10));
-
-                if (new Date() <= end_of_event_date) {
-                    cache.events.list.push(data[i]);
-                }
-            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
