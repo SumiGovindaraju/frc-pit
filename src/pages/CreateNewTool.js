@@ -48,6 +48,7 @@ export default class CreateNewTool extends Component {
       document.getElementById("name").value = "";
       document.getElementById("tool").value = "";
       document.getElementById("team-number").value = "";
+      document.getElementsByClassName("error-alert-div")[0].style.display = "none";
     } else {
       alert("No current user");
     }

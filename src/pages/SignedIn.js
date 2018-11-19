@@ -41,6 +41,7 @@ export default class SignedIn extends Component {
       return;
     }
 
+    document.getElementsByClassName("error-alert-div")[0].style.display = "none";
     if (this.state.currentUser != null) {
       firebase.firestore().collection('users').doc(this.state.currentUser.uid).set({
         "name": full_name,

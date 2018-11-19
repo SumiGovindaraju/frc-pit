@@ -23,6 +23,7 @@ class ToolRow extends Component {
 
   returnTool(id) {
     if (this.state.currentUser != null) {
+      document.getElementsByClassName("error-alert-div")[0].style.display = "none";
       firebase.firestore().collection('users').doc(this.state.currentUser.uid).collection('tools').doc(id).delete();
     } else {
       alert("No current user");

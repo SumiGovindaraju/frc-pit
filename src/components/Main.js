@@ -11,6 +11,7 @@ export default class Main extends Component {
             <Route key={i} exact={exact} path={path} component={component} />
           )}
         </Switch>
+        <div className="error-alert-div" style={{ display: "none" }}><div className="btn btn-danger btn-lg error-alert"></div></div>
       </main>
     );
   }

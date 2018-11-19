@@ -40,6 +40,14 @@ html {
     padding: 5px;
 }
 
+.error-alert-div {
+    position: fixed;
+    padding: 10px;
+    border-radius: 5px;
+    bottom: 5px;
+    right: 5px;
+}
+
 /* Portrait phones and smaller */
 @media (max-width: 480px) {
     .schedule-rankings>.tab-content>.tab-pane>table>thead>tr>th, .schedule-rankings>.tab-content>.tab-pane>table>tbody>tr>td {
