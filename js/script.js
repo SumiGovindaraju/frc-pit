@@ -28,16 +28,22 @@ function getUrlVars() {
     return vars;
 }
 
-function render(renderWebcast) {
+function render(firstRender) {
     if (!event) {
         $(".schedule-rankings").hide();
         $(".webcast").hide();
         $(".awards").hide();
         $(".countdown").hide();
+        $(".loading").hide();
         $(".no-team-event-selected").show();
 
         alert("Invalid team or event");
         return;
+    }
+
+    if (firstRender) {
+        $(".no-team-event-selected").hide();
+        $(".loading").show();
     }
 
     verifyTeamInEvent(async function() {
@@ -53,6 +59,7 @@ function render(renderWebcast) {
 
         await updateAPIs();
 
+        $(".loading").hide();
         $(".no-team-event-selected").hide();
         $(".schedule-rankings").show();
         $(".webcasts").show();
@@ -61,12 +68,13 @@ function render(renderWebcast) {
 
         renderSchedule();
         renderRankings();
-        if (renderWebcast) {
+        if (firstRender) {
             renderWebcasts();
         }
         renderAwards();
         renderCountdown();
     }, async function() {
+        $(".loading").hide();
         $(".no-team-event-selected").show();
         $(".schedule-rankings").hide();
         $(".webcasts").hide();
