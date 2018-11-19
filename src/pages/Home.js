@@ -54,6 +54,7 @@ export default class Home extends Component {
     return (
       <div>
         <h1 className="no-team-event-selected" style={{ textAlign: "center" }}>No Event/Team selected</h1>
+        <h1 className="loading" style={{ textAlign: "center", display: "none" }}>Loading...</h1>
         <ScheduleAndRankings />
         <Webcasts />
         <Awards />
