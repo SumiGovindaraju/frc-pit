@@ -6,6 +6,20 @@ var timeZone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).spl
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var cache = JSON.parse(localStorage.getItem("The Blue Alliance API Cache")) === null ? {"events": {"list": []}} : JSON.parse(localStorage.getItem("The Blue Alliance API Cache"));
 var isOnline = navigator.onLine;
+var errorAlertTimeout = null;
+
+(function(proxied) {
+    window.alert = function() {
+        $(".error-alert-div").hide();
+        $('.error-alert').text(arguments[0]);
+        $(".error-alert-div").show();
+        clearTimeout(errorAlertTimeout);
+        errorAlertTimeout = setTimeout(function() {
+            $(".error-alert-div").hide();
+        }, 7500);
+        // return proxied.apply(this, arguments);
+    };
+})(window.alert);
 
 function getMatchTimeInMS(match) {
     if (match.actual_time !== undefined && match.actual_time !== null) {
