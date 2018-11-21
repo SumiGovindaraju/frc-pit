@@ -5,7 +5,7 @@ import Awards from '../components/Awards';
 import Countdown from '../components/Countdown';
 
 export default class Home extends Component {
-  componentWillMount () { // create script tag
+  componentWillMount() { // create script tag
     var script = document.createElement("script");
     var scriptBody = document.createTextNode(`
       $(document).ready(function() {    

@@ -4,7 +4,7 @@ export default class ScheduleTable extends Component {
   render() {
     return (
       <div className="tab-pane fade show active schedule" id="schedule" role="tabpanel">
-        <h1 className="no-schedule" style={{display: "none"}}>No Schedule</h1>
+        <h1 className="no-schedule" style={{ display: "none" }}>No Schedule</h1>
         <table className="table table-bordered" id="schedule-table">
           <thead>
             <tr>

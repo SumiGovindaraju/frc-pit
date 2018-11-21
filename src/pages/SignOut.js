@@ -6,9 +6,9 @@ export default class SignOut extends Component {
   constructor(props) {
     super(props);
 
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut().then(function () {
       window.location.href = process.env.PUBLIC_URL;
-    }, function(error) {
+    }, function (error) {
       console.error(error);
     });
   }

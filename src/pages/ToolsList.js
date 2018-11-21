@@ -12,7 +12,7 @@ class ToolRow extends Component {
 
     var instance = this;
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         instance.setState({ currentUser: user });
       } else {
@@ -47,12 +47,12 @@ export default class ToolsList extends Component {
   constructor(props) {
     super(props);
 
-    firebase.firestore().settings({timestampsInSnapshots: true});
+    firebase.firestore().settings({ timestampsInSnapshots: true });
 
     this.state = { shouldRender: false, tools: [], team_number: null };
 
     var instance = this;
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         instance.setState({ currentUser: user });
 
@@ -88,13 +88,13 @@ export default class ToolsList extends Component {
   render() {
     if (this.state.shouldRender) {
       var rows = [];
-      rows = this.state.tools.map(({key, name, team_number, checkout_time, description}) => 
+      rows = this.state.tools.map(({ key, name, team_number, checkout_time, description }) =>
         <ToolRow key={key} index={key} name={name} team={team_number} time={checkout_time} tool={description} />
       );
 
       return (
         <div>
-          <h2 style={{textAlign: "center"}}>{ this.state.team_number == null ? "Loading..." : "Tools Checked Out from Team " + this.state.team_number + ":"}</h2>
+          <h2 style={{ textAlign: "center" }}>{this.state.team_number == null ? "Loading..." : "Tools Checked Out from Team " + this.state.team_number + ":"}</h2>
           <table className="table-striped table-bordered tools-list" style={{ width: "98%", maxWidth: "98%", margin: "1%" }}>
             <thead>
               <tr>
@@ -106,7 +106,7 @@ export default class ToolsList extends Component {
               </tr>
             </thead>
             <tbody>
-              { rows }
+              {rows}
             </tbody>
           </table>
         </div>

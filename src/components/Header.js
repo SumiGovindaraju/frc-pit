@@ -6,9 +6,9 @@ export default class Header extends Component {
   constructor(props) {
     super(props);
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user && user.displayName) {
-        var li = document.createElement("li"); 
+        var li = document.createElement("li");
         li.classList.add("nav-item");
 
         var a = document.createElement("a");
@@ -23,7 +23,7 @@ export default class Header extends Component {
     });
   }
 
-  componentWillMount () { // create script tags
+  componentWillMount() { // create script tags
     var script = document.createElement("script");
     var scriptBody = document.createTextNode(`
       $(document).ready(function () {
@@ -49,11 +49,12 @@ export default class Header extends Component {
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL}><i className="fa fa-home" aria-hidden="true"></i> Home</a></li>
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/tools_list"}><i className="fa fa-wrench" aria-hidden="true"></i> Tools List</a></li>
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/check_out_tool"}><i className="fa fa-plus" aria-hidden="true"></i> Check Out Tool</a></li>
+              <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/stats"}><i className="fa fa-chart-area" aria-hidden="true"></i> Stats</a></li>
             </ul>
-            <form className="form-inline settings" style={{display: "none"}}>
-              <select className="form-control mr-sm-2"></select>
-              <input className="form-control mr-sm-2" placeholder="Team Number" type="number"/>
-              <input type="button" className="btn btn-success set-team-number-and-event-btn my-2 my-sm-0" value="✓"/>
+            <form className="form-inline settings" style={{ display: "none" }}>
+              <select className="form-control mr-sm-2 settings-event"></select>
+              <input className="form-control mr-sm-2 settings-team" placeholder="Team Number" type="number" />
+              <input type="button" className="btn btn-success set-team-number-and-event-btn my-2 my-sm-0" value="✓" />
             </form>
             <ul className="navbar-nav ml-auto sign-out-ul"></ul>
           </div>

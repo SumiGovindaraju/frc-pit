@@ -30,10 +30,10 @@ export default class Auth extends Component {
         ],
       }
     };
-    
+
     var instance = this;
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         window.location.href = process.env.PUBLIC_URL + `/signed_in?redirect=${redirectURL}`;
       } else {
@@ -41,11 +41,11 @@ export default class Auth extends Component {
       }
     });
   }
-  
+
   render() {
     if (this.state.shouldRender) {
       return (
-        <StyledFirebaseAuth uiConfig={this.state.uiConfig} firebaseAuth={firebase.auth()}/>
+        <StyledFirebaseAuth uiConfig={this.state.uiConfig} firebaseAuth={firebase.auth()} />
       );
     } else {
       return null;

@@ -9,14 +9,14 @@ export default class SignedIn extends Component {
   constructor(props) {
     super(props);
 
-    firebase.firestore().settings({timestampsInSnapshots: true});
+    firebase.firestore().settings({ timestampsInSnapshots: true });
 
     this.createUser = this.createUser.bind(this);
     this.state = { shouldRender: false, currentUser: null };
 
     var instance = this;
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
           if (doc.exists) {
@@ -50,9 +50,9 @@ export default class SignedIn extends Component {
 
       this.state.currentUser.updateProfile({
         displayName: full_name
-      }).then(function() {
+      }).then(function () {
         window.location.href = redirectURL;
-      }).catch(function(error) {
+      }).catch(function (error) {
         console.error(error);
       });
     }
@@ -63,7 +63,7 @@ export default class SignedIn extends Component {
       return (
         <div>
           <form className="add-tool-container" style={{ width: "98%", margin: "1%" }}>
-            <p>Full Name:</p><input className="form-control" id="full-name" placeholder={ this.state.currentUser.displayName == null ? "Full name" : this.state.currentUser.displayName } type="text" />
+            <p>Full Name:</p><input className="form-control" id="full-name" placeholder={this.state.currentUser.displayName == null ? "Full name" : this.state.currentUser.displayName} type="text" />
             <p>Team Number:</p><input className="form-control" id="team-number" placeholder="Team Number" type="number" />
             <div className="btn btn-primary add-tool-btn" onClick={this.createUser}>Create User</div>
           </form>

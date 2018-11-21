@@ -4,7 +4,7 @@ export default class RankingsTable extends Component {
   render() {
     return (
       <div className="tab-pane fade rankings" id="rankings" role="tabpanel">
-        <h1 className="no-rankings" style={{display: "none"}}>No Rankings</h1>
+        <h1 className="no-rankings" style={{ display: "none" }}>No Rankings</h1>
         <table className="table table-striped table-bordered">
           <thead>
             <tr>

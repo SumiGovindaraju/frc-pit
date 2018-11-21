@@ -6,13 +6,13 @@ export default class CreateNewTool extends Component {
   constructor(props) {
     super(props);
 
-    firebase.firestore().settings({timestampsInSnapshots: true});
+    firebase.firestore().settings({ timestampsInSnapshots: true });
 
     this.addTool = this.addTool.bind(this);
     this.state = { shouldRender: false, currentUser: null };
 
     var instance = this;
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         instance.setState({ currentUser: user });
 
@@ -28,21 +28,21 @@ export default class CreateNewTool extends Component {
   }
 
   addTool() {
-    var name = document.getElementById("name").value, 
-      tool = document.getElementById("tool").value, 
+    var name = document.getElementById("name").value,
+      tool = document.getElementById("tool").value,
       team_number = document.getElementById("team-number").value;
 
     if (name === "" || tool === "" || team_number === "") {
-        alert("Error: All fields must be filled.");
-        return;
+      alert("Error: All fields must be filled.");
+      return;
     }
 
     if (this.state.currentUser != null) {
       firebase.firestore().collection('users').doc(this.state.currentUser.uid).collection('tools').add({
-          "name": name,
-          "description": tool,
-          "checkout_time": new Date(),
-          "team_number": parseInt(team_number, 10)
+        "name": name,
+        "description": tool,
+        "checkout_time": new Date(),
+        "team_number": parseInt(team_number, 10)
       });
 
       document.getElementById("name").value = "";
@@ -58,7 +58,7 @@ export default class CreateNewTool extends Component {
     if (this.state.shouldRender) {
       return (
         <div>
-          <h2 style={{textAlign: "center"}}>{ this.state.team_number == null ? "Loading..." : "Check Out Tool from Team " + this.state.team_number + ":"}</h2>
+          <h2 style={{ textAlign: "center" }}>{this.state.team_number == null ? "Loading..." : "Check Out Tool from Team " + this.state.team_number + ":"}</h2>
           <form className="add-tool-container" style={{ width: "98%", margin: "1%" }}>
             <p>Name:</p><input className="form-control" id="name" placeholder="Name" type="text" />
             <p>Tool:</p><input className="form-control" id="tool" placeholder="Tool" type="text" />

@@ -7,7 +7,7 @@ export default class Main extends Component {
     return (
       <main role="main">
         <Switch>
-          {routes.map(({path, component, exact}, i) =>
+          {routes.map(({ path, component, exact }, i) =>
             <Route key={i} exact={exact} path={path} component={component} />
           )}
         </Switch>
