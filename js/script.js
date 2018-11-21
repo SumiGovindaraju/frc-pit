@@ -2,19 +2,19 @@ var TBA_BASE_URL = "https://www.thebluealliance.com/api/v3";
 var X_TBA_Auth_Key = "83kBcUgRuDvJ1XLVXpB2ROeuRAzHoWpX9IRiWkRuwv8B9CryAlc3izY3ZXVOD4Hm";
 var team = false, event = false;
 var countdownInterval;
-var timeZone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
+var timeZone = new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-var cache = JSON.parse(localStorage.getItem("The Blue Alliance API Cache")) === null ? {"events": {"list": []}} : JSON.parse(localStorage.getItem("The Blue Alliance API Cache"));
+var cache = JSON.parse(localStorage.getItem("The Blue Alliance API Cache")) === null ? { "events": { "list": [] } } : JSON.parse(localStorage.getItem("The Blue Alliance API Cache"));
 var isOnline = navigator.onLine;
 var errorAlertTimeout = null;
 
-(function(proxied) {
-    window.alert = function() {
+(function (proxied) {
+    window.alert = function () {
         $(".error-alert-div").hide();
         $('.error-alert').text(arguments[0]);
         $(".error-alert-div").show();
         clearTimeout(errorAlertTimeout);
-        errorAlertTimeout = setTimeout(function() {
+        errorAlertTimeout = setTimeout(function () {
             $(".error-alert-div").hide();
         }, 7500);
         // return proxied.apply(this, arguments);
@@ -25,7 +25,7 @@ function getMatchTimeInMS(match) {
     if (match.actual_time !== undefined && match.actual_time !== null) {
         return match.actual_time * 1000;
     }
-    
+
     if (match.predicted_time !== undefined && match.predicted_time !== null) {
         return match.predicted_time * 1000;
     }
@@ -35,7 +35,7 @@ function getMatchTimeInMS(match) {
 
 function getUrlVars() {
     var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
         vars[key] = value;
     });
 
@@ -60,13 +60,13 @@ function render(firstRender) {
         $(".loading").show();
     }
 
-    verifyTeamInEvent(async function() {
+    verifyTeamInEvent(async function () {
         if (cache.events[event] === undefined) {
-            cache.events[event] = {"teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}};
+            cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {} };
         }
 
         if (team && cache.events[event].teams[team] === undefined) {
-            cache.events[event].teams[team] = {"awards": {}, "matches": {}};
+            cache.events[event].teams[team] = { "awards": {}, "matches": {} };
         }
 
         document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
@@ -87,7 +87,7 @@ function render(firstRender) {
         }
         renderAwards();
         renderCountdown();
-    }, async function() {
+    }, async function () {
         $(".loading").hide();
         $(".no-team-event-selected").show();
         $(".schedule-rankings").hide();
@@ -170,7 +170,7 @@ function renderCountdown() {
 
             var countDownDate = new Date(closestMatchTime).getTime();
 
-            countdownInterval = setInterval(function() {
+            countdownInterval = setInterval(function () {
                 var distance = countDownDate - (new Date());
 
                 var hours = parseInt((distance / (1000 * 60 * 60)) % 24);
@@ -205,7 +205,7 @@ async function renderListOfEvents() {
             headers: {
                 "X-TBA-Auth-Key": X_TBA_Auth_Key
             },
-            success: function(data) {
+            success: function (data) {
                 cache.events.list = [];
 
                 for (var i in data) {
@@ -219,7 +219,7 @@ async function renderListOfEvents() {
                     }
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
         }));
@@ -232,7 +232,7 @@ async function renderListOfEvents() {
     }
 
     $("select").empty();
-    
+
     var data = cache.events.list;
     if (data !== undefined || data.length !== undefined || data.length !== 0) {
         for (var i in data) {
@@ -370,9 +370,9 @@ function setTeamNumberAndEvent() {
     team = $("input").val() !== "" ? "frc" + $("input").val() : false;
     event = $("select").val().substring($("select").val());
 
-    verifyTeamInEvent(async function() {
+    verifyTeamInEvent(async function () {
         window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
-    }, async function() {});
+    }, async function () { });
 }
 
 function sortSchedule() {
@@ -472,19 +472,19 @@ async function verifyTeamInEvent(successCallback, errorCallback) {
             headers: {
                 "X-TBA-Auth-Key": X_TBA_Auth_Key
             },
-            success: async function(data) {
+            success: async function (data) {
                 for (var i in data) {
                     if (data[i].key === event) {
                         await successCallback();
                         return true;
                     }
                 }
-                
+
                 await errorCallback();
                 alert(team ? "Team is not in event" : "Event does not exist");
                 return false;
             },
-            error: async function(jqXHR, textStatus, errorThrown) {
+            error: async function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
                 await errorCallback();
                 alert(team ? "Team is not in event" : "Event does not exist");
@@ -512,10 +512,10 @@ async function updateAPIs() {
             headers: {
                 "X-TBA-Auth-Key": X_TBA_Auth_Key
             },
-            success: function(data) {
+            success: function (data) {
                 cache.events[event].teams[team].awards = data;
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
         }));
@@ -528,10 +528,10 @@ async function updateAPIs() {
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
         },
-        success: function(data) {
+        success: function (data) {
             cache.events[event].awards = data;
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
     }));
@@ -544,10 +544,10 @@ async function updateAPIs() {
             headers: {
                 "X-TBA-Auth-Key": X_TBA_Auth_Key
             },
-            success: function(data) {
+            success: function (data) {
                 cache.events[event].teams[team].matches = data;
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
         }));
@@ -560,10 +560,10 @@ async function updateAPIs() {
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
         },
-        success: function(data) {
+        success: function (data) {
             cache.events[event].matches = data;
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
     }));
@@ -575,10 +575,10 @@ async function updateAPIs() {
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
         },
-        success: function(data) {
+        success: function (data) {
             cache.events[event].rankings = data.rankings;
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
     }));
@@ -590,10 +590,10 @@ async function updateAPIs() {
         headers: {
             "X-TBA-Auth-Key": X_TBA_Auth_Key
         },
-        success: function(data) {
+        success: function (data) {
             cache.events[event].webcasts = data.webcasts;
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             console.error(jqXHR.responseText);
         }
     }));
@@ -601,14 +601,14 @@ async function updateAPIs() {
     await Promise.all(promises);
 }
 
-setInterval(function() {
+setInterval(function () {
     localStorage.setItem("The Blue Alliance API Cache", JSON.stringify(cache));
 }, 100);
 
-setInterval(function() { // immediately render when you get internet, after losing connection
+setInterval(function () { // immediately render when you get internet, after losing connection
     if (navigator.onLine && !isOnline) {
         render(true);
     }
 
     isOnline = navigator.onLine;
-}, 100 );
+}, 100);
