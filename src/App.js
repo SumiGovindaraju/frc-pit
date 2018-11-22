@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import createHistory from "history/createBrowserHistory";
 import Header from './components/Header';
 import Main from './components/Main';
 
@@ -8,9 +9,9 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Router history={createHistory({ basename: process.env.PUBLIC_URL })}>
           <Main />
-        </BrowserRouter>
+        </Router>
       </div>
     );
   }
