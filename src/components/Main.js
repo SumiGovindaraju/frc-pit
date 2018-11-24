@@ -11,7 +11,7 @@ export default class Main extends Component {
 
     return (
       <main role="main">
-        <HashRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter basename={process.env.PUBLIC_URL} hashType={"slash"}>
           <Switch>
             {routesJSX}
           </Switch>
