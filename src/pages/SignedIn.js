@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-var redirectURL = decodeURIComponent(((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.href) || [null, ''])[1].replace(/\+/g, '%20')) || process.env.PUBLIC_URL);
+var redirectURL = decodeURIComponent(((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.href) || [null, ''])[1].replace(/\+/g, '%20')));
 
 export default class SignedIn extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class SignedIn extends Component {
           }
         });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + redirectURL;
       }
     });
   }
