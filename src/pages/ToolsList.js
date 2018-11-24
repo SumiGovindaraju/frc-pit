@@ -16,7 +16,7 @@ class ToolRow extends Component {
       if (user) {
         instance.setState({ currentUser: user });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("tools_list");
+        window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent("tools_list");
       }
     });
   }
@@ -80,7 +80,7 @@ export default class ToolsList extends Component {
 
         instance.setState({ shouldRender: true });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent(window.location.href);
+        window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
   }

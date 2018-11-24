@@ -27,7 +27,7 @@ export default class SignedIn extends Component {
           }
         });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("signed_in");
+        window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent("signed_in");
       }
     });
   }

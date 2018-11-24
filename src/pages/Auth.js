@@ -13,7 +13,7 @@ export default class Auth extends Component {
       shouldRender: false,
       uiConfig: {
         signInFlow: 'popup',
-        signInSuccessUrl: process.env.PUBLIC_URL + `/signed_in?redirect=${redirectURL}`,
+        signInSuccessUrl: process.env.PUBLIC_URL + `/#/signed_in?redirect=${redirectURL}`,
         signInOptions: [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
           firebase.auth.GithubAuthProvider.PROVIDER_ID,
@@ -35,7 +35,7 @@ export default class Auth extends Component {
 
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        window.location.href = process.env.PUBLIC_URL + `/signed_in?redirect=${redirectURL}`;
+        window.location.href = process.env.PUBLIC_URL + `/#/signed_in?redirect=${redirectURL}`;
       } else {
         instance.setState({ shouldRender: true });
       }

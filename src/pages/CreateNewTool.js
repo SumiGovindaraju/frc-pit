@@ -22,7 +22,7 @@ export default class CreateNewTool extends Component {
 
         instance.setState({ shouldRender: true });
       } else {
-        window.location.href = process.env.PUBLIC_URL + "/auth?redirect=" + encodeURIComponent("check_out_tool");
+        window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent("check_out_tool");
       }
     });
   }
