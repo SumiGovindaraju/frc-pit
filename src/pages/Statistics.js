@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import RankingsTable from '../components/RankingsTable';
-import RobotStatistics from '../components/RobotStatistics';
+import StatisticsTable from '../components/StatisticsTable';
+import StatisticsModal from '../components/StatisticsModal';
 
 export default class Statistics extends Component {
   componentWillMount() { // create script tag
     var script = document.createElement("script");
     var scriptBody = document.createTextNode(`
       $(document).ready(function() {    
-        $(".rankings").addClass("show active");
-        $(".rankings").hide();
+        $(".statistics").hide();
         $(".settings").show();
         $(".settings-team").hide();
         $(".no-team-event-selected").show();
@@ -36,11 +35,11 @@ export default class Statistics extends Component {
           verifyTeamInEvent(
             async function () {
               if (cache.events[event] === undefined) {
-                cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {} };
+                cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
               }
     
               if (team && cache.events[event].teams[team] === undefined) {
-                cache.events[event].teams[team] = { "awards": {}, "matches": {} };
+                cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
               }
 
               $(".no-team-event-selected").hide();
@@ -52,13 +51,13 @@ export default class Statistics extends Component {
               
               $(".loading").hide();
               $(".no-team-event-selected").hide();
-              $(".rankings").show();
+              $(".statistics").show();
 
-              renderRankings();
+              renderStatistics();
             }, async function () {
               $(".loading").hide();
               $(".no-team-event-selected").show();
-              $(".rankings").hide();
+              $(".statistics").hide();
             }
           );
         }
@@ -66,7 +65,7 @@ export default class Statistics extends Component {
         setInterval(async function() {
           if (event) {
             await updateAPIs();
-            renderRankings(false);
+            renderStatistics();
           }
         }, 120000); // Attempt to render every 2 minutes no matter what
       });
@@ -80,8 +79,8 @@ export default class Statistics extends Component {
       <div>
         <h1 className="no-team-event-selected" style={{ textAlign: "center" }}>No Event/Team selected</h1>
         <h1 className="loading" style={{ textAlign: "center", display: "none" }}>Loading...</h1>
-        <RankingsTable />
-        <RobotStatistics />
+        <StatisticsTable />
+        <StatisticsModal />
       </div>
     );
   }
