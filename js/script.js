@@ -62,11 +62,11 @@ function render(firstRender) {
 
     verifyTeamInEvent(async function () {
         if (cache.events[event] === undefined) {
-            cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {} };
+            cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
         }
 
         if (team && cache.events[event].teams[team] === undefined) {
-            cache.events[event].teams[team] = { "awards": {}, "matches": {} };
+            cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
         }
 
         document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
@@ -309,6 +309,34 @@ function renderSchedule() {
     }
 }
 
+function renderStatistics() {
+    $(".statistics table tbody").empty();
+
+    var data = cache.events[event].rankings;
+    if (data === undefined || data.length === undefined || data.length === 0) {
+        $(".statistics table").hide();
+        $(".no-statistics").show();
+    } else {
+        $(".no-statistics").hide();
+        $(".statistics table").show();
+        for (var ranking in data) {
+            $("#statistics table tbody").append(`<tr>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].rank}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].team_key.substring(3)}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[0].toFixed(3)}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[1]}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[2]}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[3]}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[4]}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].record.wins}-${data[ranking].record.losses}-${data[ranking].record.ties}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].matches_played}</td>
+                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].extra_stats[0]}</td>
+                    <td><button class="btn btn-primary" onclick="showStatisticsModal('${data[ranking].team_key}')">View Team Info</button></td>
+                </tr>`);
+        }
+    }
+}
+
 function renderWebcasts() {
     $(".webcasts ul").empty();
     $(".webcasts .tab-content").empty();
@@ -495,6 +523,91 @@ async function verifyTeamInEvent(successCallback, errorCallback) {
         await successCallback();
         return true;
     }
+}
+
+function showStatisticsModal(team_key) {
+    if (cache.events[event] === undefined) {
+        cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
+    }
+
+    if (cache.events[event].teams[team_key] === undefined) {
+        cache.events[event].teams[team_key] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
+    }
+
+    $.ajax({
+        url: TBA_BASE_URL + "/team/" + team_key,
+        type: "GET",
+        headers: {
+            "X-TBA-Auth-Key": X_TBA_Auth_Key
+        },
+        success: function (data) {
+            cache.events[event].teams[team_key].name = "Team " + data.team_number + ": " + data.nickname;
+            cache.events[event].teams[team_key].rookie_year = data.rookie_year;
+            cache.events[event].teams[team_key].location = (data.city !== null && data.city !== undefined ? data.city + ", " : "") + data.country;
+
+            $("#statistics-modal-label").text(cache.events[event].teams[team_key].name);
+            $(".modal-rookie-year").text(cache.events[event].teams[team_key].rookie_year);
+            $(".modal-location").text(cache.events[event].teams[team_key].location);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR.responseText);
+        }
+    });
+
+    $.ajax({
+        url: TBA_BASE_URL + "/team/" + team_key + "/event/" + event + "/status",
+        type: "GET",
+        headers: {
+            "X-TBA-Auth-Key": X_TBA_Auth_Key
+        },
+        success: function (data) {
+            cache.events[event].teams[team_key].status = data.overall_status_str;
+
+            $(".modal-event-status").html(cache.events[event].teams[team_key].status);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR.responseText);
+        }
+    });
+
+    $.ajax({
+        url: TBA_BASE_URL + "/team/" + team_key + "/media/" + event.substring(0, 4),
+        type: "GET",
+        headers: {
+            "X-TBA-Auth-Key": X_TBA_Auth_Key
+        },
+        success: function (data) {
+            cache.events[event].teams[team_key].photos = [];
+            for (var media in data) {
+                if (data[media].type === "cdphotothread") {
+                    cache.events[event].teams[team_key].photos.push("//www.chiefdelphi.com/media/img/" + data[media].details.image_partial);
+                } else if (data[media].type === "instagram-image") {
+                    cache.events[event].teams[team_key].photos.push("//www.instagram.com/p/" + data[media].foreign_key + "/media");
+                } else if (data[media].type === "imgur") {
+                    cache.events[event].teams[team_key].photos.push("//i.imgur.com/" + data[media].foreign_key + ".jpg");
+                }
+            }
+
+            $(".carousel-inner").empty();
+            for (var photo in cache.events[event].teams[team_key].photos) {
+                $(".carousel-inner").append(`
+                    <div class="carousel-item">
+                        <img src="${cache.events[event].teams[team_key].photos[photo]}" alt="Robot Media Not Found" style="height: 350px; width: auto; display: block; margin: auto;"/>
+                    </div>
+                `);
+            }
+
+            $(".carousel-inner").children().first().addClass("active");
+
+            $(".carousel").carousel();
+            $(".modal-event-status").html(cache.events[event].teams[team_key].status);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR.responseText);
+        }
+    });
+
+    $("#statistics-modal").modal("show");
 }
 
 async function updateAPIs() {
