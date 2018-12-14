@@ -7,6 +7,7 @@ var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var cache = JSON.parse(localStorage.getItem("The Blue Alliance API Cache")) === null ? { "events": { "list": [] } } : JSON.parse(localStorage.getItem("The Blue Alliance API Cache"));
 var isOnline = navigator.onLine;
 var errorAlertTimeout = null;
+var modalTeam = "";
 
 (function (proxied) {
     window.alert = function () {
@@ -400,7 +401,120 @@ function setTeamNumberAndEvent() {
 
     verifyTeamInEvent(async function () {
         window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
+        window.location.reload();
     }, async function () { });
+}
+
+function showStatisticsModal(team_key) {
+    if (cache != undefined && cache.events != undefined && cache.events[event] != undefined) {
+        if (team_key && cache.events[event].teams[team_key] == undefined) {
+            if (!navigator.onLine) {
+                alert("Team data not cached. FRC Pit is offline.");
+                return;
+            }
+        } else {
+            $("#statistics-modal-label").text(cache.events[event].teams[team_key].name);
+            $(".modal-rookie-year").text(cache.events[event].teams[team_key].rookie_year);
+            $(".modal-location").text(cache.events[event].teams[team_key].location);
+
+            $(".modal-event-status").html(cache.events[event].teams[team_key].status);
+            $(".carousel-inner").html("<p>FRC Pit is offline. Images cannot be rendered right now.</p>");
+        }
+    } else if (!navigator.onLine) {
+        alert("Event data not cached. FRC Pit is offline.");
+        return;
+    }
+
+    if (cache.events[event] === undefined) {
+        cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
+    }
+
+    if (team_key && cache.events[event].teams[team_key] === undefined) {
+        cache.events[event].teams[team_key] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
+    }
+
+    if (navigator.onLine) {
+        console.log(cache.events[event].teams[team_key])
+        $.ajax({
+            url: TBA_BASE_URL + "/team/" + team_key,
+            type: "GET",
+            headers: {
+                "X-TBA-Auth-Key": X_TBA_Auth_Key
+            },
+            success: function (data) {
+                cache.events[event].teams[team_key].name = "Team " + data.team_number + ": " + data.nickname;
+                cache.events[event].teams[team_key].rookie_year = data.rookie_year;
+                cache.events[event].teams[team_key].location = (data.city !== null && data.city !== undefined ? data.city + ", " : "") + data.country;
+
+                $("#statistics-modal-label").text(cache.events[event].teams[team_key].name);
+                $(".modal-rookie-y      ear").text(cache.events[event].teams[team_key].rookie_year);
+                $(".modal-location").text(cache.events[event].teams[team_key].location);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR.responseText);
+            }
+        });
+
+        $.ajax({
+            url: TBA_BASE_URL + "/team/" + team_key + "/event/" + event + "/status",
+            type: "GET",
+            headers: {
+                "X-TBA-Auth-Key": X_TBA_Auth_Key
+            },
+            success: function (data) {
+                cache.events[event].teams[team_key].status = data.overall_status_str;
+
+                $(".modal-event-status").html(cache.events[event].teams[team_key].status);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR.responseText);
+            }
+        });
+
+        $.ajax({
+            url: TBA_BASE_URL + "/team/" + team_key + "/media/" + event.substring(0, 4),
+            type: "GET",
+            headers: {
+                "X-TBA-Auth-Key": X_TBA_Auth_Key
+            },
+            success: function (data) {
+                cache.events[event].teams[team_key].photos = [];
+                for (var media in data) {
+                    if (data[media].type === "cdphotothread") {
+                        cache.events[event].teams[team_key].photos.push("//www.chiefdelphi.com/media/img/" + data[media].details.image_partial);
+                    } else if (data[media].type === "instagram-image") {
+                        cache.events[event].teams[team_key].photos.push("//www.instagram.com/p/" + data[media].foreign_key + "/media");
+                    } else if (data[media].type === "imgur") {
+                        cache.events[event].teams[team_key].photos.push("//i.imgur.com/" + data[media].foreign_key + ".jpg");
+                    }
+                }
+
+                $(".carousel-inner").empty();
+                for (var photo in cache.events[event].teams[team_key].photos) {
+                    $(".carousel-inner").append(`
+                        <div class="carousel-item">
+                            <img src="${cache.events[event].teams[team_key].photos[photo]}" alt="Robot Media Not Found" style="height: 350px; width: auto; display: block; margin: auto;"/>
+                        </div>
+                    `);
+                }
+
+                $(".carousel-inner").children().first().addClass("active");
+
+                $(".carousel").carousel();
+                $(".modal-event-status").html(cache.events[event].teams[team_key].status);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR.responseText);
+            }
+        });
+    }
+
+    modalTeam = team_key;
+    $("#statistics-modal").modal("show");
+    $('#statistics-modal').on('hidden.bs.modal', function () {
+        $("#statistics-modal").modal("hide");
+        modalTeam = "";
+    });
 }
 
 function sortSchedule() {
@@ -525,91 +639,6 @@ async function verifyTeamInEvent(successCallback, errorCallback) {
     }
 }
 
-function showStatisticsModal(team_key) {
-    if (cache.events[event] === undefined) {
-        cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
-    }
-
-    if (cache.events[event].teams[team_key] === undefined) {
-        cache.events[event].teams[team_key] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
-    }
-
-    $.ajax({
-        url: TBA_BASE_URL + "/team/" + team_key,
-        type: "GET",
-        headers: {
-            "X-TBA-Auth-Key": X_TBA_Auth_Key
-        },
-        success: function (data) {
-            cache.events[event].teams[team_key].name = "Team " + data.team_number + ": " + data.nickname;
-            cache.events[event].teams[team_key].rookie_year = data.rookie_year;
-            cache.events[event].teams[team_key].location = (data.city !== null && data.city !== undefined ? data.city + ", " : "") + data.country;
-
-            $("#statistics-modal-label").text(cache.events[event].teams[team_key].name);
-            $(".modal-rookie-year").text(cache.events[event].teams[team_key].rookie_year);
-            $(".modal-location").text(cache.events[event].teams[team_key].location);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error(jqXHR.responseText);
-        }
-    });
-
-    $.ajax({
-        url: TBA_BASE_URL + "/team/" + team_key + "/event/" + event + "/status",
-        type: "GET",
-        headers: {
-            "X-TBA-Auth-Key": X_TBA_Auth_Key
-        },
-        success: function (data) {
-            cache.events[event].teams[team_key].status = data.overall_status_str;
-
-            $(".modal-event-status").html(cache.events[event].teams[team_key].status);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error(jqXHR.responseText);
-        }
-    });
-
-    $.ajax({
-        url: TBA_BASE_URL + "/team/" + team_key + "/media/" + event.substring(0, 4),
-        type: "GET",
-        headers: {
-            "X-TBA-Auth-Key": X_TBA_Auth_Key
-        },
-        success: function (data) {
-            cache.events[event].teams[team_key].photos = [];
-            for (var media in data) {
-                if (data[media].type === "cdphotothread") {
-                    cache.events[event].teams[team_key].photos.push("//www.chiefdelphi.com/media/img/" + data[media].details.image_partial);
-                } else if (data[media].type === "instagram-image") {
-                    cache.events[event].teams[team_key].photos.push("//www.instagram.com/p/" + data[media].foreign_key + "/media");
-                } else if (data[media].type === "imgur") {
-                    cache.events[event].teams[team_key].photos.push("//i.imgur.com/" + data[media].foreign_key + ".jpg");
-                }
-            }
-
-            $(".carousel-inner").empty();
-            for (var photo in cache.events[event].teams[team_key].photos) {
-                $(".carousel-inner").append(`
-                    <div class="carousel-item">
-                        <img src="${cache.events[event].teams[team_key].photos[photo]}" alt="Robot Media Not Found" style="height: 350px; width: auto; display: block; margin: auto;"/>
-                    </div>
-                `);
-            }
-
-            $(".carousel-inner").children().first().addClass("active");
-
-            $(".carousel").carousel();
-            $(".modal-event-status").html(cache.events[event].teams[team_key].status);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error(jqXHR.responseText);
-        }
-    });
-
-    $("#statistics-modal").modal("show");
-}
-
 async function updateAPIs() {
     if (!navigator.onLine) {
         return;
@@ -720,7 +749,15 @@ setInterval(function () {
 
 setInterval(function () { // immediately render when you get internet, after losing connection
     if (navigator.onLine && !isOnline) {
-        render(true);
+        if (window.location.hash.startsWith("#/stats")) {
+            renderStatistics();
+
+            if (modalTeam != "") {
+                showStatisticsModal(modalTeam);
+            }
+        } else {
+            render(true);
+        }
     }
 
     isOnline = navigator.onLine;

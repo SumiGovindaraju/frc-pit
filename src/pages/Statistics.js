@@ -32,34 +32,26 @@ export default class Statistics extends Component {
         renderListOfEvents();
 
         if (event) {
-          verifyTeamInEvent(
-            async function () {
-              if (cache.events[event] === undefined) {
-                cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
-              }
+          if (cache.events[event] === undefined) {
+            cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
+          }
     
-              if (team && cache.events[event].teams[team] === undefined) {
-                cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
-              }
+          if (team && cache.events[event].teams[team] === undefined) {
+            cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
+          }
 
-              $(".no-team-event-selected").hide();
-              $(".loading").show();
+          $(".no-team-event-selected").hide();
+          $(".loading").show();
     
-              document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
+          document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
 
-              await updateAPIs();
+          updateAPIs();
               
-              $(".loading").hide();
-              $(".no-team-event-selected").hide();
-              $(".statistics").show();
+          $(".loading").hide();
+          $(".no-team-event-selected").hide();
+          $(".statistics").show();
 
-              renderStatistics();
-            }, async function () {
-              $(".loading").hide();
-              $(".no-team-event-selected").show();
-              $(".statistics").hide();
-            }
-          );
+          renderStatistics();
         }
     
         setInterval(async function() {
