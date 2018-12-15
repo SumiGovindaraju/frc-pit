@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "6661d6b3521b4c480ba759e4b9e480c1",
-    "url": "/frc-pit/static/media/fa-solid-900.6661d6b3.woff"
+    "revision": "3654744dc6d6c37c9b3582b57622df5e",
+    "url": "/frc-pit/static/media/fa-brands-400.3654744d.woff2"
   },
   {
     "revision": "024ec32e44eca83bcb96",
@@ -36,8 +36,8 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-solid-900.8a8c0474.woff2"
   },
   {
-    "revision": "3654744dc6d6c37c9b3582b57622df5e",
-    "url": "/frc-pit/static/media/fa-brands-400.3654744d.woff2"
+    "revision": "6661d6b3521b4c480ba759e4b9e480c1",
+    "url": "/frc-pit/static/media/fa-solid-900.6661d6b3.woff"
   },
   {
     "revision": "024ec32e44eca83bcb96",
@@ -52,20 +52,20 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-regular-400.3929b3ef.svg"
   },
   {
-    "revision": "748ab466bee11e0b2132916def799916",
-    "url": "/frc-pit/static/media/fa-brands-400.748ab466.eot"
-  },
-  {
     "revision": "7febe26eeb4dd8e3a3c614a144d399fb",
     "url": "/frc-pit/static/media/fa-brands-400.7febe26e.ttf"
   },
   {
-    "revision": "b6a14bb88dbc580e45034af297c8f605",
-    "url": "/frc-pit/static/media/fa-solid-900.b6a14bb8.ttf"
+    "revision": "748ab466bee11e0b2132916def799916",
+    "url": "/frc-pit/static/media/fa-brands-400.748ab466.eot"
   },
   {
     "revision": "035a137af03db6f1af76a589da5bb865",
     "url": "/frc-pit/static/media/fa-solid-900.035a137a.eot"
+  },
+  {
+    "revision": "b6a14bb88dbc580e45034af297c8f605",
+    "url": "/frc-pit/static/media/fa-solid-900.b6a14bb8.ttf"
   },
   {
     "revision": "9bbbee00f65769a64927764ef51af6d0",
