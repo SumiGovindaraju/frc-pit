@@ -405,7 +405,7 @@ function setTeamNumberAndEvent() {
     }, async function () { });
 }
 
-function showStatisticsModal(team_key) {
+async function showStatisticsModal(team_key) {
     if (cache != undefined && cache.events != undefined && cache.events[event] != undefined) {
         if (team_key && cache.events[event].teams[team_key] == undefined) {
             if (!navigator.onLine) {
@@ -433,8 +433,9 @@ function showStatisticsModal(team_key) {
         cache.events[event].teams[team_key] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
     }
 
+    var promises = [];
     if (navigator.onLine) {
-        $.ajax({
+        promises.push($.ajax({
             url: TBA_BASE_URL + "/team/" + team_key,
             type: "GET",
             headers: {
@@ -446,15 +447,17 @@ function showStatisticsModal(team_key) {
                 cache.events[event].teams[team_key].location = (data.city !== null && data.city !== undefined ? data.city + ", " : "") + data.country;
 
                 $("#statistics-modal-label").text(cache.events[event].teams[team_key].name);
-                $(".modal-rookie-y      ear").text(cache.events[event].teams[team_key].rookie_year);
+                $(".modal-rookie-year").text(cache.events[event].teams[team_key].rookie_year);
                 $(".modal-location").text(cache.events[event].teams[team_key].location);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
+                alert("Team not found on The Blue Alliance");
+                return;
             }
-        });
+        }));
 
-        $.ajax({
+        promises.push($.ajax({
             url: TBA_BASE_URL + "/team/" + team_key + "/event/" + event + "/status",
             type: "GET",
             headers: {
@@ -468,9 +471,9 @@ function showStatisticsModal(team_key) {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
-        });
+        }));
 
-        $.ajax({
+        promises.push($.ajax({
             url: TBA_BASE_URL + "/team/" + team_key + "/media/" + event.substring(0, 4),
             type: "GET",
             headers: {
@@ -505,13 +508,21 @@ function showStatisticsModal(team_key) {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
             }
-        });
+        }));
     }
+
+    await Promise.all(promises);
 
     modalTeam = team_key;
     $("#statistics-modal").modal("show");
     $('#statistics-modal').on('hidden.bs.modal', function () {
         $("#statistics-modal").modal("hide");
+        $("#statistics-modal-label").text("Loading...");
+        $(".modal-rookie-year").text("Loading...");
+        $(".modal-location").text("Loading...");
+
+        $(".modal-event-status").html("Loading...");
+        $(".carousel-inner").html("Loading...");
         modalTeam = "";
     });
 }

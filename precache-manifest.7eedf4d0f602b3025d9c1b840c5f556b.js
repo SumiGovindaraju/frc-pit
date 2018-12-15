@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-solid-900.6661d6b3.woff"
   },
   {
-    "revision": "ed01f85f4393a2a4a2ed",
+    "revision": "024ec32e44eca83bcb96",
     "url": "/frc-pit/static/css/main.a52c6edf.chunk.css"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/js/runtime~main.797c765d.js"
   },
   {
-    "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
-    "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
-  },
-  {
     "revision": "33f727ccde4b05c0ed143c5cd78cda0c",
     "url": "/frc-pit/static/media/fa-regular-400.33f727cc.woff2"
+  },
+  {
+    "revision": "f3dd4f397fbc5aaf831b6b0ba112d75c",
+    "url": "/frc-pit/static/media/fa-regular-400.f3dd4f39.woff"
   },
   {
     "revision": "b58f468f84168d61e0ebc1e1f423587c",
@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-brands-400.3654744d.woff2"
   },
   {
-    "revision": "ed01f85f4393a2a4a2ed",
-    "url": "/frc-pit/static/js/main.ed01f85f.chunk.js"
+    "revision": "024ec32e44eca83bcb96",
+    "url": "/frc-pit/static/js/main.024ec32e.chunk.js"
   },
   {
     "revision": "2248542e1bbbd548a157e3e6ced054fc",
@@ -52,20 +52,20 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-regular-400.3929b3ef.svg"
   },
   {
-    "revision": "7febe26eeb4dd8e3a3c614a144d399fb",
-    "url": "/frc-pit/static/media/fa-brands-400.7febe26e.ttf"
-  },
-  {
     "revision": "748ab466bee11e0b2132916def799916",
     "url": "/frc-pit/static/media/fa-brands-400.748ab466.eot"
   },
   {
-    "revision": "035a137af03db6f1af76a589da5bb865",
-    "url": "/frc-pit/static/media/fa-solid-900.035a137a.eot"
+    "revision": "7febe26eeb4dd8e3a3c614a144d399fb",
+    "url": "/frc-pit/static/media/fa-brands-400.7febe26e.ttf"
   },
   {
     "revision": "b6a14bb88dbc580e45034af297c8f605",
     "url": "/frc-pit/static/media/fa-solid-900.b6a14bb8.ttf"
+  },
+  {
+    "revision": "035a137af03db6f1af76a589da5bb865",
+    "url": "/frc-pit/static/media/fa-solid-900.035a137a.eot"
   },
   {
     "revision": "9bbbee00f65769a64927764ef51af6d0",
@@ -76,7 +76,7 @@ self.__precacheManifest = [
     "url": "/frc-pit/static/media/fa-brands-400.b032e14e.svg"
   },
   {
-    "revision": "3b83385a7ac0dec5b8640c8a56179118",
+    "revision": "454b3e18632f53b92330a68f76d6703f",
     "url": "/frc-pit/index.html"
   }
 ];
