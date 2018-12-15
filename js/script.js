@@ -434,7 +434,6 @@ function showStatisticsModal(team_key) {
     }
 
     if (navigator.onLine) {
-        console.log(cache.events[event].teams[team_key])
         $.ajax({
             url: TBA_BASE_URL + "/team/" + team_key,
             type: "GET",
@@ -517,6 +516,7 @@ function showStatisticsModal(team_key) {
     });
 }
 
+// adapted from w3 schools
 function sortSchedule() {
     var table, rows, switching, i, x, y, shouldSwitch;
     table = document.getElementById("schedule-table");
