@@ -6,7 +6,7 @@ export default class Statistics extends Component {
   componentWillMount() { // create script tag
     var script = document.createElement("script");
     var scriptBody = document.createTextNode(`
-      $(document).ready(function() {    
+      $(document).ready(async function() {    
         $(".statistics").hide();
         $(".settings").show();
         $(".settings-team").hide();
@@ -45,7 +45,7 @@ export default class Statistics extends Component {
     
           document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
 
-          updateAPIs();
+          await updateAPIs();
               
           $(".loading").hide();
           $(".no-team-event-selected").hide();
