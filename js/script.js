@@ -284,12 +284,12 @@ function renderSchedule() {
                 var append = `
                 <tr>
                     <td>${data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number))}</td>
-                    <td class="red ${data[match].alliances.red.team_keys[0] === team ? "current-team" : ""}">${data[match].alliances.red.team_keys[0].substring(3)}</td>
-                    <td class="red ${data[match].alliances.red.team_keys[1] === team ? "current-team" : ""}">${data[match].alliances.red.team_keys[1].substring(3)}</td>
-                    <td class="red ${data[match].alliances.red.team_keys[2] === team ? "current-team" : ""}">${data[match].alliances.red.team_keys[2].substring(3)}</td>
-                    <td class="blue ${data[match].alliances.blue.team_keys[0] === team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[0].substring(3)}</td>
-                    <td class="blue ${data[match].alliances.blue.team_keys[1] === team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[1].substring(3)}</td>
-                    <td class="blue ${data[match].alliances.blue.team_keys[2] === team ? "current-team" : ""}">${data[match].alliances.blue.team_keys[2].substring(3)}</td>`;
+                    <td class="red ${data[match].alliances.red.team_keys[0] === team ? "current-team" : ""}">${data[match].alliances.red.dq_team_keys.includes(data[match].alliances.red.team_keys[0]) ? "<strike>" : ""}${data[match].alliances.red.team_keys[0].substring(3)}${data[match].alliances.red.dq_team_keys.includes(data[match].alliances.red.team_keys[0]) ? "</strike>" : ""}</td>
+                    <td class="red ${data[match].alliances.red.team_keys[1] === team ? "current-team" : ""}">${data[match].alliances.red.dq_team_keys.includes(data[match].alliances.red.team_keys[1]) ? "<strike>" : ""}${data[match].alliances.red.team_keys[1].substring(3)}${data[match].alliances.red.dq_team_keys.includes(data[match].alliances.red.team_keys[1]) ? "</strike>" : ""}</td>
+                    <td class="red ${data[match].alliances.red.team_keys[2] === team ? "current-team" : ""}">${data[match].alliances.red.dq_team_keys.includes(data[match].alliances.red.team_keys[2]) ? "<strike>" : ""}${data[match].alliances.red.team_keys[2].substring(3)}${data[match].alliances.red.dq_team_keys.includes(data[match].alliances.red.team_keys[2]) ? "</strike>" : ""}</td>
+                    <td class="blue ${data[match].alliances.blue.team_keys[0] === team ? "current-team" : ""}">${data[match].alliances.blue.dq_team_keys.includes(data[match].alliances.blue.team_keys[0]) ? "<strike>" : ""}${data[match].alliances.blue.team_keys[0].substring(3)}${data[match].alliances.blue.dq_team_keys.includes(data[match].alliances.blue.team_keys[0]) ? "</strike>" : ""}</td>
+                    <td class="blue ${data[match].alliances.blue.team_keys[1] === team ? "current-team" : ""}">${data[match].alliances.blue.dq_team_keys.includes(data[match].alliances.blue.team_keys[1]) ? "<strike>" : ""}${data[match].alliances.blue.team_keys[1].substring(3)}${data[match].alliances.blue.dq_team_keys.includes(data[match].alliances.blue.team_keys[1]) ? "</strike>" : ""}</td>
+                    <td class="blue ${data[match].alliances.blue.team_keys[2] === team ? "current-team" : ""}">${data[match].alliances.blue.dq_team_keys.includes(data[match].alliances.blue.team_keys[2]) ? "<strike>" : ""}${data[match].alliances.blue.team_keys[2].substring(3)}${data[match].alliances.blue.dq_team_keys.includes(data[match].alliances.blue.team_keys[2]) ? "</strike>" : ""}</td>`;
 
                 if (data[match].alliances.red.score >= 0 && data[match].alliances.blue.score >= 0) {
                     append += `
@@ -322,16 +322,17 @@ function renderStatistics() {
         $(".statistics table").show();
         for (var ranking in data) {
             $("#statistics table tbody").append(`<tr>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].rank}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].team_key.substring(3)}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[0].toFixed(3)}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[1]}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[2]}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[3]}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].sort_orders[4]}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].record.wins}-${data[ranking].record.losses}-${data[ranking].record.ties}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].matches_played}</td>
-                    <td ${data[ranking].team_key === team ? "class='current-team'" : ""}>${data[ranking].extra_stats[0]}</td>
+                    <td>${data[ranking].rank}</td>
+                    <td>${data[ranking].team_key.substring(3)}</td>
+                    <td>${data[ranking].sort_orders[0].toFixed(3)}</td>
+                    <td>${data[ranking].sort_orders[1]}</td>
+                    <td>${data[ranking].sort_orders[2]}</td>
+                    <td>${data[ranking].sort_orders[3]}</td>
+                    <td>${data[ranking].sort_orders[4]}</td>
+                    <td>${data[ranking].record.wins}-${data[ranking].record.losses}-${data[ranking].record.ties}</td>
+                    <td>${data[ranking].dq}</td>
+                    <td>${data[ranking].matches_played}</td>
+                    <td>${data[ranking].extra_stats[0]}</td>
                     <td><button class="btn btn-primary" onclick="showStatisticsModal('${data[ranking].team_key}')">View Team Info</button></td>
                 </tr>`);
         }
