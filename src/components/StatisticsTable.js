@@ -65,8 +65,9 @@ export default class StatisticsTable extends Component {
               <th onClick={() => this.sortStatistics(5)}>Ownership <i className="fas fa-sort"></i></th>
               <th onClick={() => this.sortStatistics(6)}>Vault <i className="fas fa-sort"></i></th>
               <th>Record (W-L-T)</th>
-              <th onClick={() => this.sortStatistics(8)}>Played <i className="fas fa-sort"></i></th>
-              <th onClick={() => this.sortStatistics(9)}>Total RP <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(8)}>DQ <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(9)}>Played <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(10)}>Total RP <i className="fas fa-sort"></i></th>
               <th>View Team Info</th>
             </tr>
           </thead>
