@@ -333,7 +333,11 @@ function renderStatistics() {
                     <td>${data[ranking].dq}</td>
                     <td>${data[ranking].matches_played}</td>
                     <td>${data[ranking].extra_stats[0]}</td>
-                    <td><button class="btn btn-primary" onclick="showStatisticsModal('${data[ranking].team_key}')">View Team Info</button></td>
+                    <td>
+                        <button class="btn ${data[ranking].team_key.substring(3) != parseInt(data[ranking].team_key.substring(3)) ? "btn-secondary" : "btn-primary"}" onclick="showStatisticsModal('${data[ranking].team_key}')" ${data[ranking].team_key.substring(3) != parseInt(data[ranking].team_key.substring(3)) ? "disabled" : ""}>
+                            ${data[ranking].team_key.substring(3) != parseInt(data[ranking].team_key.substring(3)) ? "Invalid Team #" : "View Team Info"}
+                        </button>
+                    </td>
                 </tr>`);
         }
     }
@@ -502,6 +506,13 @@ async function showStatisticsModal(team_key) {
                 }
 
                 $(".carousel-inner").children().first().addClass("active");
+                if ($(".carousel-inner").children().length === 0) {
+                    $(".carousel-inner").hide();
+                    $(".robot-images-title").html("<b>No Robot Images Available</b>");
+                } else {
+                    $(".robot-images-title").html("<b>Robot Images:</b>");
+                    $(".carousel-inner").show();
+                }
 
                 $(".carousel").carousel();
                 $(".modal-event-status").html(cache.events[event].teams[team_key].status);
