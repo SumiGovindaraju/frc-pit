@@ -487,8 +487,8 @@ async function showStatisticsModal(team_key) {
             success: function (data) {
                 cache.events[event].teams[team_key].photos = [];
                 for (var media in data) {
-                    if (data[media].direct_url !== undefined) {
-                        cache.events[event].teams[team_key].photos.push(data[media].direct_url);
+                    if (data[media].direct_url !== undefined && data[media].direct_url !== "" && (data[media].type === "cdphotothread" || data[media].type === "instagram-image" || data[media].type === "imgur")) {
+                        cache.events[event].teams[team_key].photos.push(data[media].direct_url.substring(data[media].direct_url.indexOf("//")));
                     }
                 }
 
