@@ -487,12 +487,8 @@ async function showStatisticsModal(team_key) {
             success: function (data) {
                 cache.events[event].teams[team_key].photos = [];
                 for (var media in data) {
-                    if (data[media].type === "cdphotothread") {
-                        cache.events[event].teams[team_key].photos.push("//www.chiefdelphi.com/media/img/" + data[media].details.image_partial);
-                    } else if (data[media].type === "instagram-image") {
-                        cache.events[event].teams[team_key].photos.push("//www.instagram.com/p/" + data[media].foreign_key + "/media");
-                    } else if (data[media].type === "imgur") {
-                        cache.events[event].teams[team_key].photos.push("//i.imgur.com/" + data[media].foreign_key + ".jpg");
+                    if (data[media].direct_url !== undefined) {
+                        cache.events[event].teams[team_key].photos.push(data[media].direct_url);
                     }
                 }
 
