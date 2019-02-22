@@ -60,10 +60,10 @@ export default class StatisticsTable extends Component {
               <th onClick={() => this.sortStatistics(0)}>Rank <i className="fas fa-sort"></i></th>
               <th onClick={() => this.sortStatistics(1)}>Team <i className="fas fa-sort"></i></th>
               <th onClick={() => this.sortStatistics(2)}>Ranking Score <i className="fas fa-sort"></i></th>
-              <th onClick={() => this.sortStatistics(3)}>Park/Climb Points <i className="fas fa-sort"></i></th>
-              <th onClick={() => this.sortStatistics(4)}>Auto <i className="fas fa-sort"></i></th>
-              <th onClick={() => this.sortStatistics(5)}>Ownership <i className="fas fa-sort"></i></th>
-              <th onClick={() => this.sortStatistics(6)}>Vault <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(3)}>Cargo <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(4)}>Hatch Panel <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(5)}>HAB Climb <i className="fas fa-sort"></i></th>
+              <th onClick={() => this.sortStatistics(6)}>Sandstorm Bonus <i className="fas fa-sort"></i></th>
               <th>Record (W-L-T)</th>
               <th onClick={() => this.sortStatistics(8)}>DQ <i className="fas fa-sort"></i></th>
               <th onClick={() => this.sortStatistics(9)}>Played <i className="fas fa-sort"></i></th>
