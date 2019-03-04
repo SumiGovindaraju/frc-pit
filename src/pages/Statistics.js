@@ -9,6 +9,7 @@ export default class Statistics extends Component {
       $(document).ready(async function() {    
         $(".statistics").hide();
         $(".settings").show();
+        $(".settings-team").val("")
         $(".settings-team").hide();
         $(".no-team-event-selected").show();
 
@@ -52,6 +53,8 @@ export default class Statistics extends Component {
           $(".statistics").show();
 
           renderStatistics();
+        } else {
+          document.title = "FRC Pit";
         }
     
         setInterval(async function() {
