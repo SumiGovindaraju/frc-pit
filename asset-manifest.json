@@ -1,14 +1,14 @@
 {
-  "main.css": "/frc-pit/static/css/main.a52c6edf.chunk.css",
-  "main.js": "/frc-pit/static/js/main.2c7436db.chunk.js",
-  "main.js.map": "/frc-pit/static/js/main.2c7436db.chunk.js.map",
-  "static/js/1.abc87119.chunk.js": "/frc-pit/static/js/1.abc87119.chunk.js",
-  "static/js/1.abc87119.chunk.js.map": "/frc-pit/static/js/1.abc87119.chunk.js.map",
-  "runtime~main.js": "/frc-pit/static/js/runtime~main.797c765d.js",
-  "runtime~main.js.map": "/frc-pit/static/js/runtime~main.797c765d.js.map",
-  "static/media/fontawesome-all.min.css": "/frc-pit/static/media/fa-brands-400.b032e14e.svg",
-  "static/css/main.a52c6edf.chunk.css.map": "/frc-pit/static/css/main.a52c6edf.chunk.css.map",
+  "main.css": "/frc-pit/static/css/main.781b4d8b.chunk.css",
+  "main.js": "/frc-pit/static/js/main.dbba5447.chunk.js",
+  "main.js.map": "/frc-pit/static/js/main.dbba5447.chunk.js.map",
+  "runtime~main.js": "/frc-pit/static/js/runtime~main.d72981da.js",
+  "runtime~main.js.map": "/frc-pit/static/js/runtime~main.d72981da.js.map",
+  "static/js/2.01631e1a.chunk.js": "/frc-pit/static/js/2.01631e1a.chunk.js",
+  "static/js/2.01631e1a.chunk.js.map": "/frc-pit/static/js/2.01631e1a.chunk.js.map",
   "index.html": "/frc-pit/index.html",
-  "precache-manifest.e688161d099f0359fa15c90d6bd8ca97.js": "/frc-pit/precache-manifest.e688161d099f0359fa15c90d6bd8ca97.js",
-  "service-worker.js": "/frc-pit/service-worker.js"
+  "precache-manifest.4d8226349306a3daf92c4f77745c08bb.js": "/frc-pit/precache-manifest.4d8226349306a3daf92c4f77745c08bb.js",
+  "service-worker.js": "/frc-pit/service-worker.js",
+  "static/css/main.781b4d8b.chunk.css.map": "/frc-pit/static/css/main.781b4d8b.chunk.css.map",
+  "static/media/fontawesome-all.min.css": "/frc-pit/static/media/fa-solid-900.b6a14bb8.ttf"
 }
