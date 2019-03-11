@@ -14,7 +14,7 @@ export default class StatisticsModal extends Component {
             </div>
             <div className="modal-body">
               <p><b>Rookie Year:</b> <span className="modal-rookie-year"></span></p>
-              <p><b>Country:</b> <span className="modal-location"></span></p>
+              <p><b>Location:</b> <span className="modal-location"></span></p>
               <p><b>Event Record:</b> <span className="modal-event-status"></span></p>
               <p className="robot-images-title"><b>Robot Images:</b></p>
               <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
