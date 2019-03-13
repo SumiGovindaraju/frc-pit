@@ -48,6 +48,18 @@ html {
     right: 5px;
 }
 
+.settings {
+    width: 60%;
+}
+
+.settings-event {
+    width: 60% !important;
+}
+
+.settings-team {
+    width: 100% !important;
+}
+
 /* Portrait phones and smaller */
 @media (max-width: 480px) {
     .schedule-rankings>.tab-content>.tab-pane>table>thead>tr>th, .schedule-rankings>.tab-content>.tab-pane>table>tbody>tr>td {
@@ -60,6 +72,18 @@ html {
 
     .tools-list>tbody>tr>td>button {
         padding: 2px;
+    }
+
+    .settings {
+        width: 100%;
+    }
+    
+    .settings-event {
+        width: 100% !important;
+    }
+    
+    .set-team-number-and-event-btn {
+        width: 100%;
     }
 }
 
@@ -76,6 +100,18 @@ html {
     .webcasts {
         min-height: 45vh;
     }
+
+    .settings {
+        width: 100%;
+    }
+    
+    .settings-event {
+        width: 100% !important;
+    }
+    
+    .set-team-number-and-event-btn {
+        width: 100%;
+    }
 }
 
 /* Portrait tablets and small desktops */
@@ -90,6 +126,18 @@ html {
 
     .webcasts {
         min-height: 45vh;
+    }
+
+    .settings {
+        width: 100%;
+    }
+    
+    .settings-event {
+        width: 65% !important;
+    }
+
+    .settings-team {
+        width: auto !important;
     }
 }
 
@@ -142,6 +190,18 @@ html {
         margin: 1%;
         overflow-y: scroll;
     }
+
+    .settings {
+        width: 30%;
+    }
+
+    .settings-event {
+        width: 55% !important;
+    }
+
+    .settings-team {
+        width: 23% !important;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -191,5 +251,9 @@ html {
         height: 45%;
         margin: 1%;
         overflow-y: scroll;
+    }
+
+    .settings-team {
+        width: 15% !important;
     }
 }
