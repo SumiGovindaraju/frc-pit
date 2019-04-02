@@ -40,6 +40,14 @@ html {
     padding: 5px;
 }
 
+.countdown-blue {
+    color: #007bff !important;
+}
+
+.countdown-red {
+    color: #dc3545 !important;
+}
+
 .error-alert-div {
     position: fixed;
     padding: 10px;
