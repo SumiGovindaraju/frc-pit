@@ -150,11 +150,13 @@ function renderCountdown() {
     } else {
         var closestMatchTime = Number.MAX_VALUE;
         var closestMatchName = null;
+        var closestMatchBumperColor = null;
 
         for (var match in data) {
             if ((new Date()) < (new Date(getMatchTimeInMS(data[match]))) && getMatchTimeInMS(data[match]) < closestMatchTime) {
                 closestMatchTime = getMatchTimeInMS(data[match]);
                 closestMatchName = data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number));
+                closestMatchBumperColor = team ? (data[match].alliances.blue.team_keys.includes(team) ? "blue" : "red") : null
             }
         }
 
@@ -165,6 +167,10 @@ function renderCountdown() {
             $(".no-countdown").show();
         } else {
             $(".no-countdown").hide();
+            $(".countdown-timer-tag").removeClass("countdown-red countdown-blue");
+            if (closestMatchBumperColor !== null) {
+                $(".countdown-timer-tag").addClass("countdown-" + closestMatchBumperColor);
+            }
             $(".countdown-timer-tag").show();
             $(".countdown h2").text("Until " + closestMatchName);
             $(".countdown h2").show();
