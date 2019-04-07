@@ -502,7 +502,7 @@ async function showStatisticsModal(team_key) {
                 for (var photo in cache.events[event].teams[team_key].photos) {
                     $(".carousel-inner").append(`
                         <div class="carousel-item">
-                            <img src="${cache.events[event].teams[team_key].photos[photo]}" alt="Robot Media Not Found" style="height: 350px; width: auto; display: block; margin: auto;"/>
+                            <img src="${cache.events[event].teams[team_key].photos[photo]}" alt="Robot Media Not Found" style="width: 100%; display: block; margin: auto;"/>
                         </div>
                     `);
                 }
