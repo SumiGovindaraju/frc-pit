@@ -103,7 +103,7 @@ function renderAwards() {
         $(".awards ul").empty();
 
         var data = cache.events[event].teams[team].awards;
-        if (data === undefined || data.length === undefined || data.length === 0) {
+        if (data === undefined || data === null || data.length === undefined || data.length === 0) {
             $(".awards h1").last().hide();
             $(".awards ul").hide();
             $(".no-awards").show();
@@ -121,7 +121,7 @@ function renderAwards() {
         $(".awards ul").empty();
 
         data = cache.events[event].awards;
-        if (data === undefined || data.length === 0) {
+        if (data === undefined || data === null || data.length === undefined || data.length === 0) {
             $(".awards h1").last().hide();
             $(".awards ul").hide();
             $(".no-awards").show();
@@ -143,7 +143,7 @@ function renderCountdown() {
 
     var data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
 
-    if (data === undefined || data.length === undefined || data.length === 0) {
+    if (data === undefined || data === null || data.length === undefined || data.length === 0) {
         $(".countdown-timer-tag").hide();
         $(".countdown h2").hide();
         $(".no-countdown").show();
@@ -256,7 +256,7 @@ function renderRankings() {
     $(".rankings table tbody").empty();
 
     var data = cache.events[event].rankings;
-    if (data === undefined || data.length === undefined || data.length === 0) {
+    if (data === undefined || data === null || data.length === undefined || data.length === 0) {
         $(".rankings table").hide();
         $(".no-rankings").show();
     } else {
@@ -279,7 +279,7 @@ function renderSchedule() {
     $(".schedule table tbody").empty();
 
     var data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
-    if (data === undefined || data.length === undefined || data.length === 0) {
+    if (data === undefined || data === null || data.length === undefined || data.length === 0) {
         $(".schedule table").hide();
         $(".no-schedule").show();
     } else {
@@ -320,7 +320,7 @@ function renderStatistics() {
     $(".statistics table tbody").empty();
 
     var data = cache.events[event].rankings;
-    if (data === undefined || data.length === undefined || data.length === 0) {
+    if (data === undefined || data === null || data.length === undefined || data.length === 0) {
         $(".statistics table").hide();
         $(".no-statistics").show();
     } else {
@@ -356,7 +356,7 @@ function renderWebcasts() {
     var data = cache.events[event].webcasts;
     if (!navigator.onLine) {
         $(".no-internet").show();
-    } else if (data === undefined || data.length === undefined || data.length === 0) {
+    } else if (data === undefined || data === null || data.length === undefined || data.length === 0) {
         $(".no-internet").hide();
         $(".webcasts ul").hide();
         $(".webcasts .tab-content").hide();
