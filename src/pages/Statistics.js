@@ -9,15 +9,13 @@ export default class Statistics extends Component {
       $(document).ready(async function() {    
         $(".statistics").hide();
         $(".settings").show();
-        $(".settings-team").val("")
+        $(".settings-team").val("");
         $(".settings-team").hide();
         $(".no-team-event-selected").show();
 
         $("body").tooltip({selector: '[data-toggle=tooltip]'});
 
-        if (getUrlVars()["team"] !== undefined) {
-          team = getUrlVars()["team"];
-        }
+        team = false;
 
         if (getUrlVars()["event"] !== undefined) {
           event = getUrlVars()["event"];
