@@ -21,6 +21,17 @@ class ToolRow extends Component {
     });
   }
 
+  componentWillMount() { // create script tags
+    var script = document.createElement("script");
+    var scriptBody = document.createTextNode(`
+      $(document).ready(function () {
+        $(".settings").hide();
+      });
+    `);
+    script.appendChild(scriptBody);
+    document.body.appendChild(script);
+  }
+
   returnTool(id) {
     if (this.state.currentUser != null) {
       document.getElementsByClassName("error-alert-div")[0].style.display = "none";

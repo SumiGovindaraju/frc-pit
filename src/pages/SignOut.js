@@ -13,6 +13,17 @@ export default class SignOut extends Component {
     });
   }
 
+  componentWillMount() { // create script tags
+    var script = document.createElement("script");
+    var scriptBody = document.createTextNode(`
+      $(document).ready(function () {
+        $(".settings").hide();
+      });
+    `);
+    script.appendChild(scriptBody);
+    document.body.appendChild(script);
+  }
+
   render() {
     return (
       <h1 className="sign-out-header" style={{ textAlign: "center" }}>Signing you out now.</h1>

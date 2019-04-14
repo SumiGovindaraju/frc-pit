@@ -32,6 +32,17 @@ export default class SignedIn extends Component {
     });
   }
 
+  componentWillMount() { // create script tags
+    var script = document.createElement("script");
+    var scriptBody = document.createTextNode(`
+      $(document).ready(function () {
+        $(".settings").hide();
+      });
+    `);
+    script.appendChild(scriptBody);
+    document.body.appendChild(script);
+  }
+
   createUser() {
     var full_name = document.getElementById("full-name").value !== "" ? document.getElementById("full-name").value : this.state.currentUser.displayName;
     var team_number = document.getElementById("team-number").value;

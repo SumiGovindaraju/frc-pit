@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 
 export default class PageNotFound extends Component {
+  componentWillMount() { // create script tags
+    var script = document.createElement("script");
+    var scriptBody = document.createTextNode(`
+      $(document).ready(function () {
+        $(".settings").hide();
+      });
+    `);
+    script.appendChild(scriptBody);
+    document.body.appendChild(script);
+  }
+  
   render() {
     return (
       <div>
