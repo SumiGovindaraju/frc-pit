@@ -411,7 +411,7 @@ function setTeamNumberAndEvent() {
     event = $("select").val().substring($("select").val());
 
     verifyTeamInEvent(async function () {
-        window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "");
+        window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "") + "&showWebcast=" + showWebcast;
         window.location.reload();
     }, async function () { });
 }
