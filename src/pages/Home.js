@@ -25,6 +25,10 @@ export default class Home extends Component {
         if (getUrlVars()["event"] !== undefined) {
           event = getUrlVars()["event"];
         }
+
+        if (getUrlVars()["showWebcast"] !== undefined) {
+          showWebcast = JSON.parse(getUrlVars()["showWebcast"]);
+        }
         
         $('form input').keydown(function(event){
           if(event.keyCode == 13) {

@@ -1,6 +1,6 @@
 var TBA_BASE_URL = "https://www.thebluealliance.com/api/v3";
 var X_TBA_Auth_Key = "83kBcUgRuDvJ1XLVXpB2ROeuRAzHoWpX9IRiWkRuwv8B9CryAlc3izY3ZXVOD4Hm";
-var team = false, event = false;
+var team = false, event = false, showWebcast = true;
 var countdownInterval;
 var timeZone = new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -59,43 +59,43 @@ function render(firstRender) {
     if (firstRender) {
         $(".no-team-event-selected").hide();
         $(".loading").show();
+
+        verifyTeamInEvent(async function () {
+            if (cache.events[event] === undefined) {
+                cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
+            }
+    
+            if (team && cache.events[event].teams[team] === undefined) {
+                cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
+            }
+    
+            document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
+    
+            await updateAPIs();
+    
+            $(".loading").hide();
+            $(".no-team-event-selected").hide();
+            $(".schedule-rankings").show();
+            $(".webcasts").show();
+            $(".awards").show();
+            $(".countdown").show();
+    
+            renderSchedule();
+            renderRankings();
+            if (firstRender) {
+                renderWebcasts();
+            }
+            renderAwards();
+            renderCountdown();
+        }, async function () {
+            $(".loading").hide();
+            $(".no-team-event-selected").show();
+            $(".schedule-rankings").hide();
+            $(".webcasts").hide();
+            $(".awards").hide();
+            $(".countdown").hide();
+        });
     }
-
-    verifyTeamInEvent(async function () {
-        if (cache.events[event] === undefined) {
-            cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
-        }
-
-        if (team && cache.events[event].teams[team] === undefined) {
-            cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
-        }
-
-        document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
-
-        await updateAPIs();
-
-        $(".loading").hide();
-        $(".no-team-event-selected").hide();
-        $(".schedule-rankings").show();
-        $(".webcasts").show();
-        $(".awards").show();
-        $(".countdown").show();
-
-        renderSchedule();
-        renderRankings();
-        if (firstRender) {
-            renderWebcasts();
-        }
-        renderAwards();
-        renderCountdown();
-    }, async function () {
-        $(".loading").hide();
-        $(".no-team-event-selected").show();
-        $(".schedule-rankings").hide();
-        $(".webcasts").hide();
-        $(".awards").hide();
-        $(".countdown").hide();
-    });
 }
 
 function renderAwards() {
@@ -354,7 +354,7 @@ function renderWebcasts() {
     $(".webcasts .tab-content").empty();
 
     var data = cache.events[event].webcasts;
-    if (!navigator.onLine) {
+    if (!navigator.onLine || !showWebcast) {
         $(".no-internet").show();
     } else if (data === undefined || data === null || data.length === undefined || data.length === 0) {
         $(".no-internet").hide();

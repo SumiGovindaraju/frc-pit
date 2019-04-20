@@ -30,6 +30,12 @@ export default class Header extends Component {
         $('.set-team-number-and-event-btn').click(function () {
           setTeamNumberAndEvent();
         });
+
+        $('.disable-webcast-button').click(function() {
+          showWebcast = false;
+          window.location.href = window.location.href.split("?")[0] + "?event=" + event + (team ? "&team=" + team : "") + "&showWebcast=" + showWebcast;
+          window.location.reload();
+        });
       });
     `);
     script.appendChild(scriptBody);
@@ -55,6 +61,7 @@ export default class Header extends Component {
               <select className="form-control mr-sm-2 settings-event"></select>
               <input className="form-control mr-sm-2 settings-team" placeholder="Team Number" type="number" />
               <input type="button" className="btn btn-success set-team-number-and-event-btn my-2 my-sm-0" value="✓" />
+              <input type="button" className="btn btn-secondary disable-webcast-button my-2 my-sm-0" value="Disable Webcasts" style={{marginLeft: "5px"}} />
             </form>
             <ul className="navbar-nav ml-auto sign-out-ul"></ul>
           </div>

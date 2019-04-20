@@ -14,5 +14,5 @@ module.exports = {
     handler: 'networkFirst'
   }],
   maximumFileSizeToCacheInBytes: 3500000,
-  ignoreUrlParametersMatching: [/^team/, /^event/, /^redirect/]
+  ignoreUrlParametersMatching: [/^team/, /^event/, /^redirect/, /^showWebcast/]
 }
