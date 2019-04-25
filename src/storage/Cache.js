@@ -2,15 +2,16 @@ import { EventEmitter } from "events";
 
 const LOCAL_STORAGE_KEY = "The Blue Alliance API Cache";
 
-class Cache extends EventEmitter {
+class Cache {
     constructor() {
-        super();
         var local_cache = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (local_cache === null) {
             this.data = { "events": { "list": [] } };
         } else {
             this.data = JSON.parse(local_cache);
         }
+
+        this.eventEmitter = new EventEmitter();
     }
 
     static getInstance() {
@@ -19,6 +20,10 @@ class Cache extends EventEmitter {
         }
 
         return this.instance;
+    }
+
+    getEventEmitter() {
+        return this.eventEmitter;
     }
 
     writeToLocalStorage() {
@@ -30,9 +35,11 @@ class Cache extends EventEmitter {
     }
 
     set(data) {
-        this.data = data;
-        this.writeToLocalStorage();
-        this.emit("dataChanged");
+        if (data !== this.data) {
+            this.data = data;
+            this.writeToLocalStorage();
+            this.eventEmitter.emit("dataChanged");
+        }
     }
 }
 

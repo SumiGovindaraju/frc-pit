@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>        
+    <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#343a40">
-        <meta name="keywords" content="FIRST Robotics, FIRST Robotics Competition, robotics, first, firstrobotics, competition, pit, tools">
+        <meta name="keywords"
+            content="FIRST Robotics, FIRST Robotics Competition, robotics, first, firstrobotics, competition, pit, tools">
         <meta name="description" content="FRC Pit Display with tools checkout.">
 
         <title>FRC Pit</title>
@@ -13,11 +14,17 @@
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     </head>
     <body>
-        <noscript><h1>You need to enable JavaScript to run this app.</h1></noscript>
+        <noscript>
+            <h1>You need to enable JavaScript to run this app.</h1>
+        </noscript>
         <div id="root"></div>
 
         <script src="%PUBLIC_URL%/js/jquery-3.4.0.min.js"></script>
         <script src="%PUBLIC_URL%/js/bootstrap.bundle.min.js"></script>
-        <script src="%PUBLIC_URL%/js/script.js"></script>
+        <script>
+            $(function () {
+                $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+            });
+        </script>
     </body>
 </html>
