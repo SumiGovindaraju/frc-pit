@@ -41,7 +41,7 @@ export default class ScheduleTable extends Component {
           } else {
             var matchDate = new Date(util.getMatchTimeInMS(data[match]));
             scores =
-              <td colspan="2"><time datetime={matchDate.toISOString()}>{util.days[matchDate.getDay()]}, {matchDate.toLocaleTimeString().replace(/:\d{2}\s/, ' ')}</time></td>
+              <td colSpan="2"><time dateTime={matchDate.toISOString()}>{util.days[matchDate.getDay()]}, {matchDate.toLocaleTimeString().replace(/:\d{2}\s/, ' ')}</time></td>
           }
 
           rows.push(
@@ -84,6 +84,10 @@ export default class ScheduleTable extends Component {
   sortSchedule() {
     var table, rows, switching, i, x, y, shouldSwitch;
     table = document.getElementById("schedule-table");
+    if (table === null) {
+      return;
+    }
+
     switching = true;
 
     while (switching) {

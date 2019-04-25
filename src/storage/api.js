@@ -12,6 +12,14 @@ var FETCH_CONFIG = {
 };
 
 async function verifyTeamInEvent(team, event) {
+    if (!event) {
+        return false;
+    }
+
+    if (AppState.getInstance().getTeamEventVerified() !== undefined) {
+        return AppState.getInstance().getTeamEventVerified();
+    }
+
     var cache = Cache.getInstance().get();
 
     if (cache.events !== undefined && cache.events[event] !== undefined) {
@@ -45,6 +53,8 @@ async function verifyTeamInEvent(team, event) {
         }));
 
     await Promise.all(promises);
+
+    AppState.getInstance().setTeamEventVerified(ret_val);
     return ret_val;
 }
 
@@ -81,8 +91,9 @@ export default async function pullFromTBA() {
     var team = AppState.getInstance().getTeam();
     var event = AppState.getInstance().getEvent();
     var showWebcasts = AppState.getInstance().getShowWebcasts();
-
-    if (!event || !(await verifyTeamInEvent(team, event))) {
+    
+    await verifyTeamInEvent(team, event);
+    if (!event || !AppState.getInstance().getTeamEventVerified()) {
         await Promise.all(promises);
         return;
     }

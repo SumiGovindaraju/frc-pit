@@ -35,11 +35,9 @@ class Cache {
     }
 
     set(data) {
-        if (data !== this.data) {
-            this.data = data;
-            this.writeToLocalStorage();
-            this.eventEmitter.emit("dataChanged");
-        }
+        this.data = data;
+        this.writeToLocalStorage();
+        this.eventEmitter.emit("dataChanged");
     }
 }
 

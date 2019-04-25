@@ -1,9 +1,14 @@
+import { EventEmitter } from "events";
+
 class AppState {
     constructor() {
         // default states, populated through URL vars
         this.team = false;
         this.event = false;
         this.showWebcasts = true;
+        this.teamEventVerified = undefined;
+        this.eventEmitter = new EventEmitter();
+
         this.populateStateFromURLVars();
     }
 
@@ -27,16 +32,32 @@ class AppState {
         return this.showWebcasts;
     }
 
+    getTeamEventVerified() {
+        return this.teamEventVerified;
+    }
+
+    getEventEmitter() {
+        return this.eventEmitter;
+    }
+
     setTeam(team) {
         this.team = team;
+        this.eventEmitter.emit("appStateChanged");
     }
 
     setEvent(event) {
         this.event = event;
+        this.eventEmitter.emit("appStateChanged");
     }
 
     setShowWebcasts(showWebcasts) {
         this.showWebcasts = showWebcasts;
+        this.eventEmitter.emit("appStateChanged");
+    }
+
+    setTeamEventVerified(teamEventVerified) {
+        this.teamEventVerified = teamEventVerified;
+        this.eventEmitter.emit("appStateChanged");
     }
 
     getUrlVars() {
