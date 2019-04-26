@@ -16,12 +16,11 @@ export default class RankingsTable extends Component {
     var team = AppState.getInstance().getTeam();
     var event = AppState.getInstance().getEvent();
     var cache = Cache.getInstance().get();
-    console.log(cache);
 
     var body;
-    if (cache.events[event] === undefined || cache.events[event].rankings === undefined || cache.events[event].rankings.rankings === undefined
-      || cache.events[event].rankings.rankings.length === 0) {
-      body = <h1 className="no-rankings">No Rankings</h1>;
+    if (cache.events[event] === undefined || cache.events[event].rankings === undefined
+      || cache.events[event].rankings.rankings === undefined || cache.events[event].rankings.rankings.length === 0) {
+      body = <h1>No Rankings</h1>;
     } else {
       var data = cache.events[event].rankings.rankings;
 
