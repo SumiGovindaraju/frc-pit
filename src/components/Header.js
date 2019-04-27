@@ -66,13 +66,14 @@ export default class Header extends Component {
     var showSettings = AppState.getInstance().getShowSettingsPane();
     var showTeamSettings = AppState.getInstance().getShowOtherSettings();
     var event = AppState.getInstance().getEvent();
+    var team = AppState.getInstance().getTeam();
     var cache = Cache.getInstance().get();
 
     var eventOptions = [];
     if (cache.events !== undefined || cache.events.list !== undefined || cache.events.list.length !== 0) {
       var data = cache.events.list;
       for (var i in data) {
-        eventOptions.push(<option key={data[i].key} value={data[i].key} selected={event && event === data[i].key}>{data[i].name} ({data[i].key})</option>);
+        eventOptions.push(<option key={data[i].key} value={data[i].key}>{data[i].name} ({data[i].key})</option>);
       }
     }
 
@@ -95,8 +96,8 @@ export default class Header extends Component {
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/#/stats"}><i className="fa fa-chart-area" aria-hidden="true"></i> Stats</a></li>
             </ul>
             <form className="form-inline settings">
-              <select className="form-control mr-sm-2 settings-event" style={{ display: showSettings ? "block" : "none" }}>{eventOptions}</select>
-              <input className="form-control mr-sm-2 settings-team" placeholder="Team Number" type="number" style={{ display: showTeamSettings ? "block" : "none" }} />
+              <select className="form-control mr-sm-2 settings-event" style={{ display: showSettings ? "block" : "none" }} defaultValue={event || ""}>{eventOptions}</select>
+              <input className="form-control mr-sm-2 settings-team" placeholder="Team Number" type="number" style={{ display: showTeamSettings ? "block" : "none" }} defaultValue={showTeamSettings && team ? parseInt(team.substring(3)) : ""}/>
               <input type="button" className="btn btn-success set-team-number-and-event-btn my-2 my-sm-0" value="✓" onClick={this.setTeamNumberAndEvent} style={{ display: showSettings ? "block" : "none" }} />
               <input type="button" className="btn btn-secondary disable-webcast-button my-2 my-sm-0" value="Toggle Webcasts" style={{ display: showTeamSettings ? "block" : "none", marginLeft: "5px" }} onClick={this.toggleWebcast} />
             </form>
