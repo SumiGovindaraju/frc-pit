@@ -49,15 +49,17 @@ async function verifyTeamInEvent(team, event) {
             alert(team ? "Team is not in event" : "Event does not exist");
             ret_val = false;
         }).catch((error) => {
-            console.error(error);
-            // alert(team ? "Team is not in event" : "Event does not exist");
+            if (error.message !== "TypeError: Failed To Fetch") {
+                alert("FRC Pit is Offline")
+            } else {
+                alert(team ? "Team is not in event" : "Event does not exist");
+            }
             ret_val = false;
         }));
 
     await Promise.all(promises);
 
     AppState.getInstance().setTeamEventVerified(ret_val);
-    return ret_val;
 }
 
 export default async function pullFromTBA() {
