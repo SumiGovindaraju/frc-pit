@@ -43,6 +43,10 @@ class Cache {
     sendUpdatedWebcastsEvent() {
         this.eventEmitter.emit("webcastsUpdated");
     }
+
+    sendEventListChangedEvent() {
+        this.eventEmitter.emit("eventListChanged");
+    }
 }
 
 export default Cache;

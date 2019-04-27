@@ -29,6 +29,14 @@ export default class Header extends Component {
       instance.forceUpdate();
     });
 
+    var hasListOfEventsChanged = false;
+    Cache.getInstance().getEventEmitter().on("eventListChanged", function () {
+      if (!hasListOfEventsChanged) {
+        instance.forceUpdate();
+        hasListOfEventsChanged = true;
+      }
+    });
+
     this.setTeamNumberAndEvent = this.setTeamNumberAndEvent.bind(this);
     this.toggleWebcast = this.toggleWebcast.bind(this);
   }

@@ -43,7 +43,7 @@ async function verifyTeamInEvent(team, event) {
                     return;
                 }
             }
-    
+
             alert(team ? "Team is not in event" : "Event does not exist");
             ret_val = false;
         }, (error) => {
@@ -83,7 +83,9 @@ export default async function pullFromTBA() {
                     cache.events.list.push(result[i]);
                 }
             }
+
             cache_instance.set(cache);
+            cache_instance.sendEventListChangedEvent();
         }, (error) => {
             console.error(error);
         }));
@@ -91,7 +93,7 @@ export default async function pullFromTBA() {
     var team = AppState.getInstance().getTeam();
     var event = AppState.getInstance().getEvent();
     var showWebcasts = AppState.getInstance().getShowWebcasts();
-    
+
     await verifyTeamInEvent(team, event);
     if (!event || !AppState.getInstance().getTeamEventVerified()) {
         await Promise.all(promises);
