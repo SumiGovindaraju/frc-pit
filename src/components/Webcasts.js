@@ -8,7 +8,7 @@ export default class Webcasts extends Component {
 
     var instance = this;
     var hasDataChanged = false;
-    Cache.getInstance().getEventEmitter().on("dataChanged", function () {
+    Cache.getInstance().getEventEmitter().on("webcastsUpdated", function () {
       if (!hasDataChanged) {
         instance.forceUpdate();
         hasDataChanged = true;

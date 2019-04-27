@@ -39,6 +39,10 @@ class Cache {
         this.writeToLocalStorage();
         this.eventEmitter.emit("dataChanged");
     }
+
+    sendUpdatedWebcastsEvent() {
+        this.eventEmitter.emit("webcastsUpdated");
+    }
 }
 
 export default Cache;

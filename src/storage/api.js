@@ -164,6 +164,7 @@ export default async function pullFromTBA() {
             .then((result) => {
                 cache.events[event].webcasts = result;
                 cache_instance.set(cache);
+                cache_instance.sendUpdatedWebcastsEvent();
             }, (error) => {
                 console.error(error);
             }));
