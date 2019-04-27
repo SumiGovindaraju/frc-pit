@@ -70,7 +70,7 @@ export default class Countdown extends Component {
     } else {
       body =
         <div>
-          <h1 className={`countdown-timer-tag ${"countdown-" + this.state.nextMatchBumperColor}`} style={{ textAlign: "center", fontSize: "5.25em" }}>{this.state.nextMatchNameTime}</h1>;
+          <h1 className={`countdown-timer-tag ${"countdown-" + this.state.nextMatchBumperColor}`} style={{ textAlign: "center", fontSize: "5.25em" }}>{this.state.nextMatchNameTime}</h1>
           <h2 style={{ textAlign: "center" }}>Until {this.state.nextMatchName}</h2>
         </div>
     }
