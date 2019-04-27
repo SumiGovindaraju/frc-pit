@@ -19,7 +19,7 @@ export default class RankingsTable extends Component {
 
     var body;
     if (cache.events[event] == null || cache.events[event].rankings == null
-      || cache.events[event].rankings.rankings === null || cache.events[event].rankings.rankings.length === 0) {
+      || cache.events[event].rankings.rankings == null || cache.events[event].rankings.rankings.length === 0) {
       body = <h1>No Rankings</h1>;
     } else {
       var data = cache.events[event].rankings.rankings;
