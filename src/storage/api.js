@@ -21,15 +21,17 @@ async function verifyTeamInEvent(team, event) {
     }
 
     var cache = Cache.getInstance().get();
-
-    if (cache.events !== undefined && cache.events[event] !== undefined) {
-        if ((team && cache.events[event].teams[team] === undefined) && !navigator.onLine) {
+    if (cache.events != null && cache.events[event] != null) {
+        if ((team && cache.events[event].teams[team] == null) && !navigator.onLine) {
             alert("Team data not cached. FRC Pit is offline.");
-            return false;
+            return;
         }
+
+        AppState.getInstance().setTeamEventVerified(true);
+        return;
     } else if (!navigator.onLine) {
         alert("Event data not cached. FRC Pit is offline.");
-        return false;
+        return;
     }
 
     var promises = [];
@@ -46,9 +48,9 @@ async function verifyTeamInEvent(team, event) {
 
             alert(team ? "Team is not in event" : "Event does not exist");
             ret_val = false;
-        }, (error) => {
+        }).catch((error) => {
             console.error(error);
-            alert(team ? "Team is not in event" : "Event does not exist");
+            // alert(team ? "Team is not in event" : "Event does not exist");
             ret_val = false;
         }));
 
@@ -59,9 +61,9 @@ async function verifyTeamInEvent(team, event) {
 }
 
 export default async function pullFromTBA() {
-    if (!navigator.onLine) {
-        return;
-    }
+    // if (!navigator.onLine) {
+    //     return;
+    // }
 
     var promises = [];
     var cache_instance = Cache.getInstance();
@@ -86,7 +88,7 @@ export default async function pullFromTBA() {
 
             cache_instance.set(cache);
             cache_instance.sendEventListChangedEvent();
-        }, (error) => {
+        }).catch((error) => {
             console.error(error);
         }));
 
@@ -114,7 +116,7 @@ export default async function pullFromTBA() {
             .then((result) => {
                 cache.events[event].teams[team].awards = result;
                 cache_instance.set(cache);
-            }, (error) => {
+            }).catch((error) => {
                 console.error(error);
             }));
 
@@ -124,7 +126,7 @@ export default async function pullFromTBA() {
             .then((result) => {
                 cache.events[event].teams[team].matches = result;
                 cache_instance.set(cache);
-            }, (error) => {
+            }).catch((error) => {
                 console.error(error);
             }));
     } else {
@@ -144,7 +146,7 @@ export default async function pullFromTBA() {
             .then((result) => {
                 cache.events[event].matches = result;
                 cache_instance.set(cache);
-            }, (error) => {
+            }).catch((error) => {
                 console.error(error);
             }));
     }
@@ -155,7 +157,7 @@ export default async function pullFromTBA() {
         .then((result) => {
             cache.events[event].rankings = result;
             cache_instance.set(cache);
-        }, (error) => {
+        }).catch((error) => {
             console.error(error);
         }));
 
@@ -167,7 +169,7 @@ export default async function pullFromTBA() {
                 cache.events[event].webcasts = result;
                 cache_instance.set(cache);
                 cache_instance.sendUpdatedWebcastsEvent();
-            }, (error) => {
+            }).catch((error) => {
                 console.error(error);
             }));
     }

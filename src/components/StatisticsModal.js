@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 export default class StatisticsModal extends Component {
+  // constructor(props) {
+  //   super(props);
+
+  //   // this.state = {};
+  // }
+
   render() {
     return (
       <div className="modal fade" id="statistics-modal" tabIndex="-1" role="dialog" aria-labelledby="statistics-modal-label" aria-hidden="true">

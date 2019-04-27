@@ -13,6 +13,10 @@ export default class ScheduleTable extends Component {
     });
   }
 
+  componentDidMount() {
+    this.sortSchedule();
+  }
+
   componentDidUpdate() {
     this.sortSchedule();
   }
