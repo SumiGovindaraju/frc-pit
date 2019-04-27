@@ -72,7 +72,7 @@ export default class Statistics extends Component {
     var body;
     if (!event) {
       body = <h1 style={{ textAlign: "center" }}>No Event Selected</h1>;
-    } else if (cache.events[event] === undefined || cache.events[event].rankings === undefined
+    } else if (cache.events[event] == null || cache.events[event].rankings == null
       || cache.events[event].rankings.rankings === null || cache.events[event].rankings.rankings.length === 0) {
       body = <h1 style={{ textAlign: "center" }}>No Statistics</h1>;
     } else {

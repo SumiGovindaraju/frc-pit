@@ -18,7 +18,7 @@ export default class RankingsTable extends Component {
     var cache = Cache.getInstance().get();
 
     var body;
-    if (cache.events[event] === undefined || cache.events[event].rankings === undefined
+    if (cache.events[event] == null || cache.events[event].rankings == null
       || cache.events[event].rankings.rankings === null || cache.events[event].rankings.rankings.length === 0) {
       body = <h1>No Rankings</h1>;
     } else {

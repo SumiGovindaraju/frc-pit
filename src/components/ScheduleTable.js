@@ -23,8 +23,8 @@ export default class ScheduleTable extends Component {
     var cache = Cache.getInstance().get();
 
     var body;
-    if ((cache.events[event] === undefined || cache.events[event].matches === undefined || cache.events[event].matches.length === 0)
-      || (team && (cache.events[event].teams[team] === undefined || cache.events[event].teams[team].matches === undefined || cache.events[event].teams[team].matches.length === 0))) {
+    if ((cache.events[event] == null || cache.events[event].matches == null || cache.events[event].matches.length === 0)
+      || (team && (cache.events[event].teams[team] == null || cache.events[event].teams[team].matches == null || cache.events[event].teams[team].matches.length === 0))) {
       body = <h1>No Schedule</h1>;
     } else {
       var data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;

@@ -18,8 +18,8 @@ export default class Awards extends Component {
     var cache = Cache.getInstance().get();
 
     var body;
-    if ((cache.events[event] === undefined || cache.events[event].awards === undefined || cache.events[event].awards.length === 0)
-      || (team && (cache.events[event].teams[team] === undefined || cache.events[event].teams[team].awards === undefined || cache.events[event].teams[team].awards.length === 0))) {
+    if ((cache.events[event] == null || cache.events[event].awards == null || cache.events[event].awards.length === 0)
+      || (team && (cache.events[event].teams[team] == null || cache.events[event].teams[team].awards == null || cache.events[event].teams[team].awards.length === 0))) {
       body = <h1>No Awards</h1>;
     } else {
       var data = team ? cache.events[event].teams[team].awards : cache.events[event].awards;

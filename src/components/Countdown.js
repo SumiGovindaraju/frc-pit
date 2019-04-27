@@ -26,8 +26,8 @@ export default class Countdown extends Component {
     var closestMatchName = null;
     var closestMatchBumperColor = null;
 
-    if ((cache.events[event] === undefined || cache.events[event].matches === undefined || cache.events[event].matches.length === 0)
-      || (team && (cache.events[event].teams[team] === undefined || cache.events[event].teams[team].matches === undefined || cache.events[event].teams[team].matches.length === 0))) {
+    if ((cache.events[event] == null || cache.events[event].matches == null || cache.events[event].matches.length === 0)
+      || (team && (cache.events[event].teams[team] == null || cache.events[event].teams[team].matches == null || cache.events[event].teams[team].matches.length === 0))) {
       return;
     }
 
