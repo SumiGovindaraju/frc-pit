@@ -1,70 +1,14 @@
 import React, { Component } from 'react';
 import StatisticsTable from '../components/StatisticsTable';
 import StatisticsModal from '../components/StatisticsModal';
+import AppState from '../state/AppState';
 
 export default class Statistics extends Component {
-  componentWillMount() { // create script tag
-    var script = document.createElement("script");
-    var scriptBody = document.createTextNode(`
-      $(document).ready(async function() {    
-        $(".statistics").hide();
-        $(".settings").show();
-        $(".settings-team").val("");
-        $(".settings-team").hide();
-        $(".no-team-event-selected").show();
+  constructor(props) {
+    super(props);
 
-        $("body").tooltip({selector: '[data-toggle=tooltip]'});
-
-        team = false;
-
-        if (getUrlVars()["event"] !== undefined) {
-          event = getUrlVars()["event"];
-        }
-        
-        $('form input').keydown(function(event){
-          if(event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
-
-        renderListOfEvents();
-
-        if (event) {
-          if (cache.events[event] === undefined) {
-            cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
-          }
-    
-          if (team && cache.events[event].teams[team] === undefined) {
-            cache.events[event].teams[team] = { "awards": {}, "matches": {}, "photos": [], "name": "", "rookie_year": 0, "status": "", "location": "" };
-          }
-
-          $(".no-team-event-selected").hide();
-          $(".loading").show();
-    
-          document.title = "FRC Pit | " + (team ? team.substring(3) + " @ " : "") + event;
-
-          await updateAPIs();
-              
-          $(".loading").hide();
-          $(".no-team-event-selected").hide();
-          $(".statistics").show();
-
-          renderStatistics();
-        } else {
-          document.title = "FRC Pit";
-        }
-    
-        setInterval(async function() {
-          if (event) {
-            await updateAPIs();
-            renderStatistics();
-          }
-        }, 120000); // Attempt to render every 2 minutes no matter what
-      });
-    `);
-    script.appendChild(scriptBody);
-    document.body.appendChild(script);
+    AppState.getInstance().setShowSettingsPane(true);
+    AppState.getInstance().setShowOtherSettings(false);
   }
 
   render() {

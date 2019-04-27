@@ -7,6 +7,8 @@ class AppState {
         this.event = false;
         this.showWebcasts = true;
         this.teamEventVerified = undefined;
+        this.showSettingsPane = false; // show entire settings pane
+        this.showOtherSettings = false; // show team input
         this.eventEmitter = new EventEmitter();
 
         this.populateStateFromURLVars();
@@ -36,6 +38,14 @@ class AppState {
         return this.teamEventVerified;
     }
 
+    getShowSettingsPane() {
+        return this.showSettingsPane;
+    }
+
+    getShowOtherSettings() {
+        return this.showOtherSettings;
+    }
+
     getEventEmitter() {
         return this.eventEmitter;
     }
@@ -57,6 +67,16 @@ class AppState {
 
     setTeamEventVerified(teamEventVerified) {
         this.teamEventVerified = teamEventVerified;
+        this.eventEmitter.emit("appStateChanged");
+    }
+
+    setShowSettingsPane(showSettingsPane) {
+        this.showSettingsPane = showSettingsPane;
+        this.eventEmitter.emit("appStateChanged");
+    }
+
+    setShowOtherSettings(showOtherSettings) {
+        this.showOtherSettings = showOtherSettings;
         this.eventEmitter.emit("appStateChanged");
     }
 

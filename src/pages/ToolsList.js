@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import AppState from '../state/AppState';
 
 class ToolRow extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class ToolRow extends Component {
     this.state = { currentUser: null };
 
     var instance = this;
-
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         instance.setState({ currentUser: user });
@@ -19,17 +19,6 @@ class ToolRow extends Component {
         window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
-  }
-
-  componentWillMount() { // create script tags
-    var script = document.createElement("script");
-    var scriptBody = document.createTextNode(`
-      $(document).ready(function () {
-        $(".settings").hide();
-      });
-    `);
-    script.appendChild(scriptBody);
-    document.body.appendChild(script);
   }
 
   returnTool(id) {
@@ -94,6 +83,9 @@ export default class ToolsList extends Component {
         window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
+
+    AppState.getInstance().setShowSettingsPane(false);
+    AppState.getInstance().setShowOtherSettings(false);
   }
 
   render() {

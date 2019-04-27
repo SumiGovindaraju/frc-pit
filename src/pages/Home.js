@@ -13,6 +13,9 @@ export default class Home extends Component {
     AppState.getInstance().getEventEmitter().on("appStateChanged", function () {
       instance.forceUpdate();
     });
+
+    AppState.getInstance().setShowSettingsPane(true);
+    AppState.getInstance().setShowOtherSettings(true);
   }
 
   render() {
@@ -21,7 +24,6 @@ export default class Home extends Component {
         {AppState.getInstance().getTeamEventVerified() === undefined || !AppState.getInstance().getTeamEventVerified() ?
           <h1 className="no-team-event-selected" style={{ textAlign: "center" }}>No Event/Team selected</h1> :
           <div>
-            {/* <h1 className="loading" style={{ textAlign: "center", display: "none" }}>Loading...</h1> */}
             <ScheduleAndRankings />
             <Webcasts />
             <Awards />

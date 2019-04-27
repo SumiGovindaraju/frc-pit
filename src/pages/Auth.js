@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import AppState from '../state/AppState';
 
 var redirectURL = ((new RegExp('[?|&]redirect=([^&;]+?)(&|#|;|$)').exec(window.location.href) || [null, ''])[1].replace(/\+/g, '%20'));
 
@@ -40,17 +41,9 @@ export default class Auth extends Component {
         instance.setState({ shouldRender: true });
       }
     });
-  }
 
-  componentWillMount() { // create script tags
-    var script = document.createElement("script");
-    var scriptBody = document.createTextNode(`
-      $(document).ready(function () {
-        $(".settings").hide();
-      });
-    `);
-    script.appendChild(scriptBody);
-    document.body.appendChild(script);
+    AppState.getInstance().setShowSettingsPane(false);
+    AppState.getInstance().setShowOtherSettings(false);
   }
 
   render() {
