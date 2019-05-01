@@ -6,12 +6,13 @@ class Cache {
     constructor() {
         var local_cache = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (local_cache === null) {
-            this.data = { "events": { "list": [] } };
+            this.set = { "events": { "list": [] } };
         } else {
             this.data = JSON.parse(local_cache);
         }
 
         this.eventEmitter = new EventEmitter();
+        this.sendDataChangedEvent();
     }
 
     static getInstance() {
@@ -37,6 +38,10 @@ class Cache {
     set(data) {
         this.data = data;
         this.writeToLocalStorage();
+        this.sendDataChangedEvent();
+    }
+
+    sendDataChangedEvent() {
         this.eventEmitter.emit("dataChanged");
     }
 

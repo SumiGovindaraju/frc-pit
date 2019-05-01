@@ -12,12 +12,8 @@ var FETCH_CONFIG = {
 };
 
 async function verifyTeamInEvent(team, event) {
-    if (!event) {
-        return false;
-    }
-
-    if (AppState.getInstance().getTeamEventVerified() !== undefined) {
-        return AppState.getInstance().getTeamEventVerified();
+    if (!event || AppState.getInstance().getTeamEventVerified() !== undefined) {
+        return;
     }
 
     var cache = Cache.getInstance().get();
@@ -63,10 +59,6 @@ async function verifyTeamInEvent(team, event) {
 }
 
 export default async function pullFromTBA() {
-    // if (!navigator.onLine) {
-    //     return;
-    // }
-
     var promises = [];
     var cache_instance = Cache.getInstance();
     var cache = cache_instance.get();

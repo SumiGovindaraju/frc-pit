@@ -10,6 +10,15 @@ class App extends Component {
     setInterval(function () {
       pullFromTBA();
     }, 120000);
+
+    var isOnline = navigator.onLine;
+    setInterval(function () {
+      if (navigator.onLine && !isOnline) {
+        pullFromTBA();
+      }
+
+      isOnline = navigator.onLine;
+    }, 100);
   }
 
   render() {
