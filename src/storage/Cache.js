@@ -6,9 +6,9 @@ class Cache {
     constructor() {
         var local_cache = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (local_cache === null) {
-            this.set = { "events": { "list": [] } };
+            this.set({ "events": { "list": [] } });
         } else {
-            this.data = JSON.parse(local_cache);
+            this.set(JSON.parse(local_cache));
         }
 
         this.eventEmitter = new EventEmitter();
