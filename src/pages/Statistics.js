@@ -19,10 +19,12 @@ export default class Statistics extends Component {
   }
 
   // from w3 schools
-  sortStatistics(n) {
+  sortStatistics(evt) {
     if (document.readyState !== "complete") {
       return;
     }
+
+    var n = evt.currentTarget.dataset.sortindex;
 
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("statistics").getElementsByTagName("table")[0];
@@ -80,37 +82,50 @@ export default class Statistics extends Component {
 
       var rows = [];
       for (var ranking in data) {
+        var extra_stat = cache.events[event].rankings.extra_stats_info[0] ? <td>{data[ranking].extra_stats[0] ? data[ranking].extra_stats[0] : "N/A"}</td> : <React.Fragment></React.Fragment>;
+        var stats = [];
+        for (var stat in cache.events[event].rankings.sort_order_info) {
+          if (data[ranking].sort_orders[stat] === parseInt(data[ranking].sort_orders[stat])) {
+            stats.push(<td key={stat}>{data[ranking].sort_orders[stat]}</td>);
+          } else {
+            stats.push(<td key={stat}>{data[ranking].sort_orders[stat].toFixed(3)}</td>);
+          }
+        }
+
+        console.log(data[ranking], cache.events[event].rankings)
+
         rows.push(
           <tr key={ranking}>
             <td>{data[ranking].rank}</td>
             <td>{data[ranking].team_key.substring(3)}</td>
-            <td>{data[ranking].sort_orders[0].toFixed(3)}</td>
-            <td>{data[ranking].sort_orders[1]}</td>
-            <td>{data[ranking].sort_orders[2]}</td>
-            <td>{data[ranking].sort_orders[3]}</td>
-            <td>{data[ranking].sort_orders[4]}</td>
-            <td>{data[ranking].record.wins}-{data[ranking].record.losses}-{data[ranking].record.ties}</td>
+            {stats}
+            <td>{data[ranking].record != null ? data[ranking].record.wins + "-" + data[ranking].record.losses + "-" + data[ranking].record.ties : "N/A"}</td>
             <td>{data[ranking].dq}</td>
             <td>{data[ranking].matches_played}</td>
-            <td>{data[ranking].extra_stats[0]}</td>
+            {extra_stat}
             <td></td>
           </tr>);
       }
 
+      var stat_infos = [];
+      var stat_sort_index = 2;
+      for (var stat_info in cache.events[event].rankings.sort_order_info) {
+        stat_infos.push(<th onClick={this.sortStatistics} data-sortindex={stat_sort_index} key={stat_info}>{cache.events[event].rankings.sort_order_info[stat_info].name} <i className="fas fa-sort"></i></th>);
+        stat_sort_index++;
+      }
+
+      var extra_stats_info = cache.events[event].rankings.extra_stats_info[0] ? <th onClick={this.sortStatistics} data-sortindex={stat_sort_index + 3}>{cache.events[event].rankings.extra_stats_info[0].name} <i className="fas fa-sort"></i></th> : <React.Fragment></React.Fragment>;
+
       body = <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th onClick={() => this.sortStatistics(0)}>Rank <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(1)}>Team <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(2)}>Ranking Score <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(3)}>Cargo <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(4)}>Hatch Panel <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(5)}>HAB Climb <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(6)}>Sandstorm Bonus <i className="fas fa-sort"></i></th>
+            <th onClick={this.sortStatistics} data-sortindex={0}>Rank <i className="fas fa-sort"></i></th>
+            <th onClick={this.sortStatistics} data-sortindex={1}>Team <i className="fas fa-sort"></i></th>
+            {stat_infos}
             <th>Record (W-L-T)</th>
-            <th onClick={() => this.sortStatistics(8)}>DQ <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(9)}>Played <i className="fas fa-sort"></i></th>
-            <th onClick={() => this.sortStatistics(10)}>Total RP <i className="fas fa-sort"></i></th>
+            <th onClick={this.sortStatistics} data-sortindex={stat_sort_index + 1}>DQ <i className="fas fa-sort"></i></th>
+            <th onClick={this.sortStatistics} data-sortindex={stat_sort_index + 2}>Played <i className="fas fa-sort"></i></th>
+            {extra_stats_info}
             <th>View Team Info</th>
           </tr>
         </thead>
