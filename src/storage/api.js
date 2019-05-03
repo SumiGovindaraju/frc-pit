@@ -97,7 +97,7 @@ export default async function pullFromTBA() {
     }
 
     if (cache.events[event] === undefined) {
-        cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {} };
+        cache.events[event] = { "teams": {}, "awards": {}, "rankings": {}, "matches": {}, "webcasts": {}, "statistics": {}, "last_updated": (new Date()).toUTCString() };
     }
 
     if (team) {
@@ -109,6 +109,7 @@ export default async function pullFromTBA() {
             .then(res => res.json())
             .then((result) => {
                 cache.events[event].teams[team].awards = result;
+                cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
             }).catch((error) => {
                 console.error(error);
@@ -119,6 +120,7 @@ export default async function pullFromTBA() {
             .then(res => res.json())
             .then((result) => {
                 cache.events[event].teams[team].matches = result;
+                cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
             }).catch((error) => {
                 console.error(error);
@@ -129,6 +131,7 @@ export default async function pullFromTBA() {
             .then(res => res.json())
             .then((result) => {
                 cache.events[event].awards = result;
+                cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
             }, (error) => {
                 console.error(error);
@@ -139,6 +142,7 @@ export default async function pullFromTBA() {
             .then(res => res.json())
             .then((result) => {
                 cache.events[event].matches = result;
+                cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
             }).catch((error) => {
                 console.error(error);
@@ -150,6 +154,7 @@ export default async function pullFromTBA() {
         .then(res => res.json())
         .then((result) => {
             cache.events[event].rankings = result;
+            cache.events[event].last_updated = (new Date()).toUTCString();
             cache_instance.set(cache);
         }).catch((error) => {
             console.error(error);
@@ -161,6 +166,7 @@ export default async function pullFromTBA() {
             .then(res => res.json())
             .then((result) => {
                 cache.events[event].webcasts = result;
+                cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
                 cache_instance.sendUpdatedWebcastsEvent();
             }).catch((error) => {
