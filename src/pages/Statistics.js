@@ -92,8 +92,6 @@ export default class Statistics extends Component {
           }
         }
 
-        console.log(data[ranking], cache.events[event].rankings)
-
         rows.push(
           <tr key={ranking}>
             <td>{data[ranking].rank}</td>
