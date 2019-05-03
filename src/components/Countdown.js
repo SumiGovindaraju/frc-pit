@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cache from '../storage/Cache';
 import AppState from '../state/AppState';
-import util from '../util';
+import util from '../util/util';
 
 export default class Countdown extends Component {
   constructor(props) {

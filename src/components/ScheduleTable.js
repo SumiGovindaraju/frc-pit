@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cache from '../storage/Cache';
 import AppState from '../state/AppState';
-const util = require('./../util');
+import util from '../util/util';
 
 export default class ScheduleTable extends Component {
   constructor(props) {

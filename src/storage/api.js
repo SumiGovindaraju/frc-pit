@@ -165,7 +165,11 @@ export default async function pullFromTBA() {
         promises.push(fetch(TBA_BASE_URL + "/event/" + event, FETCH_CONFIG)
             .then(res => res.json())
             .then((result) => {
-                cache.events[event].webcasts = result;
+                if (result == null || result.webcasts == null) {
+                    throw new Error("Webcast API call returns null");
+                }
+
+                cache.events[event].webcasts = result.webcasts;
                 cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
                 cache_instance.sendUpdatedWebcastsEvent();

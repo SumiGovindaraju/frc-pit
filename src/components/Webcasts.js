@@ -38,11 +38,10 @@ export default class Webcasts extends Component {
       body = <h1>Webcasts Disabled</h1>
     } else if (!navigator.onLine) {
       body = <h1>Offline: Cannot Access Webcasts</h1>
-    } else if (cache.events[event] == null || cache.events[event].webcasts == null ||
-      cache.events[event].webcasts.webcasts == null || cache.events[event].webcasts.webcasts.length === 0) {
+    } else if (cache.events[event] == null || cache.events[event].webcasts == null || cache.events[event].webcasts.length === 0) {
       body = <h1>No Webcasts</h1>
     } else {
-      var data = cache.events[event].webcasts.webcasts;
+      var data = cache.events[event].webcasts;
       var lis = [], iframes = [];
       for (var webcast in data) {
         if (data[webcast].type === "twitch" || data[webcast].type === "youtube") {
