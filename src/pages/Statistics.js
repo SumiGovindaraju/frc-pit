@@ -82,7 +82,11 @@ export default class Statistics extends Component {
 
       var rows = [];
       for (var ranking in data) {
-        var extra_stat = cache.events[event].rankings.extra_stats_info[0] ? <td>{data[ranking].extra_stats[0] ? data[ranking].extra_stats[0] : "N/A"}</td> : <React.Fragment></React.Fragment>;
+        var extra_stat = cache.events[event].rankings.extra_stats_info[0] ?
+          <td>{data[ranking].extra_stats[0] ?
+            (data[ranking].extra_stats[0] === parseInt(data[ranking].extra_stats[0]) ? data[ranking].extra_stats[0] : data[ranking].extra_stats[0].toFixed(3)) :
+            "N/A"}</td> :
+          <React.Fragment></React.Fragment>;
         var stats = [];
         for (var stat in cache.events[event].rankings.sort_order_info) {
           if (data[ranking].sort_orders[stat] === parseInt(data[ranking].sort_orders[stat])) {
