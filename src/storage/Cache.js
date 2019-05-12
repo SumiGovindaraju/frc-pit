@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
+const sizeof = require('object-sizeof');
 
 const LOCAL_STORAGE_KEY = "The Blue Alliance API Cache";
+const MAX_CACHE_SIZE = 3.5e6;
 
 class Cache {
     constructor() {
@@ -12,6 +14,8 @@ class Cache {
         }
 
         this.eventEmitter = new EventEmitter();
+
+        this.reduceSize();
         this.sendDataChangedEvent();
     }
 
@@ -39,6 +43,33 @@ class Cache {
         this.data = data;
         this.writeToLocalStorage();
         this.sendDataChangedEvent();
+    }
+
+    size() {
+        return sizeof(this.data);
+    }
+
+    deleteLastUpdatedEvent() {
+        var last_updated_event_key = null, last_updated_event_date = new Date();
+        for (var event in this.data.events) {
+            if (new Date(this.data.events[event].last_updated) < last_updated_event_date) {
+                last_updated_event_key = event;
+                last_updated_event_date = new Date(this.data.events[event].last_updated);
+            }
+        }
+
+        if (last_updated_event_key !== null) {
+            delete this.data.events[last_updated_event_key];
+        }
+    }
+
+    /**
+     * Only reduces size if necessary
+     */
+    reduceSize() {
+        while(this.size() > MAX_CACHE_SIZE) {
+            this.deleteLastUpdatedEvent();
+        }
     }
 
     sendDataChangedEvent() {
