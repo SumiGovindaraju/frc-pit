@@ -7,15 +7,17 @@ export default class Statistics extends Component {
   constructor(props) {
     super(props);
 
-    var instance = this;
-    Cache.getInstance().getEventEmitter().on("dataChanged", function () {
-      instance.forceUpdate();
-    });
-
     this.sortStatistics = this.sortStatistics.bind(this);
+    this.setStatisticsModalTeamNum = this.setStatisticsModalTeamNum.bind(this);
 
     AppState.getInstance().setShowSettingsPane(true);
     AppState.getInstance().setShowOtherSettings(false);
+
+    this.state = { modalTeamNumber: null };
+  }
+
+  setStatisticsModalTeamNum(evt) {
+    this.setState({ modalTeamNumber: evt.currentTarget.dataset.teamnumber });
   }
 
   // from w3 schools
@@ -96,6 +98,7 @@ export default class Statistics extends Component {
           }
         }
 
+        var team_key_valid = data[ranking].team_key.substring(3) == parseInt(data[ranking].team_key.substring(3));
         rows.push(
           <tr key={ranking}>
             <td>{data[ranking].rank}</td>
@@ -105,7 +108,11 @@ export default class Statistics extends Component {
             <td>{data[ranking].dq}</td>
             <td>{data[ranking].matches_played}</td>
             {extra_stat}
-            <td></td>
+            <td>
+              <button className={"btn " + (team_key_valid ? "btn-primary" : "btn-secondary")} disabled={!team_key_valid} onClick={this.setStatisticsModalTeamNum} data-teamnumber={team_key_valid ? data[ranking].team_key : null}>
+                {team_key_valid ? "View Team Info" : "Invalid Team #"}
+              </button>
+            </td>
           </tr>);
       }
 
@@ -140,7 +147,7 @@ export default class Statistics extends Component {
         <div className="statistics" id="statistics">
           {body}
         </div>
-        <StatisticsModal />
+        <StatisticsModal teamKey={this.state.modalTeamNumber} eventKey={event} />
       </div>
     );
   }
