@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StatisticsModal from '../components/StatisticsModal';
+// import StatisticsModal from '../components/StatisticsModal';
 import AppState from '../state/AppState';
 import Cache from '../storage/Cache';
 
@@ -14,6 +14,11 @@ export default class Statistics extends Component {
     AppState.getInstance().setShowOtherSettings(false);
 
     this.state = { modalTeamNumber: null };
+
+    var instance = this;
+    Cache.getInstance().getEventEmitter().on("dataChanged", function () {
+      instance.forceUpdate();
+    });
   }
 
   setStatisticsModalTeamNum(evt) {
