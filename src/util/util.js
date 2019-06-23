@@ -1,6 +1,6 @@
-var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function getMatchTimeInMS(match) {
+export function getMatchTimeInMS(match) {
     if (match.actual_time !== undefined && match.actual_time !== null) {
         return match.actual_time * 1000;
     }
@@ -12,5 +12,4 @@ function getMatchTimeInMS(match) {
     return match.time * 1000;
 }
 
-module.exports.getMatchTimeInMS = getMatchTimeInMS;
-module.exports.days = days;
+export default { getMatchTimeInMS, days }

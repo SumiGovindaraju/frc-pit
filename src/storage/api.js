@@ -1,5 +1,5 @@
 import Cache from "./Cache";
-import AppState from "./../state/AppState";
+import AppState from "../state/AppState";
 
 const TBA_BASE_URL = "https://www.thebluealliance.com/api/v3";
 const X_TBA_Auth_Key = "83kBcUgRuDvJ1XLVXpB2ROeuRAzHoWpX9IRiWkRuwv8B9CryAlc3izY3ZXVOD4Hm";
@@ -58,7 +58,7 @@ async function verifyTeamInEvent(team, event) {
     AppState.getInstance().setTeamEventVerified(ret_val);
 }
 
-export default async function pullFromTBA() {
+export async function pullFromTBA() {
     var promises = [];
     var cache_instance = Cache.getInstance();
     var cache = cache_instance.get();
@@ -180,3 +180,5 @@ export default async function pullFromTBA() {
 
     await Promise.all(promises);
 }
+
+export default { pullFromTBA }

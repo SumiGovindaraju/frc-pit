@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Cache from '../storage/Cache';
+import AppState from '../state/AppState';
+import api from '../storage/api';
 
 export default class StatisticsModal extends Component {
   constructor(props) {
@@ -15,7 +18,6 @@ export default class StatisticsModal extends Component {
       validProps: this.props.teamKey !== null && this.props.eventKey !== null
     };
 
-    this.populateStateFromTBA();
     this.showModal();
 
     this.hideModal = this.hideModal.bind(this);
@@ -34,13 +36,13 @@ export default class StatisticsModal extends Component {
     }
 
     if (newModal) {
-      this.populateStateFromTBA();
       this.showModal();
     }
   }
 
-  showModal() {
+  async showModal() {
     if (this.state.validProps) {
+      await this.populateStateFromTBA();
       alert("Showing Modal For " + this.props.teamKey + " @ " + this.props.eventKey);
       this.setState({ shown: true });
       document.body.classList.add("modal-open");
@@ -57,8 +59,22 @@ export default class StatisticsModal extends Component {
     document.body.removeChild(document.getElementById("modal-backdrop"));
   }
 
-  populateStateFromTBA() {
+  async populateStateFromTBA() {
+    await api.pullStatisticsFromTBA(this.state.teamKey);
+    var cache = Cache.getInstance().get();
+    var event = AppState.getInstance().getEvent();
+  
+    if (cache.events == null || cache.events[event] == null || cache.events[event].teams == null || cache.events[event].teams[this.state.teamKey] == null) {
+      return;
+    }
+    console.log("b")
 
+    this.setState({
+      teamNickname: cache.events[event].teams[this.state.teamKey].name,
+      rookieYear: cache.events[event].teams[this.state.teamKey].rookie_year,
+      location: cache.events[event].teams[this.state.teamKey].location,
+      eventRecord: cache.events[event].teams[this.state.teamKey].status
+    });
   }
 
   render() {
@@ -79,7 +95,7 @@ export default class StatisticsModal extends Component {
             <div className="modal-body">
               <p><b>Rookie Year:</b> {this.state.rookieYear}</p>
               <p><b>Location:</b> {this.state.location}</p>
-              <p><b>Event Record:</b> {this.state.eventRecord}</p>
+              <p><b>Event Record:</b> {this.state.eventRecord != null ? this.state.eventRecord.replace("<b>", "").replace("</b>", "") : ""}</p>
               <p className="robot-images-title"><b>Robot Images:</b></p>
               <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">

@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
-import pullFromTBA from './storage/api';
+import api from './storage/api';
 
 class App extends Component {
   componentDidMount() {
-    pullFromTBA();
+    api.pullFromTBA();
 
     setInterval(function () {
-      pullFromTBA();
+      api.pullFromTBA();
     }, 120000);
 
     var isOnline = navigator.onLine;
     setInterval(function () {
       if (navigator.onLine && !isOnline) {
-        pullFromTBA();
+        api.pullFromTBA();
       }
 
       isOnline = navigator.onLine;
