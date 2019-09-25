@@ -46,13 +46,13 @@ $ npm start
 To build a production build, run 
 
 ```
-$ npm build
+$ npm run build
 ```
 
 To deploy to a production environment, run
 
 ```
-$ npm deploy
+$ npm run deploy
 ```
 
 ## Acknowledgements
