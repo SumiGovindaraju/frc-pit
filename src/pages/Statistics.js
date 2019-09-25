@@ -103,7 +103,7 @@ export default class Statistics extends Component {
           }
         }
 
-        var team_key_valid = data[ranking].team_key.substring(3) == parseInt(data[ranking].team_key.substring(3));
+        // var team_key_valid = data[ranking].team_key.substring(3) == parseInt(data[ranking].team_key.substring(3));
         rows.push(
           <tr key={ranking}>
             <td>{data[ranking].rank}</td>
