@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
+import AppState from '../state/AppState';
 
 export default class PageNotFound extends Component {
-  componentWillMount() { // create script tags
-    var script = document.createElement("script");
-    var scriptBody = document.createTextNode(`
-      $(document).ready(function () {
-        $(".settings").hide();
-      });
-    `);
-    script.appendChild(scriptBody);
-    document.body.appendChild(script);
+  constructor(props) {
+    super(props);
+
+    AppState.getInstance().setShowSettingsPane(false);
+    AppState.getInstance().setShowOtherSettings(false);
   }
-  
+
   render() {
     return (
       <div>

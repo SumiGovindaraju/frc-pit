@@ -20,6 +20,10 @@ html {
     background-color: #eef;
 }
 
+.strike {
+    text-decoration: line-through;
+}
+
 .blue-score {
     background-color: #ddf;
 }

@@ -5,7 +5,7 @@ import './css/fontawesome-all.min.css';
 import './css/style.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import initFirebase from './initFirebase';
+import initFirebase from './util/initFirebase';
 
 initFirebase();
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import AppState from '../state/AppState';
 
 export default class CreateNewTool extends Component {
   constructor(props) {
@@ -25,17 +26,9 @@ export default class CreateNewTool extends Component {
         window.location.href = process.env.PUBLIC_URL + "/#/auth?redirect=" + encodeURIComponent(window.location.href);
       }
     });
-  }
 
-  componentWillMount() { // create script tags
-    var script = document.createElement("script");
-    var scriptBody = document.createTextNode(`
-      $(document).ready(function () {
-        $(".settings").hide();
-      });
-    `);
-    script.appendChild(scriptBody);
-    document.body.appendChild(script);
+    AppState.getInstance().setShowSettingsPane(false);
+    AppState.getInstance().setShowOtherSettings(false);
   }
 
   addTool() {
