@@ -27,11 +27,11 @@ export default class Awards extends Component {
       for (var award in data) {
         if (team) {
           lis.push(
-            <li key={award}>{data[award].name} {data[award].recipient_list.map(x => x.team_key === team && x.awardee !== null ? "(" + x.awardee + ")" : "").join("")}</li>
+            <li key={award}>{data[award].name} {data[award].recipient_list.map(x => x.team_key === team && (x.awardee !== null && x.awardee !== "") ? "(" + x.awardee + ")" : "").join("")}</li>
           );
         } else {
           lis.push(
-            <li key={award}>{data[award].name} ({data[award].recipient_list.map(x => x.awardee !== null ? x.awardee : x.team_key.substring(3)).join(", ")})</li>
+            <li key={award}>{data[award].name} ({data[award].recipient_list.map(x => (x.awardee !== null && x.awardee !== "") ? x.awardee : x.team_key.substring(3)).join(", ")})</li>
           );
         }
       }
