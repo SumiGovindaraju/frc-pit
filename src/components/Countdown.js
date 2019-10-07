@@ -47,18 +47,22 @@ export default class Countdown extends Component {
 
       var distance = countDownDate - (new Date());
 
-      var hours = parseInt((distance / (1000 * 60 * 60)) % 24);
-      var minutes = parseInt((distance / (1000 * 60)) % 60);
-      var seconds = parseInt((distance / 1000) % 60);
-
-      hours = (hours < 10) ? "0" + hours : hours;
-      minutes = (minutes < 10) ? "0" + minutes : minutes;
-      seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-      if (distance >= 0) {
-        this.setState({ nextMatchNameTime: hours + ":" + minutes + ":" + seconds, nextMatchName: closestMatchName, nextMatchBumperColor: closestMatchBumperColor });
-      } else {
+      if (distance >= 24 * 60 * 60 * 1000) { // if greater than a day away
         this.setState({ nextMatchNameTime: null, nextMatchName: null, nextMatchBumperColor: "black" });
+      } else {
+        var hours = parseInt((distance / (1000 * 60 * 60)) % 24);
+        var minutes = parseInt((distance / (1000 * 60)) % 60);
+        var seconds = parseInt((distance / 1000) % 60);
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        if (distance >= 0) {
+          this.setState({ nextMatchNameTime: hours + ":" + minutes + ":" + seconds, nextMatchName: closestMatchName, nextMatchBumperColor: closestMatchBumperColor });
+        } else {
+          this.setState({ nextMatchNameTime: null, nextMatchName: null, nextMatchBumperColor: "black" });
+        }
       }
     }
   }
