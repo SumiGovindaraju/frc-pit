@@ -33,7 +33,7 @@ export default class Countdown extends Component {
 
     var data = team ? cache.events[event].teams[team].matches : cache.events[event].matches;
     for (var match in data) {
-      if ((new Date()) < (new Date(util.getMatchTimeInMS(data[match]))) && util.getMatchTimeInMS(data[match]) < closestMatchTime) {
+      if ((new Date()) < (new Date(util.getMatchTimeInMS(data[match]))) && util.getMatchTimeInMS(data[match]) < closestMatchTime && data[match].score_breakdown == null) {
         closestMatchTime = util.getMatchTimeInMS(data[match]);
         closestMatchName = data[match].comp_level === "qm" ? "Quals " + data[match].match_number : (data[match].comp_level === "qf" ? "Quarters " + data[match].set_number + " Match " + data[match].match_number : (data[match].comp_level === "sf" ? "Semis " + data[match].set_number + " Match " + data[match].match_number : "Finals " + data[match].match_number));
         closestMatchBumperColor = team ? (data[match].alliances.blue.team_keys.includes(team) ? "blue" : "red") : null
