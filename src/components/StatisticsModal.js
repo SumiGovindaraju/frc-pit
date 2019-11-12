@@ -96,7 +96,7 @@ export default class StatisticsModal extends Component {
               <p><b>Rookie Year:</b> <span className="modal-rookie-year"></span></p>
               <p><b>Location:</b> <span className="modal-location"></span></p>
               <p><b>Event Record:</b> <span className="modal-event-status"></span></p>
-              <p><b>TBA Profile:</b> <a className="modal-tba-profile" target="_blank">&nbsp;</a></p>
+              <p><b>TBA Profile:</b> <a className="modal-tba-profile" target="_blank" href="/">&nbsp;</a></p>
               <p className="robot-images-title"><b>Robot Images:</b></p>
               <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
