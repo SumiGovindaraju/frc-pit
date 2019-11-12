@@ -3,6 +3,10 @@ html {
     overflow-x: hidden;
 }
 
+#root {
+    margin-bottom: 3%;
+}
+
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
@@ -79,7 +83,11 @@ html {
     width: 100%;
     background: white;
     text-align: center;
-    vertical-align: center;
+    font-size: 12px;
+}
+
+.footer>p {
+    margin: 0;
 }
 
 /* Portrait phones and smaller */
