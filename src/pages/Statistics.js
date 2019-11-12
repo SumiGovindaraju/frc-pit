@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import StatisticsModal from '../components/StatisticsModal';
+import StatisticsModal from '../components/StatisticsModal';
 import AppState from '../state/AppState';
 import Cache from '../storage/Cache';
 
@@ -8,7 +8,7 @@ export default class Statistics extends Component {
     super(props);
 
     this.sortStatistics = this.sortStatistics.bind(this);
-    this.setStatisticsModalTeamNum = this.setStatisticsModalTeamNum.bind(this);
+    // this.setStatisticsModalTeamNum = this.setStatisticsModalTeamNum.bind(this);
 
     AppState.getInstance().setShowSettingsPane(true);
     AppState.getInstance().setShowOtherSettings(false);
@@ -21,8 +21,18 @@ export default class Statistics extends Component {
     });
   }
 
-  setStatisticsModalTeamNum(evt) {
-    this.setState({ modalTeamNumber: evt.currentTarget.dataset.teamnumber });
+  // setStatisticsModalTeamNum(evt) {
+  //   this.setState({ modalTeamNumber: evt.currentTarget.dataset.teamnumber });
+  // }
+
+  showStatisticsModal(evt) {
+    var script = document.createElement("script");
+    var scriptBody = document.createTextNode(`
+        showStatisticsModal("${AppState.getInstance().getEvent()}", "${evt.currentTarget.dataset.teamnumber}");
+    `);
+    script.appendChild(scriptBody);
+    console.log(script);
+    document.getElementsByTagName('body')[0].appendChild(script);
   }
 
   // from w3 schools
@@ -103,7 +113,7 @@ export default class Statistics extends Component {
           }
         }
 
-        // var team_key_valid = data[ranking].team_key.substring(3) == parseInt(data[ranking].team_key.substring(3));
+        var team_key_valid = data[ranking].team_key.substring(3) == parseInt(data[ranking].team_key.substring(3));
         rows.push(
           <tr key={ranking}>
             <td>{data[ranking].rank}</td>
@@ -113,11 +123,11 @@ export default class Statistics extends Component {
             <td>{data[ranking].dq}</td>
             <td>{data[ranking].matches_played}</td>
             {extra_stat}
-            {/* <td>
-              <button className={"btn " + (team_key_valid ? "btn-primary" : "btn-secondary")} disabled={!team_key_valid} onClick={this.setStatisticsModalTeamNum} data-teamnumber={team_key_valid ? data[ranking].team_key : null}>
+            <td>
+              <button className={"btn " + (team_key_valid ? "btn-primary" : "btn-secondary")} disabled={!team_key_valid} onClick={this.showStatisticsModal} data-teamnumber={team_key_valid ? data[ranking].team_key : null}>
                 {team_key_valid ? "View Team Info" : "Invalid Team #"}
               </button>
-            </td> */}
+            </td>
           </tr>);
       }
 
@@ -140,7 +150,7 @@ export default class Statistics extends Component {
             <th onClick={this.sortStatistics} data-sortindex={stat_sort_index + 1}>DQ <i className="fas fa-sort"></i></th>
             <th onClick={this.sortStatistics} data-sortindex={stat_sort_index + 2}>Played <i className="fas fa-sort"></i></th>
             {extra_stats_info}
-            {/* <th>View Team Info</th> */}
+            <th>View Team Info</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -152,7 +162,7 @@ export default class Statistics extends Component {
         <div className="statistics" id="statistics">
           {body}
         </div>
-        {/* <StatisticsModal teamKey={this.state.modalTeamNumber} eventKey={event} /> */}
+        <StatisticsModal />
       </div>
     );
   }
