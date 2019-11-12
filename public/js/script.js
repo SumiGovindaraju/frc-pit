@@ -113,6 +113,8 @@ async function showStatisticsModal(event, team_key) {
         }));
     }
 
+    $(".modal-tba-profile").attr("href", "https://www.thebluealliance.com/team/" + team_key.substring(3) + "/" + event.substring(0, 4));
+    $(".modal-tba-profile").text(team_key.substring(3));
     await Promise.all(promises);
 
     modalTeam = team_key;
