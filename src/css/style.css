@@ -65,11 +65,21 @@ html {
 }
 
 .settings-event {
-    width: 60% !important;
+    width: 58% !important;
 }
 
 .settings-team {
     width: 100% !important;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    text-align: center;
+    vertical-align: center;
 }
 
 /* Portrait phones and smaller */
