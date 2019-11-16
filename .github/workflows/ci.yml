@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Dependencies
       run: |
-        rm -rf $GITHUB_WORKSPACE/package-lock.json && npm install
+        cd $GITHUB_WORKSPACE && ls && rm package-lock.json && npm install
       env:
         CI: true
     - name: Build Code
