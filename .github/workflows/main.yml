@@ -1,0 +1,13 @@
+name: Environment Variables
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up environment variables 
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPT_KEY }}
