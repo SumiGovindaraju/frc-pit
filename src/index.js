@@ -7,6 +7,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import initFirebase from './util/initFirebase';
 
+console.log(process.env);
 initFirebase();
 
 ReactDOM.render(<App />, document.getElementById('root'));
