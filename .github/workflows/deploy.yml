@@ -3,9 +3,9 @@ name: Auto Deploy
 on: [push]
 
 jobs:
-  build:
+  deploy:
 
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
