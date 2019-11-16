@@ -1,4 +1,4 @@
-# FRC Pit
+# FRC Pit [![Node CI](https://github.com/SumiGovindaraju/frc-pit/workflows/Node%20CI/badge.svg)](https://github.com/SumiGovindaraju/frc-pit/actions?query=workflow%3A%22Node+CI%22)
 
 Progressive Web App that provides teams with functionalities 
 

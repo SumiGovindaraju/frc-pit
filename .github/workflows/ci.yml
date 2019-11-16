@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest]
-        node-version: [12.x]
+        node-version: [10.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Dependencies
       run: |
-        cd $GITHUB_WORKSPACE && ls && rm package-lock.json && npm install
+        cd $GITHUB_WORKSPACE && rm package-lock.json && npm install
       env:
         CI: true
     - name: Build Code
