@@ -17,11 +17,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Remove Package Lock
+      if: matrix.os != "windows-latest"
+      run: 
+        rm -rf $GITHUB_WORKSPACE/package-lock.json
     - name: Install Dependencies
-      run: |
-        rm -rf $GITHUB_WORKSPACE/package-lock.json; npm install
-      env:
-        CI: true
+      run: npm install
     - name: Build Code
       run: |
         npm run build
