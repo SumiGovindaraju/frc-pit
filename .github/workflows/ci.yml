@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Remove Package Lock
-      if: ${{ matrix.os }} != ${{ windows-latest }}
+      if: matrix.os != 'windows-latest'
       run: 
         rm -rf $GITHUB_WORKSPACE/package-lock.json
     - name: Install Dependencies
