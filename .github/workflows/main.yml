@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: echo $ENCRYPTION_KEY
     - name: Set up environment variables 
       env:
         ENCRYPTION_KEY: ${{ secrets.ENCRYPT_KEY }}
+      run: echo $ENCRYPTION_KEY
