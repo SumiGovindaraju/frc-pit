@@ -1,0 +1,23 @@
+name: Auto Deploy
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10.x
+      	uses: actions/setup-node@v1
+      	with:
+        	node-version: 10.x
+	- name: GitHub Pages Deploy
+	  	uses: maxheld83/ghpages@v0.1.2
+	  	with:
+	  		GH_PAT: ${{ secrets.GH_PAT }}
+	  	env:
+	  		BUILD_DIR: build/
+	  		
+	  		
