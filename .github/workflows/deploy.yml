@@ -13,7 +13,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-	- name: GitHub Pages Deploy
+    - name: GitHub Pages Deploy
 	  	uses: maxheld83/ghpages@v0.1.2
 	  	with:
 	  		GH_PAT: ${{ secrets.GH_PAT }}
