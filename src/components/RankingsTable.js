@@ -26,12 +26,13 @@ export default class RankingsTable extends Component {
 
       var rows = [];
       for (var ranking in data) {
+        var record_exists = data[ranking].record != null; // to account for games like 2015
         rows.push(
           <tr key={ranking}>
             <td className={data[ranking].team_key === team ? "current-team" : ""}>{data[ranking].rank}</td>
             <td className={data[ranking].team_key === team ? "current-team" : ""}>{data[ranking].team_key.substring(3)}</td>
             <td className={data[ranking].team_key === team ? "current-team" : ""}>{data[ranking].sort_orders[0].toFixed(3)}</td>
-            <td className={data[ranking].team_key === team ? "current-team" : ""}>{data[ranking].record.wins}-{data[ranking].record.losses}-{data[ranking].record.ties}</td>
+            <td className={data[ranking].team_key === team ? "current-team" : ""}>{record_exists ? `${data[ranking].record.wins}-${data[ranking].record.losses}-${data[ranking].record.ties}` : "N/A"}</td>
             <td className={data[ranking].team_key === team ? "current-team" : ""}>{data[ranking].matches_played}</td>
             <td className={data[ranking].team_key === team ? "current-team" : ""}>{data[ranking].extra_stats[0]}</td>
           </tr>);
