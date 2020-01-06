@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import Cache from '../storage/Cache';
 import AppState from '../state/AppState';
 import util from '../util/util';
-
-const bonus_rp_1_index = "completeRocketRankingPoint";
-const bonus_rp_1_name = "Complete Rocket";
-const bonus_rp_2_index = "habDockingRankingPoint";
-const bonus_rp_2_name = "HAB Docking";
+import Challenge from '../state/Challenge';
 
 export default class ScheduleTable extends Component {
   constructor(props) {
@@ -30,6 +26,12 @@ export default class ScheduleTable extends Component {
     var team = AppState.getInstance().getTeam();
     var event = AppState.getInstance().getEvent();
     var cache = Cache.getInstance().get();
+
+    // for ranking point pop ups
+    var bonus_rp_1_index = Challenge.getBonusRankingPoint1(event.substring(0, 4)).index;
+    var bonus_rp_1_name = Challenge.getBonusRankingPoint1(event.substring(0, 4)).name;
+    var bonus_rp_2_index = Challenge.getBonusRankingPoint2(event.substring(0, 4)).index;
+    var bonus_rp_2_name = Challenge.getBonusRankingPoint2(event.substring(0, 4)).name;
 
     var body;
     if ((cache.events[event] == null || cache.events[event].matches == null || cache.events[event].matches.length === 0)
