@@ -37,7 +37,7 @@ export default class CreateNewTool extends Component {
       team_number = document.getElementById("team-number").value;
 
     if (name === "" || tool === "" || team_number === "") {
-      alert("Error: All fields must be filled.");
+      alert("Error: All fields must be filled.", true);
       return;
     }
 
@@ -54,7 +54,7 @@ export default class CreateNewTool extends Component {
       document.getElementById("team-number").value = "";
       document.getElementsByClassName("error-alert-div")[0].style.display = "none";
     } else {
-      alert("No current user");
+      alert("No current user", true);
     }
   }
 

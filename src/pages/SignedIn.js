@@ -41,7 +41,7 @@ export default class SignedIn extends Component {
     var team_number = document.getElementById("team-number").value;
 
     if (full_name === "" || full_name === null || team_number === "") {
-      alert("Error: All fields must be filled.");
+      alert("Error: All fields must be filled.", true);
       return;
     }
 

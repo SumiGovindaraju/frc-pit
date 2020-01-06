@@ -16,7 +16,7 @@ export default class Main extends Component {
             {routesJSX}
           </Switch>
         </HashRouter>
-        <div className="error-alert-div" style={{ display: "none" }}><div className="btn btn-danger btn-lg error-alert"></div></div>
+        <div className="alert-div" style={{ display: "none" }}><div className="btn btn-lg alert"></div></div>
       </main>
     );
   }

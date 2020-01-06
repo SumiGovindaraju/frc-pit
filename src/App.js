@@ -15,6 +15,7 @@ class App extends Component {
     var isOnline = navigator.onLine;
     setInterval(function () {
       if (navigator.onLine && !isOnline) {
+        alert("FRC Pit is online. Refreshing cached data now", false);
         api.pullFromTBA();
       }
 

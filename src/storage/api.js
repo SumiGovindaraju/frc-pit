@@ -16,17 +16,25 @@ async function verifyTeamInEvent(team, event) {
         return;
     }
 
+    if (!team.startsWith("frc")) {
+        alert("Invalid team", true);
+        return;
+    }
+
+    // handle cases where we are offline
     var cache = Cache.getInstance().get();
     if (cache.events != null && cache.events[event] != null) {
-        if ((team && cache.events[event].teams[team] == null) && !navigator.onLine) {
-            alert("Team data not cached. FRC Pit is offline.");
+        if ((team && cache.events[event].teams[team] == null) && !navigator.onLine) { // if offline and no team data at this event is available
+            alert("Team data not cached. FRC Pit is offline.", true);
+            return;
+        } else if ((team && cache.events[event].teams[team] != null) && !navigator.onLine) { // if offline and team data at this event is available
+            AppState.getInstance().setTeamEventVerified(true);
+            console.log(cache.events)
+            alert("FRC Pit is offline. Using cached data.", false)
             return;
         }
-
-        AppState.getInstance().setTeamEventVerified(true);
-        return;
-    } else if (!navigator.onLine) {
-        alert("Event data not cached. FRC Pit is offline.");
+    } else if (!navigator.onLine) { // if offline and no cached data for this event is available
+        alert("Event data not cached. FRC Pit is offline.", true);
         return;
     }
 
@@ -42,13 +50,13 @@ async function verifyTeamInEvent(team, event) {
                 }
             }
 
-            alert(team ? "Team is not in event" : "Event does not exist");
+            alert(team ? "Team is not in event" : "Event does not exist", true);
             ret_val = false;
         }).catch((error) => {
             if (error.message !== "TypeError: Failed To Fetch") {
                 alert("FRC Pit is Offline")
             } else {
-                alert(team ? "Team is not in event" : "Event does not exist");
+                alert(team ? "Team is not in event" : "Event does not exist", true);
             }
             ret_val = false;
         }));

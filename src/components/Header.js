@@ -44,7 +44,7 @@ export default class Header extends Component {
   setTeamNumberAndEvent() {
     var event = document.getElementsByClassName("settings-event")[0].value;
     if (!event) {
-      alert("Event field is required");
+      alert("Event field is required", true);
       return;
     }
 
