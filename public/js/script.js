@@ -2,6 +2,19 @@ const LOCAL_STORAGE_KEY = "The Blue Alliance API Cache";
 const TBA_BASE_URL = "https://www.thebluealliance.com/api/v3";
 const X_TBA_Auth_Key = "83kBcUgRuDvJ1XLVXpB2ROeuRAzHoWpX9IRiWkRuwv8B9CryAlc3izY3ZXVOD4Hm";
 
+var errorAlertTimeout = null;
+(function (proxied) {
+    window.alert = function () {
+        $(".error-alert-div").hide();
+        $('.error-alert').text(arguments[0]);
+        $(".error-alert-div").show();
+        clearTimeout(errorAlertTimeout);
+        errorAlertTimeout = setTimeout(function () {
+            $(".error-alert-div").hide();
+        }, 7500);
+    };
+})(window.alert);
+
 async function showStatisticsModal(event, team_key) {
     cache = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 
