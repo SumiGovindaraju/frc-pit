@@ -16,7 +16,7 @@ async function verifyTeamInEvent(team, event) {
         return;
     }
 
-    if (!team.startsWith("frc")) {
+    if (team && !team.startsWith("frc")) {
         alert("Invalid team", true);
         return;
     }
