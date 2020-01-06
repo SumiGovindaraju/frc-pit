@@ -3,6 +3,11 @@ import Cache from '../storage/Cache';
 import AppState from '../state/AppState';
 import util from '../util/util';
 
+const bonus_rp_1_index = "completeRocketRankingPoint";
+const bonus_rp_1_name = "Complete Rocket";
+const bonus_rp_2_index = "habDockingRankingPoint";
+const bonus_rp_2_name = "HAB Docking";
+
 export default class ScheduleTable extends Component {
   constructor(props) {
     super(props);
@@ -40,8 +45,8 @@ export default class ScheduleTable extends Component {
           if (data[match].alliances.red.score >= 0 && data[match].alliances.blue.score >= 0) {
             var score_breakdown_exists = data[match].score_breakdown != null;
             scores = <React.Fragment>
-              <td className={`red-score ${data[match].winning_alliance === "red" ? "winner" : ""} ${data[match].alliances.red.team_keys.includes(team) ? "current-team" : ""}`} data-toggle="tooltip" data-placement="top" title={`${score_breakdown_exists && data[match].score_breakdown.red.completeRocketRankingPoint ? "Complete Rocket" : ""}${score_breakdown_exists && data[match].score_breakdown.red.completeRocketRankingPoint && data[match].score_breakdown.red.habDockingRankingPoint ? " & " : ""}${score_breakdown_exists && data[match].score_breakdown.red.habDockingRankingPoint ? "HAB Docking" : ""}`}>{data[match].alliances.red.score}</td>
-              <td className={`blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""} ${data[match].alliances.blue.team_keys.includes(team) ? "current-team" : ""}`} data-toggle="tooltip" data-placement="top" title={`${score_breakdown_exists && data[match].score_breakdown.blue.completeRocketRankingPoint ? "Complete Rocket" : ""}${score_breakdown_exists && data[match].score_breakdown.blue.completeRocketRankingPoint && data[match].score_breakdown.blue.habDockingRankingPoint ? " & " : ""}${score_breakdown_exists && data[match].score_breakdown.blue.habDockingRankingPoint ? "HAB Docking" : ""}`}>{data[match].alliances.blue.score}</td>
+              <td className={`red-score ${data[match].winning_alliance === "red" ? "winner" : ""} ${data[match].alliances.red.team_keys.includes(team) ? "current-team" : ""}`} data-toggle="tooltip" data-placement="top" title={`${score_breakdown_exists && data[match].score_breakdown.red[bonus_rp_1_index] ? bonus_rp_1_name : ""}${score_breakdown_exists && data[match].score_breakdown.red[bonus_rp_1_index] && data[match].score_breakdown.red[bonus_rp_2_index] ? " & " : ""}${score_breakdown_exists && data[match].score_breakdown.red[bonus_rp_2_index] ? bonus_rp_2_name : ""}`}>{data[match].alliances.red.score}</td>
+              <td className={`blue-score ${data[match].winning_alliance === "blue" ? "winner" : ""} ${data[match].alliances.blue.team_keys.includes(team) ? "current-team" : ""}`} data-toggle="tooltip" data-placement="top" title={`${score_breakdown_exists && data[match].score_breakdown.blue[bonus_rp_1_index] ? bonus_rp_1_name : ""}${score_breakdown_exists && data[match].score_breakdown.blue[bonus_rp_1_index] && data[match].score_breakdown.blue[bonus_rp_2_index] ? " & " : ""}${score_breakdown_exists && data[match].score_breakdown.blue[bonus_rp_2_index] ? bonus_rp_2_name : ""}`}>{data[match].alliances.blue.score}</td>
             </React.Fragment>
           } else {
             var matchDate = new Date(util.getMatchTimeInMS(data[match]));
