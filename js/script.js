@@ -2,13 +2,32 @@ const LOCAL_STORAGE_KEY = "The Blue Alliance API Cache";
 const TBA_BASE_URL = "https://www.thebluealliance.com/api/v3";
 const X_TBA_Auth_Key = "83kBcUgRuDvJ1XLVXpB2ROeuRAzHoWpX9IRiWkRuwv8B9CryAlc3izY3ZXVOD4Hm";
 
+var errorAlertTimeout = null;
+/**
+ * arguments[0] is the message
+ * arguments[1] is a boolean whether the message is an error
+ */
+(function (proxied) {
+    window.alert = function () {
+        $(".alert-div").hide();
+        $('.alert').text(arguments[0]);
+        $('.alert').css("background-color", arguments[1] ? "#dc3545" : "#28a745");
+        $('.alert').css("border-color", arguments[1] ? "#dc3545" : "#28a745");
+        $(".alert-div").show();
+        clearTimeout(errorAlertTimeout);
+        errorAlertTimeout = setTimeout(function () {
+            $(".alert-div").hide();
+        }, 7500);
+    };
+})(window.alert);
+
 async function showStatisticsModal(event, team_key) {
     cache = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 
     if (cache != undefined && cache.events != undefined && cache.events[event] != undefined) {
         if (team_key && cache.events[event].teams[team_key] == undefined) {
             if (!navigator.onLine) {
-                alert("Team data not cached. FRC Pit is offline.");
+                alert("Team data not cached. FRC Pit is offline.", true);
                 return;
             }
         } else {
@@ -20,7 +39,7 @@ async function showStatisticsModal(event, team_key) {
             $(".carousel-inner").html("<p>FRC Pit is offline. Images cannot be rendered right now.</p>");
         }
     } else if (!navigator.onLine) {
-        alert("Event data not cached. FRC Pit is offline.");
+        alert("Event data not cached. FRC Pit is offline.", true);
         return;
     }
 
@@ -51,7 +70,7 @@ async function showStatisticsModal(event, team_key) {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(jqXHR.responseText);
-                alert("Team not found on The Blue Alliance");
+                alert("Team not found on The Blue Alliance", true);
                 return;
             }
         }));
