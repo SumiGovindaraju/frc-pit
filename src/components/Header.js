@@ -16,7 +16,20 @@ export default class Header extends Component {
         var a = document.createElement("a");
         a.classList.add("nav-link");
         a.classList.add("sign-out");
-        a.innerHTML = "Sign out " + user.displayName;
+        
+        var data_toggle = document.createAttribute("data-toggle");
+        data_toggle.value = "tooltip";
+        a.attributes.setNamedItem(data_toggle);
+
+        var data_placement = document.createAttribute("data-placement");
+        data_placement.value = "bottom";
+        a.attributes.setNamedItem(data_placement);
+        
+        var title = document.createAttribute("title");
+        title.value = "Sign out " + user.displayName;
+        a.attributes.setNamedItem(title);
+
+        a.innerHTML = "Sign out";
         a.href = process.env.PUBLIC_URL + "/#/sign_out";
 
         li.appendChild(a);
