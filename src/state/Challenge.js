@@ -44,6 +44,16 @@ const rankingPointYear = {
             "index": "habDockingRankingPoint",
             "name": "HAB Docking"
         }
+    ],
+    "2020": [
+        {
+            "index": "shieldOperationalRankingPoint",
+            "name": "Shield Operational"
+        },
+        {
+            "index": "shieldEnergizedRankingPoint",
+            "name": "Shield Energized"
+        }
     ]
 };
 
