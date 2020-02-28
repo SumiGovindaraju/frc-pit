@@ -149,6 +149,8 @@ export async function pullFromTBA() {
         promises.push(fetch(TBA_BASE_URL + "/event/" + event + "/matches", FETCH_CONFIG)
             .then(res => res.json())
             .then((result) => {
+                console.log("Matches for " + event + ": ");
+                console.log(JSON.stringify(result));
                 cache.events[event].matches = result;
                 cache.events[event].last_updated = (new Date()).toUTCString();
                 cache_instance.set(cache);
