@@ -19,7 +19,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build && sw-precache --config=sw-precache-config.js",
+    "build": "react-scripts build && workbox generateSW workbox-config.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -30,6 +30,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "sw-precache": "^5.2.1"
+    "workbox-cli": "^5.1.3"
   }
 }
