@@ -1,19 +1,17 @@
 {
   "name": "frc-pit",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "homepage": "https://sumigovindaraju.github.io/frc-pit",
   "dependencies": {
-    "ajv": "^6.10.2",
-    "firebase": "^5.11.1",
-    "gh-pages": "^1.2.0",
-    "object-sizeof": "^1.5.1",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
-    "react-firebaseui": "^3.0.4",
+    "firebase": "^7.14.2",
+    "object-sizeof": "^1.6.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-firebaseui": "^4.1.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^3.3.0",
-    "typescript": "^3.6.3"
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -30,6 +28,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "workbox-cli": "^5.1.3"
   }
 }
