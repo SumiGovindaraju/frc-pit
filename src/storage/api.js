@@ -21,6 +21,11 @@ async function verifyTeamInEvent(team, event) {
         return;
     }
 
+    if (event && (event.length <= 4 || isNaN(event.substring(0, 4)))) {
+        alert("Invalid event", true);
+        return;
+    }
+
     // handle cases where we are offline
     var cache = Cache.getInstance().get();
     if (cache.events != null && cache.events[event] != null) {
@@ -54,7 +59,7 @@ async function verifyTeamInEvent(team, event) {
             ret_val = false;
         }).catch((error) => {
             if (error.message !== "TypeError: Failed To Fetch") {
-                alert("FRC Pit is Offline")
+                alert("FRC Pit is offline.")
             } else {
                 alert(team ? "Team is not in event" : "Event does not exist", true);
             }
