@@ -54,7 +54,7 @@ export default class Webcasts extends Component {
           iframes.push(
             <div className="tab-pane fade" id={"webcast-" + (parseInt(webcast) + 1)} role="tabpanel" key={webcast}>
               <iframe title={webcast}
-                src={(data[webcast].type === "twitch" ? "//player.twitch.tv/?channel=" : "//www.youtube.com/embed/") + data[webcast].channel}
+                src={(data[webcast].type === "twitch" ? "//player.twitch.tv/?parent=sumigovindaraju.github.io&channel=" : "//www.youtube.com/embed/") + data[webcast].channel}
                 frameBorder="none"
                 scrolling="none"
                 allowFullScreen={true}>

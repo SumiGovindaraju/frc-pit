@@ -1,6 +1,6 @@
 # FRC Pit [![Node CI](https://github.com/SumiGovindaraju/frc-pit/workflows/Node%20CI/badge.svg)](https://github.com/SumiGovindaraju/frc-pit/actions?query=workflow%3A%22Node+CI%22)
 
-Progressive Web App that provides teams with functionalities 
+Progressive Web App that helps teams stay on top of competition schedules, tools check out, and more from the comfort of their own pit.
 
 ## Current Features
 * Pit View, which displays schedule, rankings, live streams, awards, and countdown to next match
@@ -9,7 +9,6 @@ Progressive Web App that provides teams with functionalities
 * Statistics View, which currently mirrors the TBA Rankings table
 
 ## TODO
-* [ ] Statistics Modal w/ Team Info ()
 * [ ] Icon to make it a downloadable PWA
 * [ ] Pit Inventory features with Firebase
 
