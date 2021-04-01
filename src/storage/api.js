@@ -37,6 +37,11 @@ async function verifyTeamInEvent(team, event) {
             console.log(cache.events)
             alert("FRC Pit is offline. Using cached data.", false)
             return;
+        } else if (!team && !navigator.onLine) { // if offline and event data is no available (no team)
+            AppState.getInstance().setTeamEventVerified(true);
+            console.log(cache.events)
+            alert("FRC Pit is offline. Using cached data.", false)
+            return;
         }
     } else if (!navigator.onLine) { // if offline and no cached data for this event is available
         alert("Event data not cached. FRC Pit is offline.", true);
@@ -59,7 +64,7 @@ async function verifyTeamInEvent(team, event) {
             ret_val = false;
         }).catch((error) => {
             if (error.message !== "TypeError: Failed To Fetch") {
-                alert("FRC Pit is offline.")
+                alert("FRC Pit is offline.", true)
             } else {
                 alert(team ? "Team is not in event" : "Event does not exist", true);
             }
