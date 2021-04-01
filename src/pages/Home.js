@@ -13,7 +13,9 @@ export default class Home extends Component {
     AppState.getInstance().getEventEmitter().on("appStateChanged", function () {
       instance.forceUpdate();
     });
+  }
 
+  componentDidMount() {
     AppState.getInstance().setShowSettingsPane(true);
     AppState.getInstance().setShowOtherSettings(true);
   }
