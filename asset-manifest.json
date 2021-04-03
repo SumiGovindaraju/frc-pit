@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/frc-pit/static/css/main.40d06128.chunk.css",
-    "main.js": "/frc-pit/static/js/main.4f20e85c.chunk.js",
-    "main.js.map": "/frc-pit/static/js/main.4f20e85c.chunk.js.map",
+    "main.js": "/frc-pit/static/js/main.6d4e5dea.chunk.js",
+    "main.js.map": "/frc-pit/static/js/main.6d4e5dea.chunk.js.map",
     "runtime-main.js": "/frc-pit/static/js/runtime-main.31cd5a09.js",
     "runtime-main.js.map": "/frc-pit/static/js/runtime-main.31cd5a09.js.map",
-    "static/js/2.580b77f4.chunk.js": "/frc-pit/static/js/2.580b77f4.chunk.js",
-    "static/js/2.580b77f4.chunk.js.map": "/frc-pit/static/js/2.580b77f4.chunk.js.map",
+    "static/js/2.bb85e563.chunk.js": "/frc-pit/static/js/2.bb85e563.chunk.js",
+    "static/js/2.bb85e563.chunk.js.map": "/frc-pit/static/js/2.bb85e563.chunk.js.map",
     "index.html": "/frc-pit/index.html",
     "static/css/main.40d06128.chunk.css.map": "/frc-pit/static/css/main.40d06128.chunk.css.map",
-    "static/js/2.580b77f4.chunk.js.LICENSE.txt": "/frc-pit/static/js/2.580b77f4.chunk.js.LICENSE.txt",
+    "static/js/2.bb85e563.chunk.js.LICENSE.txt": "/frc-pit/static/js/2.bb85e563.chunk.js.LICENSE.txt",
     "static/media/fontawesome-all.min.css": "/frc-pit/static/media/fa-solid-900.ed935594.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.31cd5a09.js",
-    "static/js/2.580b77f4.chunk.js",
+    "static/js/2.bb85e563.chunk.js",
     "static/css/main.40d06128.chunk.css",
-    "static/js/main.4f20e85c.chunk.js"
+    "static/js/main.6d4e5dea.chunk.js"
   ]
 }
