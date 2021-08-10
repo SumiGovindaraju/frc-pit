@@ -54,6 +54,16 @@ const rankingPointYear = {
             "index": "shieldEnergizedRankingPoint",
             "name": "Shield Energized"
         }
+    ],
+    "2021": [
+        {
+            "index": "shieldOperationalRankingPoint",
+            "name": "Shield Operational"
+        },
+        {
+            "index": "shieldEnergizedRankingPoint",
+            "name": "Shield Energized"
+        }
     ]
 };
 
