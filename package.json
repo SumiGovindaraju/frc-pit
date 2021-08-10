@@ -4,17 +4,13 @@
   "private": true,
   "homepage": "https://sumigovindaraju.github.io/frc-pit",
   "dependencies": {
-    "@sideway/address": "^4.1.1",
-    "@sideway/formula": "^3.0.0",
-    "@sideway/pinpoint": "^2.0.0",
     "firebase": "^7.14.2",
-    "joi": "^17.4.0",
     "object-sizeof": "^1.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^3.4.1",
     "typescript": "^3.8.3"
   },
   "scripts": {
@@ -33,6 +29,6 @@
   ],
   "devDependencies": {
     "gh-pages": "^2.2.0",
-    "workbox-cli": "^6.1.2"
+    "workbox-cli": "^5.1.3"
   }
 }
