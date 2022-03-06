@@ -108,7 +108,7 @@ export default class Header extends Component {
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/#/check_out_tool"}><i className="fa fa-plus" aria-hidden="true"></i> Check Out Tool</a></li>
               <li className="nav-item"><a className="nav-link" href={process.env.PUBLIC_URL + "/#/stats"}><i className="fa fa-chart-area" aria-hidden="true"></i> Stats</a></li>
             </ul>
-            <form className="form-inline settings">
+            <form className="form-inline settings" action="javascript:void(0);" onSubmit={this.setTeamNumberAndEvent}>
               <select className="form-control mr-sm-2 settings-event" style={{ display: showSettings ? "block" : "none" }} defaultValue={event || ""}>{eventOptions}</select>
               <input className="form-control mr-sm-2 settings-team" placeholder="Team Number" type="number" style={{ display: showTeamSettings ? "block" : "none" }} defaultValue={showTeamSettings && team ? parseInt(team.substring(3)) : ""}/>
               <input type="button" className="btn btn-success set-team-number-and-event-btn my-2 my-sm-0" value="✓" onClick={this.setTeamNumberAndEvent} style={{ display: showSettings ? "block" : "none" }} />
