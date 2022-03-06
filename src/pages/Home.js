@@ -6,10 +6,6 @@ import Countdown from '../components/Countdown';
 import AppState from '../state/AppState';
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     var instance = this;
     AppState.getInstance().getEventEmitter().on("appStateChanged", function () {
