@@ -64,6 +64,16 @@ const rankingPointYear = {
             "index": "shieldEnergizedRankingPoint",
             "name": "Shield Energized"
         }
+    ],
+    "2022": [
+        {
+            "index": "hangarBonusRankingPoint",
+            "name": "Hangar Bonus"
+        },
+        {
+            "index": "cargoBonusRankingPoint",
+            "name": "Cargo Bonus"
+        }
     ]
 };
 
