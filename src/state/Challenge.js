@@ -74,6 +74,16 @@ const rankingPointYear = {
             "index": "cargoBonusRankingPoint",
             "name": "Cargo Bonus"
         }
+    ],
+    "2023": [
+        {
+            "index": "sustainabilityBonusAchieved",
+            "name": "Sustainability Bonus"
+        },
+        {
+            "index": "activationBonusAchieved",
+            "name": "Activation Bonus"
+        },
     ]
 };
 
